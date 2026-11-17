@@ -19,7 +19,8 @@
     "db:doctor": "node --env-file-if-exists=.env --import tsx scripts/db-doctor.mts",
     "verify": "npm run typecheck && npm run test && npm run build",
     "db:server": "node --import tsx scripts/dev-postgres.mts",
-    "start:next": "node --env-file-if-exists=.env --import tsx scripts/preflight.mts --production && next start --hostname 0.0.0.0 --port 3000"
+    "start:next": "node --env-file-if-exists=.env --import tsx scripts/preflight.mts --production && next start --hostname 0.0.0.0 --port 3000",
+    "smoke": "node --import tsx scripts/smoke.mts"
   },
   "dependencies": {
     "@electric-sql/pglite": "^0.5.16",

@@ -40,6 +40,7 @@ curl -s localhost:3000/api/health | jq
 | `npm test` | آزمون‌ها روی PGlite |
 | `npm run test:postgres` | همان آزمون‌ها روی **PostgreSQL واقعی** (خودکار بالا/پایین می‌آید) |
 | `npm run verify` | typecheck + test + build |
+| `npm run smoke` | آزمون دود زمان اجرا روی سرور در حال اجرا (۵۳ بررسی، بدون مرورگر) |
 | `npm run db:generate` | تولید SQL از تغییرات اسکیما |
 | `npm run db:migrate` | اعمال مایگریشن‌ها روی موتور فعال |
 | `npm run db:doctor` | بازرسی سلامت پایگاه داده (encoding، مایگریشن، جست‌وجوی فارسی) |
