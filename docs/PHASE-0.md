@@ -190,4 +190,4 @@ npm start                                       # بدون DATABASE_URL
 
 ---
 
-**شاخه:** `arena/a46cab47-zibanit` · **کامیت این گزارش:** `git log -1 --format='%h' -- docs/PHASE-0.md`
+**شاخه:** `arena/a46cab47-zibanit` · **کامیت پیاده‌سازی فاز ۰:** `0e148d8` (این گزارش در کامیت بعدی ثبت شده است)
