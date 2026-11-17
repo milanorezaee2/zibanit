@@ -88,7 +88,7 @@ export function MobileNav() {
                 ))}
               </ul>
 
-              <p className="mt-10 mb-3 text-label tracking-[0.16em] text-ink-subtle uppercase">بیشتر</p>
+              <p className="mt-10 mb-3 text-[0.8rem] text-ink-subtle">بیشتر</p>
               <ul className="flex flex-col gap-3 text-small">
                 {footerNav.slice(1, 3).map((item) => (
                   <li key={item.href}>

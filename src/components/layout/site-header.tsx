@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { publicNav } from '@/config/site';
 import { NavItemView } from './nav-item';
@@ -13,47 +12,21 @@ import { cn } from '@/lib/cn';
 /**
  * The header.
  *
- * Fixed rather than sticky, because the hero is meant to run underneath it: at the
- * top of the page the header is a gradient scrim over the photograph, and once the
- * visitor has scrolled past the fold it settles into a bordered bar with a blurred
- * backdrop. The transition is the only movement, and it is 500ms of background
- * colour — no shrinking, no sliding, nothing that reflows the page.
+ * In the dark design the bar was transparent over a full-bleed hero and turned
+ * opaque on scroll. On paper that compromise fails: dark ink over a photograph is
+ * unreadable, and a translucent bar over a light page reads as a smudge. So the
+ * header is now a constant: a paper bar with a hairline, blurred behind it.
  *
- * It is the only client component in the public shell besides the drawer and the
- * search dialog, and it holds exactly one piece of state: whether the page has
- * scrolled.
+ * Losing the scroll listener also means it re-renders when you navigate and never
+ * again — the only state left is the current pathname.
  */
 export function SiteHeader() {
-  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
-
-  useEffect(() => {
-    let frame = 0;
-
-    const onScroll = () => {
-      if (frame) return;
-      frame = window.requestAnimationFrame(() => {
-        setScrolled(window.scrollY > 24);
-        frame = 0;
-      });
-    };
-
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-      if (frame) window.cancelAnimationFrame(frame);
-    };
-  }, []);
 
   return (
     <header
-      data-scrolled={scrolled ? 'true' : 'false'}
       className={cn(
-        'fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-500 ease-museum',
-        scrolled
-          ? 'border-b border-line bg-paper/72 backdrop-blur-xl'
-          : 'border-b border-transparent bg-transparent',
+        'fixed inset-x-0 top-0 z-50 border-b border-line bg-paper/92 backdrop-blur-xl',
       )}
     >
       <Container

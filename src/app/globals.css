@@ -341,13 +341,15 @@
    Utilities — the recurring gestures of the museum
    ═══════════════════════════════════════════════════════════════════════════ */
 
-/* The divider that fades out: one hairline of antique gold. */
+/* The divider that fades out: one hairline of the accent role.
+   It follows the theme — dark gold on paper, pale gold in a dark room — instead of
+   being pinned to the brand value and disappearing on one of the two grounds. */
 @utility gold-rule {
   height: 1px;
   background-image: linear-gradient(
     to left,
-    var(--color-gold-500),
-    color-mix(in srgb, var(--color-gold-500) 22%, transparent) 46%,
+    var(--color-accent),
+    color-mix(in srgb, var(--color-accent) 26%, transparent) 46%,
     transparent
   );
 }
@@ -358,7 +360,7 @@
   background-image: linear-gradient(
     to bottom,
     transparent,
-    color-mix(in srgb, var(--color-gold-500) 45%, transparent) 30%,
+    color-mix(in srgb, var(--color-accent) 45%, transparent) 30%,
     transparent
   );
 }
