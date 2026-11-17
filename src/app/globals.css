@@ -73,44 +73,45 @@
      Persian is not Latin: Naskh needs more line-height and never letter-spacing.
      Sizes are fluid at the top of the scale only — a museum headline should still
      be a museum headline at 1440px, without an arbitrary clamp on body copy. */
-  --text-display: clamp(2.5rem, 1.4rem + 4.6vw, 5rem);
-  /* Naskh needs more room than a Latin serif: at 1.22 the descenders of a
-     two-line Persian headline collide. 1.32 is the tightest that still breathes. */
-  --text-display--line-height: 1.32;
+  --text-display: clamp(2.6rem, 1.5rem + 4.2vw, 5.4rem);
+  /* Headlines are set in the sans face (see the base layer). Persian sans is
+     tighter than Naskh: 1.24 is the balance point where a three-line headline
+     reads as one object without its descenders touching. */
+  --text-display--line-height: 1.3;
   --text-display--font-weight: 700;
 
-  --text-hero: clamp(2rem, 1.15rem + 3.2vw, 3.65rem);
-  --text-hero--line-height: 1.4;
+  --text-hero: clamp(2rem, 1.2rem + 2.6vw, 3.4rem);
+  --text-hero--line-height: 1.38;
 
-  --text-title: clamp(1.6rem, 1.2rem + 1.5vw, 2.35rem);
-  --text-title--line-height: 1.42;
+  --text-title: clamp(1.75rem, 1.3rem + 1.5vw, 2.7rem);
+  --text-title--line-height: 1.32;
 
-  --text-subtitle: clamp(1.2rem, 1.05rem + 0.6vw, 1.5rem);
-  --text-subtitle--line-height: 1.55;
+  --text-subtitle: clamp(1.25rem, 1.1rem + 0.5vw, 1.6rem);
+  --text-subtitle--line-height: 1.45;
 
-  --text-lead: 1.0625rem;
+  --text-lead: 1.125rem;
   --text-lead--line-height: 2.05;
 
-  --text-body: 0.9375rem;
-  --text-body--line-height: 2;
+  --text-body: 1rem;
+  --text-body--line-height: 1.95;
 
-  --text-small: 0.8125rem;
-  --text-small--line-height: 1.85;
+  --text-small: 0.875rem;
+  --text-small--line-height: 1.8;
 
   --text-label: 0.6875rem;
   --text-label--line-height: 1.6;
-  --text-label--letter-spacing: 0.16em;
+  --text-label--letter-spacing: 0.18em;
 
   /* ── Rhythm ────────────────────────────────────────────────────────────
      Section padding is the museum's breathing: generous on desktop, honest on
      a phone. Named so no section invents its own. */
-  --spacing-section: clamp(4rem, 3rem + 4vw, 8.5rem);
+  --spacing-section: clamp(4.5rem, 3rem + 4.5vw, 9rem);
   --spacing-gutter: clamp(1.25rem, 0.9rem + 1.6vw, 2.5rem);
   --spacing-stack: 1.75rem;
 
   /* ── Edges: a vitrine has corners, not bubbles ───────────────────────── */
-  --radius-vitrine: 2px;
-  --radius-plinth: 4px;
+  --radius-vitrine: 4px;
+  --radius-plinth: 8px;
 
   /* ── Shadows: light falling off, never a drop shadow ─────────────────── */
   --shadow-plinth: 0 32px 80px -48px rgb(0 0 0 / 0.9);
@@ -145,7 +146,7 @@
   :root {
     color-scheme: dark;
     --gemoria-ease: var(--ease-museum);
-    --header-height: 4.5rem;
+    --header-height: 4rem;
   }
 
   * {
@@ -171,21 +172,31 @@
     font-synthesis-weight: none;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
-    /* One institutional vignette, no images, no network. */
+    /* One institutional wash, no images, no network, no fixed attachment: a
+       fixed background repaints on every scroll frame on a phone. */
     background-image:
-      radial-gradient(1100px 620px at 88% -10%, rgba(16, 43, 37, 0.5), transparent 62%),
-      radial-gradient(900px 520px at 4% 104%, rgba(23, 60, 50, 0.28), transparent 60%);
-    background-attachment: fixed;
+      radial-gradient(1200px 640px at 92% -12%, rgba(23, 60, 50, 0.34), transparent 64%),
+      radial-gradient(900px 560px at 0% 108%, rgba(16, 43, 37, 0.22), transparent 62%);
   }
 
+  /*
+   * Headlines are set in the *body* face, not the Naskh face.
+   *
+   * That is the single biggest change of the 1B visual pass, and it is a
+   * deliberate reversal of the 1A hierarchy: Naskh at display size reads as a
+   * manuscript — beautiful, and unmistakably traditional. A contemporary museum
+   * leads with a grotesque and reserves the serif for what a serif does best:
+   * object names, quotations and the Latin wordmark. `font-display` is still the
+   * utility for those moments; it is no longer the default for every heading.
+   */
   h1,
   h2,
   h3,
   h4 {
-    font-family: var(--font-display);
+    font-family: var(--font-body);
     font-weight: 700;
-    /* Naskh sits lower than Latin serifs; 1.45 prevents clipping of descenders. */
-    line-height: 1.45;
+    line-height: 1.32;
+    letter-spacing: normal;
     text-wrap: balance;
   }
 
@@ -193,8 +204,30 @@
     text-wrap: pretty;
   }
 
-  /* Persian must never be letter-spaced; Latin display text may be. */
-  :where([lang='fa'], [dir='rtl']) * {
+  /*
+   * Persian must never be letter-spaced; Latin display text may be.
+   *
+   * The selector is deliberately *not* wrapped in `:where()`: a zero-specificity
+   * reset loses to any utility class, and `tracking-[0.16em]` on a Persian label
+   * would win. Element + attribute (0,1,1) beats a class (0,1,0), so this holds
+   * everywhere in the RTL document — including the footer labels that used to be
+   * spaced like an English kicker. Latin runs are exempt because they are wrapped
+   * in `dir="ltr"` and are not in this list.
+   */
+  [dir='rtl'] h1,
+  [dir='rtl'] h2,
+  [dir='rtl'] h3,
+  [dir='rtl'] h4,
+  [dir='rtl'] p,
+  [dir='rtl'] li,
+  [dir='rtl'] a,
+  [dir='rtl'] span:not([dir='ltr']),
+  [dir='rtl'] label,
+  [dir='rtl'] button,
+  [dir='rtl'] dt,
+  [dir='rtl'] dd,
+  [dir='rtl'] th,
+  [dir='rtl'] td {
     letter-spacing: normal;
   }
 
@@ -314,6 +347,53 @@
   background-color: color-mix(in srgb, var(--color-surface) 88%, transparent);
   border: 1px solid color-mix(in srgb, white 7%, transparent);
   border-radius: var(--radius-vitrine);
+}
+
+/* A hairline that spans the grid: the museum's only structural line. */
+@utility hairline {
+  height: 1px;
+  background-color: color-mix(in srgb, white 9%, transparent);
+}
+
+/* The quiet panel used by forms and compact modules. */
+@utility glass-panel {
+  background-color: color-mix(in srgb, var(--color-surface) 62%, transparent);
+  border: 1px solid color-mix(in srgb, white 7%, transparent);
+  border-radius: var(--radius-plinth);
+  backdrop-filter: blur(12px);
+}
+
+/*
+ * Scroll-reveal without JavaScript.
+ *
+ * `animation-timeline: view()` is progressive enhancement in the strict sense: where
+ * it is unsupported the element simply is where it should be, visible, with no
+ * script to download and no layout thrash. It is declared inside `@supports` so a
+ * browser that parses the property but not the timeline is unaffected.
+ */
+@utility reveal {
+  opacity: 1;
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: gemoria-reveal-up linear both;
+      animation-timeline: view();
+      animation-range: entry 6% cover 26%;
+    }
+  }
+}
+
+@keyframes gemoria-reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 /* A full-bleed band that keeps content aligned to the grid. */

@@ -20,7 +20,7 @@ const persianNumber = (value: number): string =>
 
 export function EncyclopediaPreview() {
   return (
-    <section id="encyclopedia" className="py-section" aria-labelledby="encyclopedia-heading">
+    <section id="encyclopedia" className="reveal py-section" aria-labelledby="encyclopedia-heading">
       <Container width="museum">
         <div className="grid gap-14 lg:grid-cols-12">
           <div className="lg:col-span-4">
@@ -47,7 +47,7 @@ export function EncyclopediaPreview() {
                     </span>
                     <div className="min-w-0">
                       <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                        <h3 className="font-display text-subtitle text-ivory-100">{topic.titleFa}</h3>
+                        <h3 className="font-bold text-subtitle text-ivory-100">{topic.titleFa}</h3>
                         <span
                           dir="ltr"
                           className="font-latin text-[0.72rem] tracking-[0.18em] text-sage-600 uppercase"

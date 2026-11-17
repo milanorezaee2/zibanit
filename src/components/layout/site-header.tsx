@@ -52,8 +52,8 @@ export function SiteHeader() {
       className={cn(
         'fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-500 ease-museum',
         scrolled
-          ? 'border-b border-white/[0.08] bg-canvas/88 backdrop-blur-md'
-          : 'border-b border-transparent bg-[linear-gradient(to_bottom,rgba(11,14,12,0.72),transparent)]',
+          ? 'border-b border-white/[0.06] bg-canvas/72 backdrop-blur-xl'
+          : 'border-b border-transparent bg-transparent',
       )}
     >
       <Container
@@ -65,14 +65,18 @@ export function SiteHeader() {
         <nav aria-label="ناوبری اصلی" className="hidden lg:block">
           <ul className="flex items-center gap-8">
             {publicNav.map((item) => {
-              const isCurrent = item.href === pathname;
+              // A section counts as current for its children too: on
+              // /halls/gemstones the navigation still says where you are.
+              const isCurrent =
+                item.href === pathname ||
+                (item.href !== '/' && pathname?.startsWith(`${item.href}/`) === true);
               return (
                 <li key={item.href}>
                   <NavItemView
                     item={item}
                     current={isCurrent}
                     onNavigate={undefined}
-                    className="text-[0.84rem]"
+                    className="text-[0.9rem]"
                   />
                 </li>
               );

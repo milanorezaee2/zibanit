@@ -37,15 +37,15 @@ export function SectionHeading({
   return (
     <header
       className={cn(
-        'mb-12 sm:mb-16',
+        'mb-10 sm:mb-14',
         align === 'center' && 'mx-auto max-w-reading text-center',
         className,
       )}
     >
       {(label || eyebrow) && (
-        <p className={cn('mb-5 flex items-center gap-3', align === 'center' && 'justify-center')}>
+        <p className={cn('mb-4 flex items-center gap-3', align === 'center' && 'justify-center')}>
           {eyebrow ? <span className="eyebrow">{eyebrow}</span> : <span className="label-fa">{label}</span>}
-          <span className="gold-rule w-12 shrink-0" aria-hidden="true" />
+          <span className="h-px w-10 shrink-0 bg-gold-500/60" aria-hidden="true" />
         </p>
       )}
 
@@ -55,7 +55,10 @@ export function SectionHeading({
           align === 'center' && 'sm:flex-col sm:items-center',
         )}
       >
-        <h2 id={titleId} className="font-display text-title text-ivory-100">
+        <h2
+          id={titleId}
+          className="max-w-[26ch] font-body text-title font-bold text-ivory-50"
+        >
           {title}
         </h2>
         {action && <div className="shrink-0">{action}</div>}
@@ -64,7 +67,7 @@ export function SectionHeading({
       {description && (
         <p
           className={cn(
-            'mt-5 max-w-reading text-body text-sage-400',
+            'mt-4 max-w-[52ch] text-body text-sage-400',
             align === 'center' && 'mx-auto',
           )}
         >

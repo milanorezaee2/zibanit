@@ -35,9 +35,9 @@ export default async function EncyclopediaIndexPage() {
         <header className="mb-14 max-w-reading">
           <p className="mb-5 flex items-center gap-3">
             <span className="label-fa">دانشنامه</span>
-            <span className="gold-rule w-10" aria-hidden="true" />
+            <span className="h-px w-10 bg-gold-500/60" aria-hidden="true" />
           </p>
-          <h1 className="font-display text-title text-ivory-100">پنج محور برای شناخت یک کانی</h1>
+          <h1 className="font-body text-hero font-bold text-ivory-50">پنج محور برای شناخت یک کانی</h1>
           <p className="mt-5 text-body text-sage-400">
             دانشنامهٔ موزه به‌جای فهرست کردن سنگ‌ها، پرسش‌هایی را سازمان می‌دهد که دربارهٔ
             هر کانی می‌توان پرسید. هر مقاله با منابع علمی منتشر می‌شود و به نمونه‌هایی از

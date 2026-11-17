@@ -42,7 +42,7 @@ export function DiscoveryPanel() {
             <span className="gold-rule w-10" aria-hidden="true" />
           </p>
 
-          <h2 id="discovery-heading" className="font-display text-title text-ivory-50">
+          <h2 id="discovery-heading" className="font-bold text-title text-ivory-50">
             هر سنگ، سندی از زمانی که پیش از ما بوده است
           </h2>
 

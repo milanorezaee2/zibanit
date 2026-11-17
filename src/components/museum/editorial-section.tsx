@@ -22,7 +22,7 @@ export function EditorialSection({ hallCount }: { hallCount: number }) {
   ];
 
   return (
-    <section id="about" className="py-section" aria-labelledby="about-heading">
+    <section id="about" className="reveal py-section" aria-labelledby="about-heading">
       <Container width="museum">
         <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
           {/* Text column: `order` keeps the photograph second on a phone, where a
@@ -33,7 +33,7 @@ export function EditorialSection({ hallCount }: { hallCount: number }) {
               <span className="gold-rule w-10" aria-hidden="true" />
             </p>
 
-            <h2 id="about-heading" className="font-display text-title text-ivory-100">
+            <h2 id="about-heading" className="font-bold text-title text-ivory-100">
               موزه‌ای برای شناختن، نه برای خریدن
             </h2>
 

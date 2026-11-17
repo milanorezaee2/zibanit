@@ -62,11 +62,11 @@ export default async function SearchPage({
     <div className="pt-[calc(var(--header-height)+3.5rem)] pb-section">
       <Container width="museum">
         <header className="mb-10 max-w-reading">
-          <p className="mb-5 flex items-center gap-3">
+          <p className="mb-4 flex items-center gap-3">
             <span className="label-fa">جست‌وجو</span>
-            <span className="gold-rule w-10" aria-hidden="true" />
+            <span className="h-px w-10 bg-gold-500/60" aria-hidden="true" />
           </p>
-          <h1 className="font-display text-title text-ivory-100">کاوش در مجموعه</h1>
+          <h1 className="font-body text-hero font-bold text-ivory-50">کاوش در مجموعه</h1>
           <p className="mt-5 text-body text-sage-400">
             جست‌وجو روی نام فارسی، نام علمی، خانوادهٔ کانی‌شناسی، فرمول شیمیایی و خاستگاه
             جغرافیایی انجام می‌شود. حروف عربی و فارسی، نیم‌فاصله و اعداد فارسی پیش از

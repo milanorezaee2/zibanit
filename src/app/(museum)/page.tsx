@@ -62,7 +62,7 @@ export default async function MuseumHomePage() {
 
   return (
     <>
-      <HeroSection />
+      <HeroSection hallCount={hallList.length} />
       <EditorialSection hallCount={hallList.length} />
       <HallShowcase halls={hallList} />
 

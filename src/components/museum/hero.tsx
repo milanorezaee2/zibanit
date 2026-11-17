@@ -7,21 +7,32 @@ import { media } from '@/content/media.generated';
 /**
  * The entrance.
  *
- * One photograph, one sentence, two doors. The photograph is composed with its
- * subject on the far side and deep shadow on the near side, which is where the
- * Persian text sits — so the scrim only has to do the last ten percent of the
- * work, and the image is not washed out to make room for a headline.
+ * Recomposed for the 1B pass. What changed and why:
  *
- * The hero is the only place that uses a full-viewport band, and the only image
- * that is `priority`: everything below the fold waits its turn.
+ *   • The headline is set in the sans face at display scale, in solid ivory. The
+ *     gold-gradient headline it replaces was the piece of the page most often read
+ *     as "ornamental"; a museum can be luxurious without tinting its own words.
+ *   • The composition is a two-part grid rather than one column on a photograph:
+ *     the eye gets a single reading line at the top, the statement in the middle,
+ *     and a strip of three facts on the floor of the image — the same way an
+ *     exhibition wall is organised.
+ *   • The scrim is anchored to the text side and dies before the middle of the
+ *     frame, so the photograph is a photograph and not a background texture.
+ *
+ * The hall count is passed in from the page, because it is a fact about the
+ * database, not about the design.
  */
-export function HeroSection() {
+export function HeroSection({ hallCount }: { hallCount?: number }) {
+  const halls =
+    typeof hallCount === 'number' && hallCount > 0
+      ? new Intl.NumberFormat('fa-IR', { useGrouping: false }).format(hallCount)
+      : null;
+
   return (
     <section
-      className="relative isolate flex min-h-[88svh] items-end overflow-hidden"
+      className="relative isolate flex min-h-[92svh] flex-col justify-end overflow-hidden"
       aria-labelledby="hero-heading"
     >
-      {/* The photograph: full-bleed, cropped by the section, never by the text. */}
       <ResponsiveImage
         media={media.hero}
         alt="خوشهٔ بلور زمرد طبیعی بر بستر سنگ آتشفشانی تیره، در نور ویترین موزه"
@@ -32,21 +43,21 @@ export function HeroSection() {
         quality={88}
       />
 
-      {/* Two scrims: one directional for the text, one vertical for the seam into
-          the page. Neither is a black overlay — the photograph stays visible. */}
+      {/* Directional scrim: opaque where the Persian text sits, gone by 55%. */}
       <div
-        className="absolute inset-0 -z-10 bg-[linear-gradient(to_left,rgba(11,14,12,0.96)_0%,rgba(11,14,12,0.82)_28%,rgba(11,14,12,0.35)_58%,rgba(11,14,12,0.1)_78%,transparent_100%)]"
+        className="absolute inset-0 -z-10 bg-[linear-gradient(to_left,rgba(11,14,12,0.97)_0%,rgba(11,14,12,0.9)_30%,rgba(11,14,12,0.52)_55%,rgba(11,14,12,0.12)_78%,transparent_100%)]"
         aria-hidden="true"
       />
+      {/* The seam into the page, so the photograph does not end in a hard edge. */}
       <div
-        className="absolute inset-x-0 bottom-0 -z-10 h-48 bg-[linear-gradient(to_top,var(--color-canvas),transparent)]"
+        className="absolute inset-x-0 bottom-0 -z-10 h-56 bg-[linear-gradient(to_top,var(--color-canvas)_4%,rgba(11,14,12,0.6)_46%,transparent)]"
         aria-hidden="true"
       />
 
-      <Container width="museum" className="relative pb-16 pt-36 sm:pb-20 sm:pt-44">
-        <div className="max-w-[42rem] animate-rise">
+      <Container width="museum" className="relative pb-10 pt-40 sm:pb-14 sm:pt-48">
+        <div className="max-w-[46rem]">
           <p className="flex items-center gap-4">
-            <span className="gold-rule w-10 shrink-0" aria-hidden="true" />
+            <span className="h-px w-8 shrink-0 bg-gold-500/70" aria-hidden="true" />
             <span className="eyebrow" dir="ltr">
               A Digital Museum of Natural Wonders
             </span>
@@ -54,29 +65,46 @@ export function HeroSection() {
 
           <h1
             id="hero-heading"
-            className="mt-8 font-display text-display text-gold-gradient"
+            className="mt-7 font-body text-display font-bold text-ivory-50"
           >
             جهانی از شگفتی‌های پنهان در دل زمین
           </h1>
 
-          <p className="mt-8 max-w-[34rem] text-lead text-ivory-200/90">
-            به دنیای سنگ‌های قیمتی، کریستال‌ها و کانی‌های کمیاب سفر کنید؛ جایی که طبیعت
-            میلیون‌ها سال برای خلق هر اثر زمان صرف کرده است.
+          <p className="mt-7 max-w-[33rem] text-lead text-ivory-200/80">
+            سنگ‌های قیمتی، کریستال‌ها و کانی‌های کمیاب — شش تالار برای دیدن، خواندن و
+            شناختن؛ جایی که طبیعت میلیون‌ها سال برای خلق هر اثر وقت گذاشته است.
           </p>
 
-          <div className="mt-11 flex flex-wrap items-center gap-4">
+          <div className="mt-10 flex flex-wrap items-center gap-3">
             <ButtonLink href="/halls" size="lg">
-              ورود به تالارهای موزه
+              ورود به تالارها
             </ButtonLink>
-            <ButtonLink href="#featured" variant="outline" size="lg">
-              کاوش در مجموعه‌ها
+            <ButtonLink href="/search" variant="outline" size="lg">
+              جست‌وجو در مجموعه
             </ButtonLink>
           </div>
         </div>
 
-        <div className="mt-16 flex items-center justify-between gap-6 border-t border-white/[0.08] pt-6">
+        {/* The floor of the exhibition wall: three facts, no ornament. */}
+        <dl className="mt-14 grid grid-cols-2 gap-x-6 gap-y-5 border-t border-white/10 pt-6 sm:grid-cols-4 sm:gap-x-10">
+          {[
+            halls ? { term: 'تالار', value: halls } : null,
+            { term: 'طبقه‌بندی علمی', value: 'مستقل از تالار' },
+            { term: 'داده', value: 'مبتنی بر پایگاه داده' },
+            { term: 'فروش', value: 'هیچ' },
+          ]
+            .filter((item): item is { term: string; value: string } => item !== null)
+            .map((item) => (
+              <div key={item.term}>
+                <dt className="text-[11.5px] tracking-wide text-sage-500">{item.term}</dt>
+                <dd className="mt-1.5 text-[0.95rem] text-ivory-100">{item.value}</dd>
+              </div>
+            ))}
+        </dl>
+
+        <div className="mt-8 flex items-center justify-between gap-6">
           <p className="max-w-md text-small text-sage-500">
-            موزه‌ای برای دیدن و شناختن؛ هیچ شیئی در این مجموعه برای فروش عرضه نمی‌شود.
+            هیچ شیئی در این مجموعه برای فروش عرضه نمی‌شود؛ موزه، موزه است.
           </p>
           <a
             href="#about"

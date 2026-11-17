@@ -36,13 +36,15 @@ export default async function HallsIndexPage() {
   return (
     <div className="pt-[calc(var(--header-height)+3.5rem)] pb-section">
       <Container width="museum">
-        <header className="mb-14 max-w-reading">
-          <p className="mb-5 flex items-center gap-3">
+        <header className="mb-16 max-w-[54rem]">
+          <p className="mb-4 flex items-center gap-3">
             <span className="label-fa">تالارهای موزه</span>
-            <span className="gold-rule w-10" aria-hidden="true" />
+            <span className="h-px w-10 bg-gold-500/60" aria-hidden="true" />
           </p>
-          <h1 className="font-display text-title text-ivory-100">شش تالار</h1>
-          <p className="mt-5 text-body text-sage-400">
+          <h1 className="font-body text-hero font-bold text-ivory-50">
+            شش تالار، شش اقلیم زمین
+          </h1>
+          <p className="mt-5 max-w-[52ch] text-lead text-sage-400">
             هر تالار به یک خانوادهٔ طبیعی اختصاص دارد. جایگاه یک نمونه در تالار، تقسیم‌بندی
             نمایشی موزه است؛ طبقه‌بندی علمی آن جداگانه در صفحهٔ هر نمونه ثبت می‌شود.
             {totalObjects > 0 && (
@@ -64,50 +66,69 @@ export default async function HallsIndexPage() {
         </header>
 
         {halls.state === 'ready' ? (
-          <ul className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {halls.items.map((hall) => (
-              <li key={hall.id}>
-                <Link href={`/halls/${encodeURIComponent(hall.slug)}`} className="group block">
-                  <MuseumImage
-                    image={hall.image}
-                    alt={hall.imageAlt}
-                    sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 92vw"
-                    ratio="4 / 5"
-                    imgClassName="transition-transform duration-[1100ms] ease-museum group-hover:scale-[1.03]"
-                    fallback={
-                      <div
-                        className="flex items-center justify-center bg-surface/40"
-                        style={{ aspectRatio: '4 / 5' }}
-                      >
-                        <span className="font-display text-[3rem] text-gold-500/20" aria-hidden="true">
-                          ❖
-                        </span>
-                      </div>
-                    }
-                  />
-                  <p
-                    dir="ltr"
-                    className="mt-5 font-latin text-[0.72rem] tracking-[0.2em] text-gold-400/80 uppercase"
-                  >
-                    {hall.latinName}
-                  </p>
-                  <h2 className="mt-2 font-display text-subtitle text-ivory-100">{hall.title}</h2>
-                  <p className="mt-3 text-small text-sage-400">{hall.summary}</p>
-                  <span className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-small text-gold-300">
-                    <span className="inline-flex items-center gap-2">
-                      مشاهدهٔ تالار
-                      <ArrowStart className="h-4 w-4 transition-transform duration-500 ease-museum group-hover:-translate-x-1" />
+          /* A numbered index, not a card wall: each gallery is a spread with its own
+             photograph, and the number is the position in the building, not a rank. */
+          <ol className="border-t border-white/[0.08]">
+            {halls.items.map((hall, index) => (
+              <li key={hall.id} className="border-b border-white/[0.08]">
+                <Link
+                  href={`/halls/${encodeURIComponent(hall.slug)}`}
+                  className="group grid items-center gap-8 py-9 sm:py-12 lg:grid-cols-[1fr_minmax(0,26rem)] lg:gap-14"
+                >
+                  <div className="flex gap-5 sm:gap-8">
+                    <span
+                      aria-hidden="true"
+                      className="mt-1 shrink-0 font-latin text-[1.6rem] leading-none text-gold-500/50 tabular-nums"
+                    >
+                      {String(index + 1).padStart(2, '0')}
                     </span>
-                    {hall.specimenCount > 0 ? (
-                      <span className="text-sage-500">{persianNumber(hall.specimenCount)} نمونه</span>
-                    ) : (
-                      <span className="text-sage-600">در حال آماده‌سازی</span>
-                    )}
-                  </span>
+
+                    <div className="min-w-0">
+                      <p className="font-latin text-[0.72rem] tracking-[0.22em] text-gold-400/70 uppercase" dir="ltr">
+                        {hall.latinName}
+                      </p>
+                      <h2 className="mt-2 text-[1.5rem] font-bold leading-snug text-ivory-50 transition-colors duration-300 group-hover:text-gold-100 sm:text-[1.75rem]">
+                        {hall.title}
+                      </h2>
+                      <p className="mt-3 max-w-[46ch] text-body text-sage-400">{hall.summary}</p>
+
+                      <p className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-small">
+                        <span className="inline-flex items-center gap-2 text-gold-300">
+                          مشاهدهٔ تالار
+                          <ArrowStart className="h-4 w-4 transition-transform duration-500 ease-museum group-hover:-translate-x-1.5" />
+                        </span>
+                        <span className="text-sage-600">
+                          {hall.specimenCount > 0
+                            ? `${persianNumber(hall.specimenCount)} نمونهٔ منتشرشده`
+                            : 'در حال آماده‌سازی'}
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="overflow-hidden" style={{ borderRadius: 'var(--radius-vitrine)' }}>
+                    <MuseumImage
+                      image={hall.image}
+                      alt={hall.imageAlt}
+                      sizes="(min-width: 1024px) 26rem, 92vw"
+                      ratio="16 / 10"
+                      imgClassName="transition-transform duration-[1100ms] ease-museum group-hover:scale-[1.05]"
+                      fallback={
+                        <div
+                          className="flex items-center justify-center bg-surface/40"
+                          style={{ aspectRatio: '16 / 10' }}
+                        >
+                          <span className="font-display text-[2.5rem] text-gold-500/20" aria-hidden="true">
+                            ❖
+                          </span>
+                        </div>
+                      }
+                    />
+                  </div>
                 </Link>
               </li>
             ))}
-          </ul>
+          </ol>
         ) : halls.state === 'empty' ? (
           <EmptyState
             title="تالارها هنوز منتشر نشده‌اند"

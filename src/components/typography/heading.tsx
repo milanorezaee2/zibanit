@@ -8,6 +8,8 @@ export interface HeadingProps extends Omit<ComponentProps<'h2'>, 'children'> {
   children: ReactNode;
   /** Renders the headline in the antique-gold gradient. */
   gold?: boolean;
+  /** Sets the headline in the Naskh face — reserved for editorial moments. */
+  serif?: boolean;
 }
 
 const levelStyles: Record<Level, string> = {
@@ -19,13 +21,22 @@ const levelStyles: Record<Level, string> = {
 
 const levelTags = { 1: 'h1', 2: 'h2', 3: 'h3', 4: 'h4' } as const;
 
-export function Heading({ level = 2, gold = false, className, children, ...rest }: HeadingProps) {
+export function Heading({
+  level = 2,
+  gold = false,
+  serif = false,
+  className,
+  children,
+  ...rest
+}: HeadingProps) {
   const Tag = levelTags[level];
   return (
     <Tag
       className={cn(
-        'font-display',
+        // Sans by default, matching the 1B hierarchy; Naskh is opt-in via `serif`.
+        'font-bold',
         levelStyles[level],
+        serif && 'font-display font-normal',
         // Mutually exclusive on purpose: two `color` utilities would leave the
         // winner to stylesheet order rather than to intent.
         gold ? 'text-gold-gradient' : 'text-ivory-100',

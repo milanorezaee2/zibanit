@@ -28,7 +28,7 @@ export async function FeaturedCollection() {
   const featured = await getFeaturedSpecimens(6);
 
   return (
-    <section id="featured" className="py-section" aria-labelledby="featured-heading">
+    <section id="featured" className="reveal py-section" aria-labelledby="featured-heading">
       <Container width="museum">
         <SectionHeading
           titleId="featured-heading"

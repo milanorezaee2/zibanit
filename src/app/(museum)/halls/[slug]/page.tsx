@@ -130,9 +130,11 @@ export default async function HallPage({
             >
               {hall.latinName}
             </p>
-            <h1 className="mt-4 font-display text-title text-ivory-50">{hall.title}</h1>
-            <p className="mt-6 max-w-reading text-lead text-ivory-200/90">{hall.summary}</p>
-            <p className="mt-6 text-small text-ivory-300/70">
+            <h1 className="mt-4 font-body text-hero font-bold tracking-[0.01em] text-ivory-50">
+              {hall.title}
+            </h1>
+            <p className="mt-5 max-w-[46rem] text-lead text-ivory-200/85">{hall.summary}</p>
+            <p className="mt-7 inline-flex items-center gap-2 rounded-full bg-white/[0.07] px-4 py-1.5 text-[0.78rem] text-ivory-200/80 backdrop-blur-sm">
               {hall.specimenCount > 0
                 ? `${persian(hall.specimenCount)} نمونهٔ منتشرشده در این تالار`
                 : 'این تالار هنوز نمونهٔ منتشرشده‌ای ندارد'}
@@ -147,12 +149,12 @@ export default async function HallPage({
           <Container width="museum">
             <div className="grid gap-8 lg:grid-cols-12">
               <div className="lg:col-span-3">
-                <h2 id="hall-intro" className="label-fa">
+                <h2 id="hall-intro" className="label-fa lg:sticky lg:top-24">
                   معرفی تالار
                 </h2>
               </div>
-              <div className="max-w-reading lg:col-span-8 lg:col-start-5">
-                <p className="text-body text-sage-300">{hall.description}</p>
+              <div className="max-w-[62ch] lg:col-span-8 lg:col-start-5">
+                <p className="text-[1.05rem] leading-[2.1] text-sage-300">{hall.description}</p>
               </div>
             </div>
           </Container>
@@ -163,7 +165,7 @@ export default async function HallPage({
       <section className="py-14" aria-labelledby="hall-collection">
         <Container width="museum">
           <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
-            <h2 id="hall-collection" className="font-display text-subtitle text-ivory-100">
+            <h2 id="hall-collection" className="text-subtitle font-bold text-ivory-50">
               نمونه‌های این تالار
             </h2>
             {specimens.state !== 'unavailable' && (
@@ -218,7 +220,7 @@ export default async function HallPage({
                   />
                 </div>
               ) : (
-                <ul className="mt-10 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+                <ul className="mt-10 grid gap-x-7 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
                   {specimens.items.map((specimen, index) => (
                     <li key={specimen.id}>
                       <SpecimenCard specimen={specimen} priority={index === 0} />

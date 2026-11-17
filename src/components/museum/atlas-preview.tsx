@@ -23,7 +23,7 @@ export function AtlasPreview() {
               <span className="gold-rule w-10" aria-hidden="true" />
             </p>
 
-            <h2 id="atlas-heading" className="font-display text-title text-ivory-100">
+            <h2 id="atlas-heading" className="font-bold text-title text-ivory-100">
               از دل زمین، از سراسر جهان
             </h2>
 

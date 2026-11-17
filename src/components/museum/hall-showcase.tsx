@@ -57,8 +57,10 @@ function HallCard({
       >
         {hall.latinName}
       </p>
-      <h3 className="mt-2 font-display text-subtitle text-ivory-50">{hall.title}</h3>
-      <p className="mt-3 max-w-sm text-small text-ivory-200/75">{hall.summary}</p>
+      <h3 className="mt-2 text-[1.35rem] font-bold leading-snug text-ivory-50">{hall.title}</h3>
+      <p className="mt-2.5 line-clamp-2 max-w-sm text-[0.85rem] leading-7 text-ivory-200/70">
+        {hall.summary}
+      </p>
       <span className="mt-5 inline-flex items-center gap-2 text-small text-gold-200">
         <span>مشاهدهٔ تالار</span>
         <ArrowStart className="h-4 w-4 transition-transform duration-500 ease-museum group-hover:-translate-x-1" />
@@ -95,8 +97,8 @@ function HallCard({
     return (
       <Link
         href={`/halls/${encodeURIComponent(hall.slug)}`}
-        className="group grid overflow-hidden border border-white/[0.07] bg-surface/40 transition-colors duration-500 hover:border-gold-500/25 lg:grid-cols-2"
-        style={{ borderRadius: 'var(--radius-vitrine)' }}
+        className="group grid overflow-hidden bg-surface/50 transition-colors duration-500 hover:bg-surface lg:grid-cols-2"
+        style={{ borderRadius: 'var(--radius-plinth)' }}
       >
         {image}
         <div className="flex flex-col justify-center gap-2 p-8 sm:p-12">{caption}</div>
@@ -108,17 +110,13 @@ function HallCard({
     <Link
       href={`/halls/${encodeURIComponent(hall.slug)}`}
       className="group relative block overflow-hidden"
+      style={{ borderRadius: 'var(--radius-vitrine)' }}
     >
       {image}
 
       {/* The scrim exists only where the text sits — the photograph stays legible. */}
       <div
-        className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(11,14,12,0.94),rgba(11,14,12,0.55)_38%,transparent_72%)]"
-        aria-hidden="true"
-      />
-
-      <span
-        className="pointer-events-none absolute inset-3 border border-gold-500/0 transition-colors duration-500 group-hover:border-gold-500/25"
+        className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(11,14,12,0.95),rgba(11,14,12,0.62)_34%,rgba(11,14,12,0.08)_66%,transparent_82%)] transition-opacity duration-500"
         aria-hidden="true"
       />
 
@@ -133,7 +131,7 @@ export function HallShowcase({ halls }: { halls: readonly HallSummary[] }) {
   const band = rest.find((_, index) => hallEmphasis(index + 2, halls.length) === 'band');
 
   return (
-    <section id="halls" className="py-section" aria-labelledby="halls-heading">
+    <section id="halls" className="reveal py-section" aria-labelledby="halls-heading">
       <Container width="museum">
         <SectionHeading
           titleId="halls-heading"

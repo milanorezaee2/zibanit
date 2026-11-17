@@ -144,8 +144,8 @@ export default async function SpecimenPage({ params }: { params: Promise<{ slug:
               <SpecimenGallery images={gallery} title={specimen.title} />
             ) : (
               <div
-                className="flex items-center justify-center border border-white/[0.06] bg-surface/40"
-                style={{ aspectRatio: '4 / 5' }}
+                className="flex items-center justify-center bg-surface/40"
+                style={{ aspectRatio: '4 / 5', borderRadius: 'var(--radius-vitrine)' }}
               >
                 <p className="max-w-[16rem] text-center text-small text-sage-600">
                   این نمونه هنوز عکسی ندارد. تصویر پس از ثبت در کتابخانهٔ رسانه در همین
@@ -159,7 +159,9 @@ export default async function SpecimenPage({ params }: { params: Promise<{ slug:
             <div className="lg:sticky lg:top-[calc(var(--header-height)+2rem)]">
               <p className="label-fa">نمونهٔ موزه</p>
 
-              <h1 className="mt-4 font-display text-title text-ivory-50">{specimen.title}</h1>
+              <h1 className="mt-3 font-body text-hero font-bold leading-[1.2] tracking-[0.01em] text-ivory-50">
+                {specimen.title}
+              </h1>
 
               {(specimen.scientificName ?? specimen.subtitle) && (
                 <p
@@ -174,15 +176,15 @@ export default async function SpecimenPage({ params }: { params: Promise<{ slug:
                 <p className="mt-6 text-lead text-ivory-200/90">{specimen.summary}</p>
               )}
 
-              <dl className="mt-8 space-y-3 border-t border-white/[0.07] pt-6 text-small">
+              <dl className="mt-8 divide-y divide-white/[0.06] border-y border-white/[0.06] text-[0.85rem]">
                 {classification.mineral_family && (
-                  <div className="flex items-baseline justify-between gap-4">
+                  <div className="flex items-baseline justify-between gap-4 py-3">
                     <dt className="text-sage-500">{TAXONOMY_LABELS.mineral_family.fa}</dt>
-                    <dd className="text-ivory-200">{classification.mineral_family}</dd>
+                    <dd className="text-ivory-100">{classification.mineral_family}</dd>
                   </div>
                 )}
                 {primaryOrigin && (primaryOrigin.countryName ?? primaryOrigin.region) && (
-                  <div className="flex items-baseline justify-between gap-4">
+                  <div className="flex items-baseline justify-between gap-4 py-3">
                     <dt className="text-sage-500">خاستگاه</dt>
                     <dd className="text-ivory-200">
                       {[primaryOrigin.countryName, primaryOrigin.region].filter(Boolean).join('، ')}
@@ -190,14 +192,14 @@ export default async function SpecimenPage({ params }: { params: Promise<{ slug:
                   </div>
                 )}
                 {specimen.weightCt && (
-                  <div className="flex items-baseline justify-between gap-4">
+                  <div className="flex items-baseline justify-between gap-4 py-3">
                     <dt className="text-sage-500">وزن</dt>
                     <dd className="nums text-ivory-200" dir="ltr">
                       {fa(Number(specimen.weightCt))} ct
                     </dd>
                   </div>
                 )}
-                <div className="flex items-baseline justify-between gap-4">
+                <div className="flex items-baseline justify-between gap-4 py-3">
                   <dt className="text-sage-500">شمارهٔ اموال</dt>
                   <dd className="nums text-ivory-300" dir="ltr">
                     {specimen.inventoryNo}

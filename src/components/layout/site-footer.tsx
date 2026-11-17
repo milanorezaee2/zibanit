@@ -23,7 +23,7 @@ export function SiteFooter() {
           </div>
 
           <nav aria-label="بخش‌های موزه">
-            <h2 className="mb-5 text-label tracking-[0.16em] text-gold-400 uppercase">موزه</h2>
+            <h2 className="mb-5 text-[0.8rem] font-medium text-gold-400">موزه</h2>
             <ul className="flex flex-col gap-3 text-small">
               {footerNav.map((item) => (
                 <li key={item.href}>
@@ -34,7 +34,7 @@ export function SiteFooter() {
           </nav>
 
           <div>
-            <h2 className="mb-5 text-label tracking-[0.16em] text-gold-400 uppercase">در آینده</h2>
+            <h2 className="mb-5 text-[0.8rem] font-medium text-gold-400">در آینده</h2>
             <ul className="flex flex-col gap-3 text-small">
               {footerLinks.map((link) => (
                 <li key={link.label}>
@@ -56,7 +56,7 @@ export function SiteFooter() {
           </div>
 
           <div>
-            <h2 className="mb-5 text-label tracking-[0.16em] text-gold-400 uppercase">مدیریت</h2>
+            <h2 className="mb-5 text-[0.8rem] font-medium text-gold-400">مدیریت</h2>
             <ul className="flex flex-col gap-3 text-small">
               <li>
                 <Link href="/admin" className="text-sage-400 transition-colors hover:text-gold-200">

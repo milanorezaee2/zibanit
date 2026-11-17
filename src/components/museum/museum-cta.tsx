@@ -16,7 +16,7 @@ export function MuseumCTA() {
       <Container width="reading" className="text-center">
         <GemoriaMark className="mx-auto mb-9 h-12 w-12 text-gold-500/70" weight={0.8} />
 
-        <h2 id="cta-heading" className="font-display text-title text-ivory-100">
+        <h2 id="cta-heading" className="font-bold text-title text-ivory-100">
           بازدید را از تالارها آغاز کنید
         </h2>
 
