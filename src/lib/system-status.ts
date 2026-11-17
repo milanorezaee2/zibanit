@@ -52,6 +52,34 @@ export interface SystemStatus {
 
 const APP_NAME_FA = 'گموریا';
 
+/**
+ * A one-line, log-safe description of an error.
+ *
+ * The raw object is never logged. Drizzle wraps driver failures in a `cause`
+ * chain that can hold an entire `pg.Pool` — sockets, process ids, connection
+ * parameters and buffered queries. Printing that buries the actual fault under
+ * hundreds of lines and risks putting connection details into logs and log
+ * aggregators. What an operator needs is the leaf cause and its code.
+ */
+export function describeError(error: unknown): string {
+  const parts: string[] = [];
+  let current: unknown = error;
+
+  for (let depth = 0; depth < 6 && current !== null && typeof current === 'object'; depth += 1) {
+    const candidate = current as { message?: unknown; code?: unknown; cause?: unknown };
+    const message =
+      typeof candidate.message === 'string' ? candidate.message.split('\n')[0]?.trim() : undefined;
+    const code = typeof candidate.code === 'string' ? candidate.code : undefined;
+
+    if (message && !parts.some((part) => part.startsWith(message))) {
+      parts.push(code ? `${message} [${code}]` : message);
+    }
+    current = candidate.cause;
+  }
+
+  return parts.length > 0 ? parts.join(' \u2190 ') : 'unknown error';
+}
+
 export async function getSystemStatus(): Promise<SystemStatus> {
   const env = getServerEnv();
   const checkedAt = new Date().toISOString();
@@ -98,8 +126,9 @@ export async function getSystemStatus(): Promise<SystemStatus> {
       error: schemaReady ? null : 'migrations_missing',
     };
   } catch (error) {
-    // Full detail is logged; the caller receives a category, not a stack trace.
-    console.error('[gemoria] database health check failed:', error);
+    // The caller receives a category, not a stack trace; the log receives the
+    // leaf cause and its code — never the error object (see `describeError`).
+    console.error('[gemoria] database health check failed:', describeError(error));
 
     database = {
       driver: env.database.driver,

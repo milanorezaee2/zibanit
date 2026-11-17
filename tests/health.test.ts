@@ -78,4 +78,28 @@ describe('GET /api/health', () => {
     const response = await route.GET();
     expect(response.headers.get('cache-control')).toContain('no-store');
   });
+
+  it('describes a failure in one line without dumping the driver objects', async () => {
+    const { describeError } = await import('@/lib/system-status');
+    const pool = { sockets: new Array(500).fill('x'), processID: 1234, secretKey: 99 };
+    const leaf = Object.assign(new Error('connect ECONNREFUSED 127.0.0.1:5432'), {
+      code: 'ECONNREFUSED',
+    });
+    const wrapped = Object.assign(new Error('Failed query: select 1'), { cause: leaf });
+    Object.assign(wrapped, { cause: Object.assign(leaf, { pool }) });
+
+    const described = describeError(wrapped);
+
+    expect(described).toContain('Failed query: select 1');
+    expect(described).toContain('ECONNREFUSED');
+    expect(described.length).toBeLessThan(200);
+    expect(described).not.toContain('processID');
+    expect(described).not.toContain('pool');
+  });
+
+  it('survives a non-Error value and an error with no message', async () => {
+    const { describeError } = await import('@/lib/system-status');
+    expect(describeError(undefined)).toBe('unknown error');
+    expect(describeError('boom')).toBe('unknown error');
+  });
 });
