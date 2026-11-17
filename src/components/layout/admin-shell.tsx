@@ -29,18 +29,18 @@ export function AdminSidebar({ user }: { user?: AdminIdentity }) {
   const currentPath = usePathname() ?? '/admin';
 
   return (
-    <aside className="hidden w-64 shrink-0 flex-col border-e border-white/[0.07] bg-obsidian-900/50 lg:flex">
-      <div className="border-b border-white/[0.07] px-5 py-5">
+    <aside className="hidden w-64 shrink-0 flex-col border-e border-line bg-paper-raised/50 lg:flex">
+      <div className="border-b border-line px-5 py-5">
         <Link href="/admin" aria-label="داشبورد مدیریت گموریا">
           <Wordmark size="sm" />
         </Link>
-        <p className="mt-3 text-[10.5px] tracking-[0.14em] text-sage-600">پنل مدیریت</p>
+        <p className="mt-3 text-[10.5px] tracking-[0.14em] text-ink-subtle">پنل مدیریت</p>
       </div>
 
       <nav aria-label="ناوبری پنل مدیریت" className="flex-1 overflow-y-auto px-3 py-5">
         {adminNav.map((group) => (
           <div key={group.id} className="mb-6 last:mb-0">
-            <p className="mb-2 px-2 text-[10.5px] font-medium tracking-[0.12em] text-sage-600">
+            <p className="mb-2 px-2 text-[10.5px] font-medium tracking-[0.12em] text-ink-subtle">
               {group.title}
             </p>
             <ul className="space-y-0.5">
@@ -51,7 +51,7 @@ export function AdminSidebar({ user }: { user?: AdminIdentity }) {
                   <>
                     <span className="flex-1">{item.label}</span>
                     {!item.available && (
-                      <span className="text-[9.5px] text-sage-600">{item.phase}</span>
+                      <span className="text-[9.5px] text-ink-subtle">{item.phase}</span>
                     )}
                   </>
                 );
@@ -65,8 +65,8 @@ export function AdminSidebar({ user }: { user?: AdminIdentity }) {
                         className={cn(
                           'flex items-center gap-2 rounded-lg px-2.5 py-2 text-[13px] transition-colors',
                           isActive
-                            ? 'bg-gold-400/12 text-gold-200'
-                            : 'text-ivory-300 hover:bg-white/[0.05] hover:text-ivory-100',
+                            ? 'bg-gold-400/12 text-accent'
+                            : 'text-ink-muted hover:bg-paper-raised hover:text-ink',
                         )}
                       >
                         {content}
@@ -75,7 +75,7 @@ export function AdminSidebar({ user }: { user?: AdminIdentity }) {
                       <span
                         aria-disabled="true"
                         title={`${item.description} — ${item.phase}`}
-                        className="-mx-0 flex cursor-default items-center gap-2 rounded-lg px-2.5 py-2 text-[13px] text-sage-600"
+                        className="-mx-0 flex cursor-default items-center gap-2 rounded-lg px-2.5 py-2 text-[13px] text-ink-subtle"
                       >
                         {content}
                       </span>
@@ -88,17 +88,17 @@ export function AdminSidebar({ user }: { user?: AdminIdentity }) {
         ))}
       </nav>
 
-      <div className="border-t border-white/[0.07] px-4 py-4">
+      <div className="border-t border-line px-4 py-4">
         <div className="flex items-center gap-3">
           <span
             aria-hidden="true"
-            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-gold-400/30 bg-gold-400/10 text-[11px] text-gold-200"
+            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-gold-400/30 bg-gold-400/10 text-[11px] text-accent"
           >
             {user ? user.displayName.slice(0, 2) : 'مد'}
           </span>
           <div className="min-w-0 flex-1">
-            <p className="truncate text-[12.5px] text-ivory-200">{user?.displayName ?? 'مدیر موزه'}</p>
-            <p className="truncate text-[10.5px] text-sage-600" dir="ltr">
+            <p className="truncate text-[12.5px] text-ink-muted">{user?.displayName ?? 'مدیر موزه'}</p>
+            <p className="truncate text-[10.5px] text-ink-subtle" dir="ltr">
               {user?.email ?? 'admin@gemoria.example'}
             </p>
           </div>
@@ -111,7 +111,7 @@ export function AdminSidebar({ user }: { user?: AdminIdentity }) {
         <form action={signOutAction} className="mt-3">
           <button
             type="submit"
-            className="w-full rounded-lg border border-white/[0.08] px-3 py-1.5 text-[11.5px] text-sage-400 transition-colors hover:border-gold-400/40 hover:text-gold-200"
+            className="w-full rounded-lg border border-line px-3 py-1.5 text-[11.5px] text-ink-muted transition-colors hover:border-gold-400/40 hover:text-accent"
           >
             خروج از حساب
           </button>
@@ -124,7 +124,7 @@ export function AdminSidebar({ user }: { user?: AdminIdentity }) {
 /** Mobile navigation for the dashboard: a single horizontal, scrollable row. */
 export function AdminMobileNav() {
   return (
-    <div className="border-b border-white/[0.07] bg-obsidian-900/70 lg:hidden">
+    <div className="border-b border-line bg-paper-raised/70 lg:hidden">
       <nav aria-label="ناوبری پنل مدیریت (موبایل)" className="overflow-x-auto px-4 py-2.5">
         <ul className="flex items-center gap-1.5 whitespace-nowrap">
           {adminNav.flatMap((group) => group.items).map((item) =>
@@ -132,7 +132,7 @@ export function AdminMobileNav() {
               <li key={item.id}>
                 <Link
                   href={item.href}
-                  className="rounded-full bg-gold-400/12 px-3 py-1.5 text-[12px] text-gold-200"
+                  className="rounded-full bg-gold-400/12 px-3 py-1.5 text-[12px] text-accent"
                 >
                   {item.label}
                 </Link>
@@ -141,7 +141,7 @@ export function AdminMobileNav() {
               <li key={item.id}>
                 <span
                   aria-disabled="true"
-                  className="rounded-full border border-white/[0.07] px-3 py-1.5 text-[12px] text-sage-600"
+                  className="rounded-full border border-line px-3 py-1.5 text-[12px] text-ink-subtle"
                 >
                   {item.label}
                 </span>
@@ -164,14 +164,14 @@ export function AdminTopbar({
   actions?: ReactNode;
 }) {
   return (
-    <header className="border-b border-white/[0.07] bg-obsidian-950/60 px-5 py-4 backdrop-blur-sm sm:px-8">
+    <header className="border-b border-line bg-paper/60 px-5 py-4 backdrop-blur-sm sm:px-8">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <div className="flex items-center gap-2.5">
-            <h1 className="font-display text-[19px] leading-tight text-ivory-100">{title}</h1>
+            <h1 className="font-display text-[19px] leading-tight text-ink">{title}</h1>
             <Badge tone="gold">فاز ۱B</Badge>
           </div>
-          {subtitle && <p className="mt-1 text-[12px] text-sage-500">{subtitle}</p>}
+          {subtitle && <p className="mt-1 text-[12px] text-ink-subtle">{subtitle}</p>}
         </div>
         {actions && <div className="flex items-center gap-2">{actions}</div>}
       </div>
@@ -181,7 +181,7 @@ export function AdminTopbar({
 
 export function AdminShell({ children, user }: { children: ReactNode; user?: AdminIdentity }) {
   return (
-    <div className="flex min-h-dvh bg-obsidian-950">
+    <div className="on-dark flex min-h-dvh bg-paper">
       <AdminSidebar user={user} />
       <div className="flex min-w-0 flex-1 flex-col">
         <AdminMobileNav />

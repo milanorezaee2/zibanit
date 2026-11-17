@@ -39,7 +39,7 @@ export function Heading({
         serif && 'font-display font-normal',
         // Mutually exclusive on purpose: two `color` utilities would leave the
         // winner to stylesheet order rather than to intent.
-        gold ? 'text-gold-gradient' : 'text-ivory-100',
+        gold ? 'text-gold-gradient' : 'text-ink',
         className,
       )}
       {...rest}

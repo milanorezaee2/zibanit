@@ -37,8 +37,8 @@ export default async function EncyclopediaIndexPage() {
             <span className="label-fa">دانشنامه</span>
             <span className="h-px w-10 bg-gold-500/60" aria-hidden="true" />
           </p>
-          <h1 className="font-body text-hero font-bold text-ivory-50">پنج محور برای شناخت یک کانی</h1>
-          <p className="mt-5 text-body text-sage-400">
+          <h1 className="font-body text-hero font-bold text-ink">پنج محور برای شناخت یک کانی</h1>
+          <p className="mt-5 text-body text-ink-muted">
             دانشنامهٔ موزه به‌جای فهرست کردن سنگ‌ها، پرسش‌هایی را سازمان می‌دهد که دربارهٔ
             هر کانی می‌توان پرسید. هر مقاله با منابع علمی منتشر می‌شود و به نمونه‌هایی از
             مجموعه پیوند می‌خورد که همان پدیده را نشان می‌دهند.
@@ -49,20 +49,20 @@ export default async function EncyclopediaIndexPage() {
           <h2 id="axes" className="label-fa mb-6">
             محورهای دانشنامه
           </h2>
-          <ol className="grid gap-px overflow-hidden border border-white/[0.07] bg-white/[0.07] sm:grid-cols-2 lg:grid-cols-3">
+          <ol className="grid gap-px overflow-hidden border border-line bg-paper-raised sm:grid-cols-2 lg:grid-cols-3">
             {encyclopediaTopics.map((topic, index) => (
-              <li key={topic.slug} className="bg-canvas p-6 sm:p-8">
-                <span className="nums block font-display text-[0.95rem] text-gold-500/60" aria-hidden="true">
+              <li key={topic.slug} className="bg-paper p-6 sm:p-8">
+                <span className="nums block font-display text-[0.95rem] text-accent/55" aria-hidden="true">
                   {persianNumber(index + 1)}
                 </span>
-                <h3 className="mt-3 font-display text-subtitle text-ivory-100">{topic.titleFa}</h3>
+                <h3 className="mt-3 font-display text-subtitle text-ink">{topic.titleFa}</h3>
                 <p
                   dir="ltr"
-                  className="mt-2 font-latin text-[0.72rem] tracking-[0.18em] text-sage-600 uppercase"
+                  className="mt-2 font-latin text-[0.72rem] tracking-[0.18em] text-ink-subtle uppercase"
                 >
                   {topic.titleEn}
                 </p>
-                <p className="mt-4 text-small text-sage-400">{topic.question}</p>
+                <p className="mt-4 text-small text-ink-muted">{topic.question}</p>
               </li>
             ))}
           </ol>
@@ -73,7 +73,7 @@ export default async function EncyclopediaIndexPage() {
             <h2 id="articles" className="label-fa">
               مقالات منتشرشده
             </h2>
-            <p className="text-small text-sage-600">
+            <p className="text-small text-ink-subtle">
               {articles.length > 0
                 ? `${new Intl.NumberFormat('fa-IR', { useGrouping: false }).format(articles.length)} مقاله`
                 : 'هنوز مقاله‌ای منتشر نشده است'}
@@ -104,19 +104,19 @@ export default async function EncyclopediaIndexPage() {
                         imgClassName="transition-transform duration-[1000ms] ease-museum group-hover:scale-[1.02]"
                       />
                     )}
-                    <h3 className="font-display text-subtitle text-ivory-100 group-hover:text-gold-100">
+                    <h3 className="font-display text-subtitle text-ink group-hover:text-accent">
                       {article.title}
                     </h3>
                     {article.latinTitle && (
                       <p
                         dir="ltr"
-                        className="mt-2 font-latin text-[0.72rem] tracking-[0.18em] text-gold-400/80 uppercase"
+                        className="mt-2 font-latin text-[0.72rem] tracking-[0.18em] text-accent/80 uppercase"
                       >
                         {article.latinTitle}
                       </p>
                     )}
                     {article.excerpt && (
-                      <p className="mt-3 line-clamp-3 text-small text-sage-400">{article.excerpt}</p>
+                      <p className="mt-3 line-clamp-3 text-small text-ink-muted">{article.excerpt}</p>
                     )}
                   </Link>
                 </li>

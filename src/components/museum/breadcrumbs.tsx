@@ -18,17 +18,17 @@ export interface BreadcrumbItem {
 
 export function Breadcrumbs({ items }: { items: readonly BreadcrumbItem[] }) {
   return (
-    <nav aria-label="مسیر" className="text-small text-sage-500">
+    <nav aria-label="مسیر" className="text-small text-ink-subtle">
       <ol className="flex flex-wrap items-center gap-2">
         {items.map((item, index) => (
           <li key={`${item.label}-${index}`} className="flex items-center gap-2">
             {index > 0 && <span aria-hidden="true">/</span>}
             {item.href ? (
-              <Link href={item.href} className="transition-colors hover:text-gold-200">
+              <Link href={item.href} className="transition-colors hover:text-accent">
                 {item.label}
               </Link>
             ) : (
-              <span aria-current="page" className="text-sage-300">
+              <span aria-current="page" className="text-ink-muted">
                 {item.label}
               </span>
             )}

@@ -34,7 +34,7 @@ export function Section({
       className={cn(
         variant === 'default' && 'py-16 sm:py-24',
         variant === 'band' &&
-          'border-y border-white/[0.06] bg-obsidian-900/60 py-16 sm:py-24',
+          'border-y border-line bg-paper-raised/60 py-16 sm:py-24',
         className,
       )}
     >
@@ -45,7 +45,7 @@ export function Section({
             {title && (
               <TitleTag
                 className={cn(
-                  'text-ivory-100',
+                  'text-ink',
                   titleAs === 'h1'
                     ? 'text-4xl leading-[1.3] sm:text-5xl'
                     : 'text-2xl sm:text-[2rem] leading-[1.35]',
@@ -55,7 +55,7 @@ export function Section({
               </TitleTag>
             )}
             {description && (
-              <p className="mt-4 max-w-2xl text-[15px] leading-[2] text-sage-400">{description}</p>
+              <p className="mt-4 max-w-2xl text-[15px] leading-[2] text-ink-muted">{description}</p>
             )}
           </header>
         )}

@@ -14,7 +14,7 @@ import { media } from '@/content/media.generated';
 export function DiscoveryPanel() {
   return (
     <section
-      className="relative isolate flex min-h-[70svh] items-center overflow-hidden"
+      className="on-dark relative isolate flex min-h-[70svh] items-center overflow-hidden"
       aria-labelledby="discovery-heading"
     >
       <ResponsiveImage
@@ -31,7 +31,7 @@ export function DiscoveryPanel() {
         aria-hidden="true"
       />
       <div
-        className="absolute inset-0 -z-10 bg-[radial-gradient(60%_60%_at_50%_50%,transparent,var(--color-canvas)_100%)] opacity-60"
+        className="absolute inset-0 -z-10 bg-[radial-gradient(62%_62%_at_50%_50%,transparent,#0b0e0c_100%)] opacity-70"
         aria-hidden="true"
       />
 
@@ -42,11 +42,11 @@ export function DiscoveryPanel() {
             <span className="gold-rule w-10" aria-hidden="true" />
           </p>
 
-          <h2 id="discovery-heading" className="font-bold text-title text-ivory-50">
+          <h2 id="discovery-heading" className="font-bold text-title text-ink">
             هر سنگ، سندی از زمانی که پیش از ما بوده است
           </h2>
 
-          <p className="mt-6 max-w-[32rem] text-lead text-ivory-200/85">
+          <p className="mt-6 max-w-[32rem] text-lead text-ink-muted/85">
             میلیون‌ها سال فشار، حرارت و زمان، در یک وجهِ کوچک جمع شده است. در گموریا این
             سند را می‌خوانیم، نه فقط تماشا می‌کنیم.
           </p>

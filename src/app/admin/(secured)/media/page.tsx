@@ -33,10 +33,10 @@ export default async function AdminMediaPage() {
 
       <div className="grid flex-1 gap-8 px-5 py-6 sm:px-8 lg:grid-cols-[22rem_1fr]">
         <section aria-labelledby="register-media">
-          <h2 id="register-media" className="mb-3 text-[13px] font-medium text-ivory-100">
+          <h2 id="register-media" className="mb-3 text-[13px] font-medium text-ink">
             ثبت فایل تازه
           </h2>
-          <p className="mb-5 text-[11.5px] leading-6 text-sage-600">
+          <p className="mb-5 text-[11.5px] leading-6 text-ink-subtle">
             فایل را نخست در پوشهٔ رسانهٔ عمومی قرار دهید، سپس مسیر آن را اینجا ثبت کنید.
             بارگذاری از مرورگر در این فاز انجام نمی‌شود.
           </p>
@@ -44,29 +44,29 @@ export default async function AdminMediaPage() {
         </section>
 
         <section aria-labelledby="media-list">
-          <h2 id="media-list" className="mb-3 text-[13px] font-medium text-ivory-100">
+          <h2 id="media-list" className="mb-3 text-[13px] font-medium text-ink">
             فایل‌ها
           </h2>
 
           {media.length === 0 ? (
-            <p className="border border-white/[0.08] px-5 py-8 text-[12.5px] leading-6 text-sage-500">
+            <p className="border border-line px-5 py-8 text-[12.5px] leading-6 text-ink-subtle">
               کتابخانه خالی است. تا زمانی که تصویری ثبت نشود، فرم نمونه‌ها گزینهٔ تصویری
               برای انتخاب ندارد.
             </p>
           ) : (
-            <ul className="divide-y divide-white/[0.06] border-y border-white/[0.06]">
+            <ul className="divide-y divide-line border-y border-line">
               {media.map((row) => (
                 <li key={row.id} className="flex flex-wrap items-center gap-x-4 gap-y-2 py-3">
-                  <span dir="ltr" className="min-w-0 flex-1 truncate text-[12px] text-ivory-200">
+                  <span dir="ltr" className="min-w-0 flex-1 truncate text-[12px] text-ink-muted">
                     {row.storageKey}
                   </span>
                   <Badge tone="neutral">{row.kind}</Badge>
                   {row.width && row.height && (
-                    <span dir="ltr" className="text-[11px] text-sage-600">
+                    <span dir="ltr" className="text-[11px] text-ink-subtle">
                       {row.width}×{row.height}
                     </span>
                   )}
-                  <span className="max-w-xs truncate text-[11px] text-sage-600">{row.altText ?? 'بدون متن جانشین'}</span>
+                  <span className="max-w-xs truncate text-[11px] text-ink-subtle">{row.altText ?? 'بدون متن جانشین'}</span>
                 </li>
               ))}
             </ul>

@@ -62,16 +62,26 @@ export default async function MuseumHomePage() {
 
   return (
     <>
+      {/*
+        The order changed with the light pass, and it is worth naming: the rooms
+        come first and the institution's story second.
+
+        A visitor who arrives at a museum walks into a gallery before reading the
+        wall text about the foundation. The previous order opened with an essay
+        about the museum's standards, which is the right thing to say and the
+        wrong thing to say first. `#about` still exists, so the hero's «آغاز
+        بازدید» lands on it.
+      */}
       <HeroSection hallCount={hallList.length} />
-      <EditorialSection hallCount={hallList.length} />
       <HallShowcase halls={hallList} />
 
       {/* Awaited rather than suspended: the collection is one indexed query, and a
           skeleton flashing above the fold costs more than the round trip saves. */}
       <FeaturedCollection />
 
-      <AtlasPreview />
+      <EditorialSection hallCount={hallList.length} />
       <EncyclopediaPreview />
+      <AtlasPreview />
       <DiscoveryPanel />
       <MuseumCTA />
     </>

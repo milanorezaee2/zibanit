@@ -56,13 +56,13 @@ export function DebouncedSearchField({
 
   return (
     <div>
-      <label htmlFor={id} className="mb-2 block text-[11.5px] text-sage-500">
+      <label htmlFor={id} className="mb-2 block text-[11.5px] text-ink-subtle">
         {label}
       </label>
 
       <div className="relative">
         <SearchIcon
-          className="pointer-events-none absolute inset-y-0 end-3 my-auto h-4 w-4 text-sage-600"
+          className="pointer-events-none absolute inset-y-0 end-3 my-auto h-4 w-4 text-ink-subtle"
           aria-hidden="true"
         />
         <input
@@ -75,7 +75,7 @@ export function DebouncedSearchField({
           autoComplete="off"
           enterKeyHint="search"
           aria-describedby={`${id}-status`}
-          className="h-11 w-full rounded-vitrine border border-white/12 bg-obsidian-900/70 pe-10 ps-3 text-small text-ivory-100 placeholder:text-sage-600 transition-colors hover:border-white/20 focus:border-gold-400/70 focus:outline-none focus:ring-2 focus:ring-gold-400/25"
+          className="h-11 w-full rounded-vitrine border border-line-strong bg-paper-raised/70 pe-10 ps-3 text-small text-ink placeholder:text-ink-subtle transition-colors hover:border-line-strong focus:border-gold-400/70 focus:outline-none focus:ring-2 focus:ring-gold-400/25"
           onChange={() => {
             if (timer.current) clearTimeout(timer.current);
             timer.current = setTimeout(submit, delayMs);
@@ -90,7 +90,7 @@ export function DebouncedSearchField({
         />
       </div>
 
-      <p id={`${id}-status`} aria-live="polite" className="mt-1.5 min-h-4 text-[11.5px] text-sage-600">
+      <p id={`${id}-status`} aria-live="polite" className="mt-1.5 min-h-4 text-[11.5px] text-ink-subtle">
         {pending ? 'در حال جست‌وجو…' : ''}
       </p>
     </div>

@@ -30,11 +30,11 @@ export function NavItemView({
       <span
         aria-disabled="true"
         title={item.phase ? `${item.label} — ${item.phase}` : undefined}
-        className={cn('cursor-default text-sage-600', className)}
+        className={cn('cursor-default text-ink-subtle', className)}
       >
         {item.label}
         {showPhase && item.phase && (
-          <span className="ms-1.5 align-middle text-[9.5px] text-sage-600">({item.phase})</span>
+          <span className="ms-1.5 align-middle text-[9.5px] text-ink-subtle">({item.phase})</span>
         )}
       </span>
     );
@@ -46,8 +46,8 @@ export function NavItemView({
       onClick={onNavigate}
       aria-current={current ? 'page' : undefined}
       className={cn(
-        'group relative inline-flex py-2 text-ivory-200/85 transition-colors duration-300 hover:text-gold-200',
-        current && 'text-ivory-50',
+        'group relative inline-flex py-2 text-ink-muted/85 transition-colors duration-300 hover:text-accent',
+        current && 'text-ink',
         className,
       )}
     >

@@ -56,15 +56,15 @@ function Section({
 }) {
   const id = `section-${number}`;
   return (
-    <section className="border-t border-white/[0.07] py-8" aria-labelledby={id}>
+    <section className="border-t border-line py-8" aria-labelledby={id}>
       <div className="mb-6 flex flex-wrap items-baseline gap-x-3 gap-y-1">
         <span className="nums text-[11px] text-gold-500/70" aria-hidden="true">
           {new Intl.NumberFormat('fa-IR', { minimumIntegerDigits: 2, useGrouping: false }).format(number)}
         </span>
-        <h2 id={id} className="text-[13.5px] font-medium text-ivory-100">
+        <h2 id={id} className="text-[13.5px] font-medium text-ink">
           {title}
         </h2>
-        {hint && <p className="w-full text-[11.5px] leading-6 text-sage-600">{hint}</p>}
+        {hint && <p className="w-full text-[11.5px] leading-6 text-ink-subtle">{hint}</p>}
       </div>
       {children}
     </section>
@@ -292,8 +292,8 @@ export function SpecimenForm({ mode, initial, options }: SpecimenFormProps) {
         </div>
 
         <fieldset className="mt-2">
-          <legend className="mb-2 block text-[12.5px] font-medium text-ivory-300">تالارهای نمایش</legend>
-          <p className="mb-3 text-[11.5px] text-sage-600">
+          <legend className="mb-2 block text-[12.5px] font-medium text-ink-muted">تالارهای نمایش</legend>
+          <p className="mb-3 text-[11.5px] text-ink-subtle">
             یک نمونه می‌تواند در چند تالار نمایش داده شود؛ اطلاعات آن تکرار نمی‌شود.
           </p>
           <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
@@ -302,7 +302,7 @@ export function SpecimenForm({ mode, initial, options }: SpecimenFormProps) {
               return (
                 <label
                   key={hall.code}
-                  className="flex items-center gap-2.5 rounded-lg border border-white/[0.08] px-3 py-2 text-[12.5px] text-ivory-200 hover:border-white/20"
+                  className="flex items-center gap-2.5 rounded-lg border border-line px-3 py-2 text-[12.5px] text-ink-muted hover:border-line-strong"
                 >
                   <input
                     type="checkbox"
@@ -324,8 +324,8 @@ export function SpecimenForm({ mode, initial, options }: SpecimenFormProps) {
         {Array.from({ length: 4 }, (_, index) => {
           const place = initial?.provenances[index];
           return (
-            <fieldset key={index} className="mb-5 border border-white/[0.07] p-4" style={{ borderRadius: 'var(--radius-vitrine)' }}>
-              <legend className="px-2 text-[11.5px] text-sage-500">
+            <fieldset key={index} className="mb-5 border border-line p-4" style={{ borderRadius: 'var(--radius-vitrine)' }}>
+              <legend className="px-2 text-[11.5px] text-ink-subtle">
                 محل {new Intl.NumberFormat('fa-IR', { useGrouping: false }).format(index + 1)}
                 {index === 0 && ' (اصلی)'}
               </legend>
@@ -368,7 +368,7 @@ export function SpecimenForm({ mode, initial, options }: SpecimenFormProps) {
       {/* ── 6. Media ────────────────────────────────────────────────────── */}
       <Section number={6} title="رسانه‌ها" hint="فایل‌ها پیش از ثبت در کتابخانهٔ رسانه در مسیر عمومی قرار می‌گیرند؛ این فرم به آن‌ها ارجاع می‌دهد.">
         {options.media.length === 0 ? (
-          <p className="text-[12.5px] leading-6 text-sage-500">
+          <p className="text-[12.5px] leading-6 text-ink-subtle">
             کتابخانهٔ رسانه خالی است. نخست یک تصویر را در بخش «کتابخانهٔ رسانه» ثبت کنید.
           </p>
         ) : (
@@ -385,12 +385,12 @@ export function SpecimenForm({ mode, initial, options }: SpecimenFormProps) {
             </Field>
 
             <fieldset>
-              <legend className="mb-2 block text-[12.5px] font-medium text-ivory-300">گالری</legend>
+              <legend className="mb-2 block text-[12.5px] font-medium text-ink-muted">گالری</legend>
               <div className="grid gap-2 sm:grid-cols-2">
                 {options.media.map((media) => (
                   <label
                     key={media.id}
-                    className="flex items-center gap-2.5 rounded-lg border border-white/[0.08] px-3 py-2 text-[12px] text-ivory-200 hover:border-white/20"
+                    className="flex items-center gap-2.5 rounded-lg border border-line px-3 py-2 text-[12px] text-ink-muted hover:border-line-strong"
                   >
                     <input
                       type="checkbox"
@@ -452,7 +452,7 @@ export function SpecimenForm({ mode, initial, options }: SpecimenFormProps) {
         </div>
 
         <div className="flex flex-wrap gap-6">
-          <label className="flex items-center gap-2.5 text-[12.5px] text-ivory-200">
+          <label className="flex items-center gap-2.5 text-[12.5px] text-ink-muted">
             <input
               type="checkbox"
               name="isFeatured"
@@ -461,7 +461,7 @@ export function SpecimenForm({ mode, initial, options }: SpecimenFormProps) {
             />
             نمایش در «نمونه‌های منتخب» صفحهٔ خانه
           </label>
-          <label className="flex items-center gap-2.5 text-[12.5px] text-ivory-200">
+          <label className="flex items-center gap-2.5 text-[12.5px] text-ink-muted">
             <input
               type="checkbox"
               name="isHighlight"
@@ -472,13 +472,13 @@ export function SpecimenForm({ mode, initial, options }: SpecimenFormProps) {
           </label>
         </div>
 
-        <p className="mt-4 text-[11.5px] leading-6 text-sage-600">
+        <p className="mt-4 text-[11.5px] leading-6 text-ink-subtle">
           وضعیت انتشار از این فرم تغییر نمی‌کند. پیش‌نویس پس از ذخیره، با دکمهٔ «انتشار» در
           بالای صفحه منتشر می‌شود.
         </p>
       </Section>
 
-      <div className="sticky bottom-0 -mx-5 flex flex-wrap items-center gap-3 border-t border-white/[0.08] bg-obsidian-950/95 px-5 py-4 backdrop-blur sm:-mx-8 sm:px-8">
+      <div className="sticky bottom-0 -mx-5 flex flex-wrap items-center gap-3 border-t border-line bg-paper/95 px-5 py-4 backdrop-blur sm:-mx-8 sm:px-8">
         <button
           type="submit"
           disabled={pending}
@@ -487,7 +487,7 @@ export function SpecimenForm({ mode, initial, options }: SpecimenFormProps) {
           {pending ? 'در حال ذخیره…' : mode === 'create' ? 'ثبت پیش‌نویس' : 'ذخیرهٔ تغییرات'}
         </button>
 
-        <p className="text-[11.5px] text-sage-500" aria-live="polite">
+        <p className="text-[11.5px] text-ink-subtle" aria-live="polite">
           {pending ? 'در حال ارسال به سرور…' : 'همهٔ فیلدهای علمی اختیاری‌اند.'}
         </p>
       </div>

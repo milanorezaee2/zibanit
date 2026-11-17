@@ -10,16 +10,18 @@ const base =
   'disabled:pointer-events-none disabled:opacity-40 aria-disabled:pointer-events-none aria-disabled:opacity-40';
 
 const variants: Record<ButtonVariant, string> = {
-  /* Antique gold on obsidian — the museum's only "loud" affordance, and it is
-     still a quiet one: no shadow, no gradient, no bounce. */
-  primary: 'bg-gold-500 text-obsidian-950 hover:bg-gold-400 active:bg-gold-600',
+  /* Deep emerald on paper. Gold is the museum's metal, not its wallpaper: in a
+     lit gallery a gold button competes with the objects, while the house green
+     reads as the institution speaking. `on-dark` flips these roles for panels
+     that really are dark. */
+  primary: 'bg-emerald-900 text-ivory-50 hover:bg-emerald-800 active:bg-emerald-950',
   /* The second action: an outline that only resolves on intent. */
   outline:
-    'border border-gold-500/40 text-gold-200 hover:border-gold-400/80 hover:bg-gold-500/10',
-  ghost: 'text-ivory-200 hover:bg-white/[0.05] hover:text-gold-200',
+    'border border-line-strong text-ink hover:border-ink/50 hover:bg-ink/[0.04]',
+  ghost: 'text-ink-muted hover:bg-paper-raised hover:text-ink',
   /* Inline text action with a rule that grows — used at the end of a heading row. */
   quiet:
-    'rounded-none px-0 text-gold-300 hover:text-gold-200 underline decoration-gold-500/30 decoration-1 underline-offset-[6px] hover:decoration-gold-400/70',
+    'rounded-none px-0 text-accent hover:text-ink underline decoration-accent/30 decoration-1 underline-offset-[6px] hover:decoration-accent/70',
 };
 
 const sizes: Record<ButtonSize, string> = {

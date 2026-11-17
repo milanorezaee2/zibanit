@@ -28,7 +28,7 @@ export default async function AdminHallsPage() {
       <AdminTopbar title="تالارها" subtitle="ترتیب نمایش، متن و وضعیت انتشار تالارهای موزه" />
 
       <div className="flex-1 px-5 py-6 sm:px-8">
-        <ul className="divide-y divide-white/[0.06] border-y border-white/[0.06]">
+        <ul className="divide-y divide-line border-y border-line">
           {halls.map((hall) => (
             <li key={hall.id} className="flex flex-wrap items-center gap-x-5 gap-y-3 py-4">
               <span className="nums w-6 text-[11px] text-gold-500/70">
@@ -36,16 +36,16 @@ export default async function AdminHallsPage() {
               </span>
 
               <div className="min-w-0 flex-1">
-                <Link href={`/admin/halls/${hall.id}`} className="text-[13.5px] text-ivory-100 hover:text-gold-200">
+                <Link href={`/admin/halls/${hall.id}`} className="text-[13.5px] text-ink hover:text-accent">
                   {hall.title}
                 </Link>
-                <p className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-sage-600">
+                <p className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-ink-subtle">
                   <span dir="ltr">{hall.latinName}</span>
                   <span dir="ltr">/{hall.slug}</span>
                   <span>
                     {new Intl.NumberFormat('fa-IR', { useGrouping: false }).format(hall.specimenCount)} نمونهٔ منتشرشده
                   </span>
-                  <code dir="ltr" className="text-sage-700">
+                  <code dir="ltr" className="text-ink-subtle">
                     {hall.code}
                   </code>
                 </p>
@@ -56,7 +56,7 @@ export default async function AdminHallsPage() {
               </Badge>
 
               <div className="flex items-center gap-3">
-                <Link href={`/admin/halls/${hall.id}`} className="text-[11.5px] text-gold-300 hover:text-gold-200">
+                <Link href={`/admin/halls/${hall.id}`} className="text-[11.5px] text-accent hover:text-accent">
                   ویرایش
                 </Link>
 
@@ -65,14 +65,14 @@ export default async function AdminHallsPage() {
                     <form action={moveHallAction}>
                       <input type="hidden" name="id" value={hall.id} />
                       <input type="hidden" name="direction" value="up" />
-                      <button type="submit" aria-label={`انتقال ${hall.title} به بالا`} className="text-sage-500 hover:text-ivory-200">
+                      <button type="submit" aria-label={`انتقال ${hall.title} به بالا`} className="text-ink-subtle hover:text-ink-muted">
                         ↑
                       </button>
                     </form>
                     <form action={moveHallAction}>
                       <input type="hidden" name="id" value={hall.id} />
                       <input type="hidden" name="direction" value="down" />
-                      <button type="submit" aria-label={`انتقال ${hall.title} به پایین`} className="text-sage-500 hover:text-ivory-200">
+                      <button type="submit" aria-label={`انتقال ${hall.title} به پایین`} className="text-ink-subtle hover:text-ink-muted">
                         ↓
                       </button>
                     </form>
@@ -80,7 +80,7 @@ export default async function AdminHallsPage() {
                     <form action={setHallStatusAction}>
                       <input type="hidden" name="id" value={hall.id} />
                       <input type="hidden" name="status" value={hall.status === 'published' ? 'draft' : 'published'} />
-                      <button type="submit" className="text-[11.5px] text-sage-400 hover:text-emerald-200">
+                      <button type="submit" className="text-[11.5px] text-ink-muted hover:text-emerald-200">
                         {hall.status === 'published' ? 'بستن تالار' : 'انتشار'}
                       </button>
                     </form>
@@ -91,7 +91,7 @@ export default async function AdminHallsPage() {
           ))}
         </ul>
 
-        <p className="mt-6 max-w-2xl text-[11.5px] leading-6 text-sage-600">
+        <p className="mt-6 max-w-2xl text-[11.5px] leading-6 text-ink-subtle">
           تالار بسته یا پیش‌نویس در هیچ صفحهٔ عمومی دیده نمی‌شود و نشانی آن ۴۰۴ برمی‌گرداند.
           پیوند نمونه‌ها به تالار از فرم ویرایش خود نمونه انجام می‌شود.
         </p>

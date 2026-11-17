@@ -70,18 +70,18 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
         />
 
         <header className="mt-10 max-w-reading">
-          <h1 className="font-display text-title text-ivory-50">{article.title}</h1>
+          <h1 className="font-display text-title text-ink">{article.title}</h1>
           {article.latinTitle && (
             <p
               dir="ltr"
-              className="mt-4 font-latin text-[0.95rem] tracking-[0.16em] text-gold-300/90 uppercase"
+              className="mt-4 font-latin text-[0.95rem] tracking-[0.16em] text-accent/90 uppercase"
             >
               {article.latinTitle}
             </p>
           )}
-          {article.excerpt && <p className="mt-6 text-lead text-ivory-200/90">{article.excerpt}</p>}
+          {article.excerpt && <p className="mt-6 text-lead text-ink-muted/90">{article.excerpt}</p>}
           {article.publishedAt && (
-            <p className="mt-6 text-small text-sage-600">
+            <p className="mt-6 text-small text-ink-subtle">
               انتشار:{' '}
               <time dateTime={article.publishedAt} className="nums">
                 {new Intl.DateTimeFormat('fa-IR', { dateStyle: 'long' }).format(
@@ -114,27 +114,27 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                 ))}
               </Prose>
             ) : (
-              <p className="text-body text-sage-500">متن این مقاله هنوز ثبت نشده است.</p>
+              <p className="text-body text-ink-subtle">متن این مقاله هنوز ثبت نشده است.</p>
             )}
 
             {article.sources.length > 0 && (
-              <section className="mt-14 border-t border-white/[0.07] pt-8" aria-labelledby="sources">
+              <section className="mt-14 border-t border-line pt-8" aria-labelledby="sources">
                 <h2 id="sources" className="label-fa mb-4">
                   منابع
                 </h2>
-                <ol className="space-y-3 text-small text-sage-400">
+                <ol className="space-y-3 text-small text-ink-muted">
                   {article.sources.map((source) => (
                     <li key={source.id} className="flex flex-wrap items-baseline gap-2">
                       <span>{source.title}</span>
-                      {source.publisher && <span className="text-sage-600">— {source.publisher}</span>}
-                      {source.year && <span className="nums text-sage-600">({source.year})</span>}
+                      {source.publisher && <span className="text-ink-subtle">— {source.publisher}</span>}
+                      {source.year && <span className="nums text-ink-subtle">({source.year})</span>}
                       {source.url && (
                         <a
                           href={source.url}
                           rel="noopener noreferrer nofollow"
                           target="_blank"
                           dir="ltr"
-                          className="text-gold-300 underline decoration-gold-500/30 underline-offset-4 hover:text-gold-200"
+                          className="text-accent underline decoration-gold-500/30 underline-offset-4 hover:text-accent"
                         >
                           پیوند
                           <span className="sr-only"> (در پنجرهٔ تازه)</span>
@@ -182,13 +182,13 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                         />
                       )}
                       <span className="min-w-0">
-                        <span className="block font-display text-subtitle text-ivory-100 group-hover:text-gold-100">
+                        <span className="block font-display text-subtitle text-ink group-hover:text-accent">
                           {specimen.title}
                         </span>
                         {specimen.subtitle && (
                           <span
                             dir="ltr"
-                            className="mt-1 block font-latin text-[0.7rem] tracking-[0.14em] text-gold-400/70 uppercase"
+                            className="mt-1 block font-latin text-[0.7rem] tracking-[0.14em] text-accent/70 uppercase"
                           >
                             {specimen.subtitle}
                           </span>

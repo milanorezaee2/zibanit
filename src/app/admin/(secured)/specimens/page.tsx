@@ -65,7 +65,7 @@ export default async function AdminSpecimensPage({
       <div className="flex-1 px-5 py-6 sm:px-8">
         <form method="get" className="mb-6 flex flex-wrap items-end gap-3">
           <div>
-            <label htmlFor="q" className="mb-1.5 block text-[11.5px] text-sage-500">
+            <label htmlFor="q" className="mb-1.5 block text-[11.5px] text-ink-subtle">
               جست‌وجو
             </label>
             <input
@@ -74,19 +74,19 @@ export default async function AdminSpecimensPage({
               type="search"
               defaultValue={params.q ?? ''}
               placeholder="شمارهٔ اموال، نام یا نشانی"
-              className="h-9 w-56 rounded-lg border border-white/12 bg-obsidian-900/70 px-3 text-[12.5px] text-ivory-100"
+              className="h-9 w-56 rounded-lg border border-line-strong bg-paper-raised/70 px-3 text-[12.5px] text-ink"
             />
           </div>
 
           <div>
-            <label htmlFor="status" className="mb-1.5 block text-[11.5px] text-sage-500">
+            <label htmlFor="status" className="mb-1.5 block text-[11.5px] text-ink-subtle">
               وضعیت
             </label>
             <select
               id="status"
               name="status"
               defaultValue={params.status ?? 'all'}
-              className="h-9 rounded-lg border border-white/12 bg-obsidian-900/70 px-3 text-[12.5px] text-ivory-100"
+              className="h-9 rounded-lg border border-line-strong bg-paper-raised/70 px-3 text-[12.5px] text-ink"
             >
               <option value="all">همه</option>
               <option value="draft">پیش‌نویس</option>
@@ -97,16 +97,16 @@ export default async function AdminSpecimensPage({
 
           <button
             type="submit"
-            className="h-9 rounded-lg border border-white/15 px-4 text-[12.5px] text-ivory-200 transition-colors hover:border-gold-400/50"
+            className="h-9 rounded-lg border border-line-strong px-4 text-[12.5px] text-ink-muted transition-colors hover:border-gold-400/50"
           >
             اعمال
           </button>
         </form>
 
         {list.items.length === 0 ? (
-          <div className="border border-white/[0.08] px-6 py-16 text-center">
-            <p className="font-display text-[1.15rem] text-ivory-100">هیچ رکوردی یافت نشد</p>
-            <p className="mx-auto mt-3 max-w-md text-[12.5px] leading-6 text-sage-500">
+          <div className="border border-line px-6 py-16 text-center">
+            <p className="font-display text-[1.15rem] text-ink">هیچ رکوردی یافت نشد</p>
+            <p className="mx-auto mt-3 max-w-md text-[12.5px] leading-6 text-ink-subtle">
               {params.q || params.status
                 ? 'با این شرط‌ها رکوردی وجود ندارد.'
                 : canWrite
@@ -119,7 +119,7 @@ export default async function AdminSpecimensPage({
             <table className="w-full min-w-[52rem] border-collapse text-[12.5px]">
               <caption className="sr-only">فهرست اشیای موزه</caption>
               <thead>
-                <tr className="border-b border-white/[0.08] text-start text-[11px] text-sage-600">
+                <tr className="border-b border-line text-start text-[11px] text-ink-subtle">
                   <th scope="col" className="py-2.5 pe-4 text-start font-normal">شمارهٔ اموال</th>
                   <th scope="col" className="py-2.5 pe-4 text-start font-normal">نام</th>
                   <th scope="col" className="py-2.5 pe-4 text-start font-normal">وضعیت</th>
@@ -129,18 +129,18 @@ export default async function AdminSpecimensPage({
               </thead>
               <tbody>
                 {list.items.map((row) => (
-                  <tr key={row.id} className="border-b border-white/[0.05] align-middle">
+                  <tr key={row.id} className="border-b border-line align-middle">
                     <td className="py-3 pe-4">
-                      <span dir="ltr" className="text-ivory-300">
+                      <span dir="ltr" className="text-ink-muted">
                         {row.inventoryNo}
                       </span>
                     </td>
                     <td className="py-3 pe-4">
-                      <Link href={`/admin/specimens/${row.id}`} className="text-ivory-100 hover:text-gold-200">
+                      <Link href={`/admin/specimens/${row.id}`} className="text-ink hover:text-accent">
                         {row.title ?? '— بدون ترجمه —'}
                       </Link>
                       {row.deletedAt && (
-                        <span className="ms-2 text-[10.5px] text-sage-600">حذف‌شده</span>
+                        <span className="ms-2 text-[10.5px] text-ink-subtle">حذف‌شده</span>
                       )}
                     </td>
                     <td className="py-3 pe-4">
@@ -148,14 +148,14 @@ export default async function AdminSpecimensPage({
                         {STATUS_LABELS[row.status] ?? row.status}
                       </Badge>
                     </td>
-                    <td className="py-3 pe-4 text-sage-500">
+                    <td className="py-3 pe-4 text-ink-subtle">
                       {new Date(row.updatedAt).toLocaleString('fa-IR')}
                     </td>
                     <td className="py-3">
                       <div className="flex flex-wrap items-center gap-2">
                         <Link
                           href={`/admin/specimens/${row.id}`}
-                          className="text-[11.5px] text-gold-300 hover:text-gold-200"
+                          className="text-[11.5px] text-accent hover:text-accent"
                         >
                           ویرایش
                         </Link>
@@ -174,7 +174,7 @@ export default async function AdminSpecimensPage({
                           <form action={setSpecimenStatusAction}>
                             <input type="hidden" name="id" value={row.id} />
                             <input type="hidden" name="status" value="draft" />
-                            <button type="submit" className="text-[11.5px] text-sage-400 hover:text-ivory-200">
+                            <button type="submit" className="text-[11.5px] text-ink-muted hover:text-ink-muted">
                               خارج کردن از انتشار
                             </button>
                           </form>
@@ -183,7 +183,7 @@ export default async function AdminSpecimensPage({
                         {row.slug && row.status === 'published' && (
                           <Link
                             href={`/specimens/${encodeURIComponent(row.slug)}`}
-                            className="text-[11.5px] text-sage-500 hover:text-gold-200"
+                            className="text-[11.5px] text-ink-subtle hover:text-accent"
                           >
                             صفحهٔ عمومی
                           </Link>
@@ -210,8 +210,8 @@ export default async function AdminSpecimensPage({
                 aria-current={number === list.page ? 'page' : undefined}
                 className={
                   number === list.page
-                    ? 'rounded-md bg-gold-400/15 px-2.5 py-1 text-gold-200'
-                    : 'rounded-md px-2.5 py-1 text-sage-500 hover:text-ivory-200'
+                    ? 'rounded-md bg-gold-400/15 px-2.5 py-1 text-accent'
+                    : 'rounded-md px-2.5 py-1 text-ink-subtle hover:text-ink-muted'
                 }
               >
                 {fa(number)}

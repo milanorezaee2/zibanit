@@ -24,21 +24,21 @@ export function EmptyState({ title, description, note, action, className }: Empt
       className={cn(
         // A rule, not a box. An empty gallery is a statement, and a statement does
         // not need a frame around it.
-        'border-y border-white/[0.08] px-2 py-16 text-center sm:py-20',
+        'border-y border-line px-2 py-16 text-center sm:py-20',
         className,
       )}
     >
       <div className="relative mx-auto max-w-[46rem]">
-        <span className="mx-auto mb-6 block h-8 w-8 text-gold-500/50" aria-hidden="true">
+        <span className="mx-auto mb-6 block h-8 w-8 text-accent/45" aria-hidden="true">
           <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="1">
             <path d="M20 3 L34 12 V28 L20 37 L6 28 V12 Z" />
             <path d="M20 3 V37 M6 12 L34 28 M34 12 L6 28" strokeOpacity="0.35" />
           </svg>
         </span>
 
-        <h3 className="text-[1.3rem] font-bold leading-snug text-ivory-50">{title}</h3>
-        <p className="mx-auto mt-3 max-w-[44ch] text-body text-sage-400">{description}</p>
-        {note && <p className="mt-5 text-small text-sage-600">{note}</p>}
+        <h3 className="text-[1.3rem] font-bold leading-snug text-ink">{title}</h3>
+        <p className="mx-auto mt-3 max-w-[44ch] text-body text-ink-muted">{description}</p>
+        {note && <p className="mt-5 text-small text-ink-subtle">{note}</p>}
         {action && <div className="mt-8 flex justify-center">{action}</div>}
       </div>
     </div>

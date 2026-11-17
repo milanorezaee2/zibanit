@@ -52,7 +52,7 @@ export function SiteHeader() {
       className={cn(
         'fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-500 ease-museum',
         scrolled
-          ? 'border-b border-white/[0.06] bg-canvas/72 backdrop-blur-xl'
+          ? 'border-b border-line bg-paper/72 backdrop-blur-xl'
           : 'border-b border-transparent bg-transparent',
       )}
     >
@@ -86,7 +86,7 @@ export function SiteHeader() {
 
         <div className="flex items-center gap-1">
           <HeaderSearch />
-          <span className="mx-1 hidden h-4 w-px bg-white/10 lg:block" aria-hidden="true" />
+          <span className="mx-1 hidden h-4 w-px bg-line lg:block" aria-hidden="true" />
           <MobileNav />
         </div>
       </Container>

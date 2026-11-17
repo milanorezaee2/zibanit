@@ -33,11 +33,11 @@ export function EditorialSection({ hallCount }: { hallCount: number }) {
               <span className="gold-rule w-10" aria-hidden="true" />
             </p>
 
-            <h2 id="about-heading" className="font-bold text-title text-ivory-100">
+            <h2 id="about-heading" className="font-bold text-title text-ink">
               موزه‌ای برای شناختن، نه برای خریدن
             </h2>
 
-            <div className="mt-8 space-y-6 text-body text-sage-300">
+            <div className="mt-8 space-y-6 text-body text-ink-muted">
               <p>
                 گموریا یک گالری تصویر نیست. هر شیء در این موزه با همان دقتی ثبت می‌شود که
                 در یک موزهٔ طبیعی به کار می‌رود: نام علمی، خاستگاه، ترکیب و ویژگی‌هایی که
@@ -50,15 +50,15 @@ export function EditorialSection({ hallCount }: { hallCount: number }) {
               </p>
             </div>
 
-            <dl className="mt-12 grid max-w-md grid-cols-3 gap-6 border-t border-white/[0.07] pt-7">
+            <dl className="mt-12 grid max-w-md grid-cols-3 gap-6 border-t border-line pt-7">
               {facts.map((fact) => (
                 <div key={fact.label}>
                   <dt className="sr-only">{fact.label}</dt>
                   <dd>
-                    <span className="block font-display text-[1.9rem] leading-none text-gold-300 nums">
+                    <span className="block font-display text-[1.9rem] leading-none text-accent nums">
                       {fact.value}
                     </span>
-                    <span className="mt-2 block text-small text-sage-500">{fact.label}</span>
+                    <span className="mt-2 block text-small text-ink-subtle">{fact.label}</span>
                   </dd>
                 </div>
               ))}
@@ -73,7 +73,7 @@ export function EditorialSection({ hallCount }: { hallCount: number }) {
               ratio="4 / 5"
               className="shadow-plinth"
             />
-            <p className="mt-4 text-small text-sage-600">
+            <p className="mt-4 text-small text-ink-subtle">
               ویترین موزه — تصویر جایگزین تا زمان ثبت عکس‌های اصلی مجموعه.
             </p>
           </div>

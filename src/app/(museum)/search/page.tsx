@@ -66,8 +66,8 @@ export default async function SearchPage({
             <span className="label-fa">جست‌وجو</span>
             <span className="h-px w-10 bg-gold-500/60" aria-hidden="true" />
           </p>
-          <h1 className="font-body text-hero font-bold text-ivory-50">کاوش در مجموعه</h1>
-          <p className="mt-5 text-body text-sage-400">
+          <h1 className="font-body text-hero font-bold text-ink">کاوش در مجموعه</h1>
+          <p className="mt-5 text-body text-ink-muted">
             جست‌وجو روی نام فارسی، نام علمی، خانوادهٔ کانی‌شناسی، فرمول شیمیایی و خاستگاه
             جغرافیایی انجام می‌شود. حروف عربی و فارسی، نیم‌فاصله و اعداد فارسی پیش از
             جست‌وجو یکسان‌سازی می‌شوند.
@@ -77,7 +77,7 @@ export default async function SearchPage({
         <CollectionControls action="/search" options={options} current={query} debounce />
 
         <div className="mt-8 flex flex-wrap items-baseline justify-between gap-3">
-          <h2 className="font-display text-subtitle text-ivory-100">
+          <h2 className="font-display text-subtitle text-ink">
             {normalized ? `نتایج برای «${query.q}»` : 'همهٔ نمونه‌های منتشرشده'}
           </h2>
           {results.state !== 'unavailable' && (
@@ -133,7 +133,7 @@ export default async function SearchPage({
               className="mt-14"
             />
 
-            <p className="mt-6 text-center text-[11.5px] text-sage-600">
+            <p className="mt-6 text-center text-[11.5px] text-ink-subtle">
               {persian(results.total)} نمونه در {persian(results.pageCount)} صفحه — هر صفحه
               {persian(results.pageSize)} نمونه.
             </p>

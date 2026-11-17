@@ -43,7 +43,7 @@ export function MobileNav() {
         aria-expanded={open}
         aria-controls="mobile-navigation"
         aria-label="باز کردن منو"
-        className="inline-flex h-10 w-10 items-center justify-center text-ivory-200 transition-colors hover:text-gold-200 lg:hidden"
+        className="inline-flex h-10 w-10 items-center justify-center text-ink-muted transition-colors hover:text-accent lg:hidden"
       >
         <MenuIcon className="h-5 w-5" />
       </button>
@@ -60,17 +60,17 @@ export function MobileNav() {
             type="button"
             aria-label="بستن منو"
             onClick={() => setOpen(false)}
-            className="absolute inset-0 h-full w-full cursor-default bg-obsidian-950/85 backdrop-blur-sm"
+            className="absolute inset-0 h-full w-full cursor-default bg-paper/85 backdrop-blur-sm"
           />
 
-          <div className="absolute inset-y-0 end-0 flex w-[min(22rem,92vw)] flex-col border-s border-white/10 bg-obsidian-900">
-            <div className="flex items-center justify-between border-b border-white/[0.07] px-6 py-4">
+          <div className="absolute inset-y-0 end-0 flex w-[min(22rem,92vw)] flex-col border-s border-line-strong bg-paper-raised">
+            <div className="flex items-center justify-between border-b border-line px-6 py-4">
               <Lockup href="/" size="sm" />
               <button
                 type="button"
                 onClick={() => setOpen(false)}
                 aria-label="بستن منو"
-                className="inline-flex h-10 w-10 items-center justify-center text-ivory-200"
+                className="inline-flex h-10 w-10 items-center justify-center text-ink-muted"
               >
                 <CloseIcon className="h-5 w-5" />
               </button>
@@ -81,21 +81,21 @@ export function MobileNav() {
                 {publicNav.map((item) => (
                   <li
                     key={item.href}
-                    className="border-b border-white/[0.05] py-3.5 text-[1.05rem] last:border-0"
+                    className="border-b border-line py-3.5 text-[1.05rem] last:border-0"
                   >
                     <NavItemView item={item} onNavigate={() => setOpen(false)} showPhase />
                   </li>
                 ))}
               </ul>
 
-              <p className="mt-10 mb-3 text-label tracking-[0.16em] text-sage-600 uppercase">بیشتر</p>
+              <p className="mt-10 mb-3 text-label tracking-[0.16em] text-ink-subtle uppercase">بیشتر</p>
               <ul className="flex flex-col gap-3 text-small">
                 {footerNav.slice(1, 3).map((item) => (
                   <li key={item.href}>
                     <Link
                       href={item.href}
                       onClick={() => setOpen(false)}
-                      className="text-sage-400 transition-colors hover:text-gold-200"
+                      className="text-ink-muted transition-colors hover:text-accent"
                     >
                       {item.label}
                     </Link>
@@ -105,7 +105,7 @@ export function MobileNav() {
                   <Link
                     href="/admin"
                     onClick={() => setOpen(false)}
-                    className="text-sage-400 transition-colors hover:text-gold-200"
+                    className="text-ink-muted transition-colors hover:text-accent"
                   >
                     پنل مدیریت
                   </Link>
@@ -113,8 +113,8 @@ export function MobileNav() {
               </ul>
             </nav>
 
-            <div className="border-t border-white/[0.07] px-6 py-5">
-              <p className="flex items-center gap-2 text-small text-sage-600">
+            <div className="border-t border-line px-6 py-5">
+              <p className="flex items-center gap-2 text-small text-ink-subtle">
                 <SearchIcon className="h-3.5 w-3.5" />
                 جست‌وجو در نوار بالای صفحه
               </p>

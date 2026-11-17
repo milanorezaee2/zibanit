@@ -44,12 +44,12 @@ export function Pagination({ page, pageCount, hrefFor, className }: PaginationPr
         <Link
           href={hrefFor(page - 1)}
           rel="prev"
-          className={cn(base, 'border-white/12 text-sage-300 hover:border-gold-500/40 hover:text-gold-200')}
+          className={cn(base, 'border-line-strong text-ink-muted hover:border-gold-500/40 hover:text-accent')}
         >
           پیشین
         </Link>
       ) : (
-        <span aria-disabled="true" className={cn(base, 'border-white/[0.06] text-sage-700')}>
+        <span aria-disabled="true" className={cn(base, 'border-line text-ink-subtle')}>
           پیشین
         </span>
       )}
@@ -60,7 +60,7 @@ export function Pagination({ page, pageCount, hrefFor, className }: PaginationPr
             {number === page ? (
               <span
                 aria-current="page"
-                className={cn(base, 'border-gold-500/50 bg-gold-500/10 text-gold-200')}
+                className={cn(base, 'border-gold-500/50 bg-gold-500/10 text-accent')}
               >
                 {persian(number)}
               </span>
@@ -69,7 +69,7 @@ export function Pagination({ page, pageCount, hrefFor, className }: PaginationPr
                 href={hrefFor(number)}
                 className={cn(
                   base,
-                  'border-white/12 text-sage-300 hover:border-gold-500/40 hover:text-gold-200',
+                  'border-line-strong text-ink-muted hover:border-gold-500/40 hover:text-accent',
                 )}
                 aria-label={`صفحهٔ ${persian(number)}`}
               >
@@ -84,12 +84,12 @@ export function Pagination({ page, pageCount, hrefFor, className }: PaginationPr
         <Link
           href={hrefFor(page + 1)}
           rel="next"
-          className={cn(base, 'border-white/12 text-sage-300 hover:border-gold-500/40 hover:text-gold-200')}
+          className={cn(base, 'border-line-strong text-ink-muted hover:border-gold-500/40 hover:text-accent')}
         >
           بعدی
         </Link>
       ) : (
-        <span aria-disabled="true" className={cn(base, 'border-white/[0.06] text-sage-700')}>
+        <span aria-disabled="true" className={cn(base, 'border-line text-ink-subtle')}>
           بعدی
         </span>
       )}
@@ -115,7 +115,7 @@ export function ResultSummary({
   const to = Math.min(page * pageSize, total);
 
   return (
-    <p className="text-small text-sage-500" aria-live="polite">
+    <p className="text-small text-ink-subtle" aria-live="polite">
       نمایش {persian(from)}–{persian(to)} از {persian(total)} {noun}
     </p>
   );

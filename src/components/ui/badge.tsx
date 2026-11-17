@@ -4,10 +4,10 @@ import { cn } from '@/lib/cn';
 export type BadgeTone = 'gold' | 'emerald' | 'neutral' | 'muted';
 
 const tones: Record<BadgeTone, string> = {
-  gold: 'border-gold-400/40 bg-gold-400/10 text-gold-200',
+  gold: 'border-gold-400/40 bg-gold-400/10 text-accent',
   emerald: 'border-emerald-400/35 bg-emerald-500/12 text-emerald-200',
-  neutral: 'border-white/12 bg-white/[0.05] text-ivory-300',
-  muted: 'border-dashed border-white/12 bg-transparent text-sage-500',
+  neutral: 'border-line-strong bg-paper-raised text-ink-muted',
+  muted: 'border-dashed border-line-strong bg-transparent text-ink-subtle',
 };
 
 export interface BadgeProps extends ComponentProps<'span'> {

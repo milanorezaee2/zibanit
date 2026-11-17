@@ -18,19 +18,19 @@ export default function SearchLoading() {
     <div className="pt-[calc(var(--header-height)+3.5rem)] pb-section" aria-busy="true">
       <Container width="museum">
         <p className="label-fa mb-5">جست‌وجو</p>
-        <p aria-hidden="true" className="font-display text-title text-ivory-500/60">
+        <p aria-hidden="true" className="font-display text-title text-ink0/60">
           کاوش در مجموعه
         </p>
-        <p className="mt-4 text-body text-sage-500" role="status">
+        <p className="mt-4 text-body text-ink-subtle" role="status">
           در حال جست‌وجو در مجموعه…
         </p>
 
         <div className="mt-10 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3" aria-hidden="true">
           {Array.from({ length: 6 }, (_, index) => (
             <div key={index}>
-              <div className="bg-surface/40" style={{ aspectRatio: '4 / 5' }} />
-              <div className="mt-6 h-4 w-2/3 bg-surface/40" />
-              <div className="mt-3 h-3 w-1/3 bg-surface/30" />
+              <div className="bg-paper-raised/40" style={{ aspectRatio: '4 / 5' }} />
+              <div className="mt-6 h-4 w-2/3 bg-paper-raised/40" />
+              <div className="mt-3 h-3 w-1/3 bg-paper-raised/30" />
             </div>
           ))}
         </div>

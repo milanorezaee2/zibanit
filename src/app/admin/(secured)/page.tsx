@@ -66,7 +66,7 @@ export default async function AdminDashboardPage() {
         </div>
 
         <section aria-labelledby="system-status" className="mb-8">
-          <h2 id="system-status" className="mb-3 text-[12px] font-medium text-sage-500">
+          <h2 id="system-status" className="mb-3 text-[12px] font-medium text-ink-subtle">
             پایگاه داده
           </h2>
 
@@ -108,7 +108,7 @@ export default async function AdminDashboardPage() {
               <Badge tone="muted">فاز بعدی</Badge>
             </CardHeader>
             <CardBody>
-              <ul className="space-y-3 text-[13px] leading-7 text-sage-300">
+              <ul className="space-y-3 text-[13px] leading-7 text-ink-muted">
                 {[
                   'ورود مدیر با Argon2id، نشست امن و TOTP',
                   'ماتریس نقش‌ها و مجوزها روی جدول‌های آمادهٔ همین فاز',
@@ -131,29 +131,29 @@ export default async function AdminDashboardPage() {
             </CardHeader>
             <CardBody>
               <dl className="space-y-3 text-[12.5px]">
-                <div className="flex items-baseline justify-between gap-3 border-b border-white/[0.05] pb-2.5">
-                  <dt className="text-sage-500">نسخهٔ برنامه</dt>
-                  <dd className="nums text-ivory-200">{application.version}</dd>
+                <div className="flex items-baseline justify-between gap-3 border-b border-line pb-2.5">
+                  <dt className="text-ink-subtle">نسخهٔ برنامه</dt>
+                  <dd className="nums text-ink-muted">{application.version}</dd>
                 </div>
-                <div className="flex items-baseline justify-between gap-3 border-b border-white/[0.05] pb-2.5">
-                  <dt className="text-sage-500">فاز</dt>
-                  <dd className="text-ivory-200">
+                <div className="flex items-baseline justify-between gap-3 border-b border-line pb-2.5">
+                  <dt className="text-ink-subtle">فاز</dt>
+                  <dd className="text-ink-muted">
                     {APP_PHASE.number} — {APP_PHASE.name}
                   </dd>
                 </div>
-                <div className="flex items-baseline justify-between gap-3 border-b border-white/[0.05] pb-2.5">
-                  <dt className="text-sage-500">محیط</dt>
-                  <dd className="text-ivory-200">{application.environment}</dd>
+                <div className="flex items-baseline justify-between gap-3 border-b border-line pb-2.5">
+                  <dt className="text-ink-subtle">محیط</dt>
+                  <dd className="text-ink-muted">{application.environment}</dd>
                 </div>
                 <div className="flex items-baseline justify-between gap-3">
-                  <dt className="text-sage-500">بررسی</dt>
-                  <dd className="nums text-sage-400">{status.checkedAt}</dd>
+                  <dt className="text-ink-subtle">بررسی</dt>
+                  <dd className="nums text-ink-muted">{status.checkedAt}</dd>
                 </div>
               </dl>
 
-              <p className="mt-5 border-t border-white/[0.06] pt-4 text-[11.5px] leading-6 text-sage-600">
+              <p className="mt-5 border-t border-line pt-4 text-[11.5px] leading-6 text-ink-subtle">
                 نسخهٔ {APP_VERSION} · برای دیدن خروجی خام:{' '}
-                <Link href="/api/health" className="text-gold-300 underline underline-offset-4">
+                <Link href="/api/health" className="text-accent underline underline-offset-4">
                   /api/health
                 </Link>
               </p>

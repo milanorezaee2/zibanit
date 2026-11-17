@@ -88,7 +88,7 @@ export function HallForm({ initial }: { initial: AdminHallFields }) {
         </Field>
       </div>
 
-      <label className="mb-6 flex items-center gap-2.5 text-[12.5px] text-ivory-200">
+      <label className="mb-6 flex items-center gap-2.5 text-[12.5px] text-ink-muted">
         <input type="checkbox" name="isFeatured" defaultChecked={initial.isFeatured} className="h-4 w-4 accent-[var(--color-gold-500)]" />
         نمایش در بخش تالارهای برگزیدهٔ صفحهٔ خانه
       </label>
@@ -101,7 +101,7 @@ export function HallForm({ initial }: { initial: AdminHallFields }) {
         >
           {pending ? 'در حال ذخیره…' : 'ذخیرهٔ تغییرات'}
         </button>
-        <p className="text-[11.5px] text-sage-500" aria-live="polite">
+        <p className="text-[11.5px] text-ink-subtle" aria-live="polite">
           {pending ? 'در حال ارسال…' : 'انتشار تالار از فهرست تالارها انجام می‌شود.'}
         </p>
       </div>

@@ -80,7 +80,7 @@ export function ScientificRecord({ specimen }: { specimen: SpecimenDetail }) {
 
   if (rows.length === 0) {
     return (
-      <p className="border-s-2 border-gold-500/30 ps-5 text-body text-sage-400">
+      <p className="border-s-2 border-gold-500/30 ps-5 text-body text-ink-muted">
         هیچ ویژگی علمی برای این نمونه ثبت نشده است. موزه مقدار پیش‌فرض یا برآوردی جای خالی
         نمی‌گذارد؛ هر عددی که در این جدول دیده شود، ثبت‌شده است.
       </p>
@@ -88,15 +88,15 @@ export function ScientificRecord({ specimen }: { specimen: SpecimenDetail }) {
   }
 
   return (
-    <dl className="divide-y divide-white/[0.07] border-y border-white/[0.07]">
+    <dl className="divide-y divide-line border-y border-line">
       {rows.map((row) => (
         <div key={row.key} className="grid grid-cols-1 gap-1 py-4 sm:grid-cols-12 sm:gap-6">
-          <dt className="text-small text-sage-500 sm:col-span-4">{row.label}</dt>
+          <dt className="text-small text-ink-subtle sm:col-span-4">{row.label}</dt>
           <dd
             className={
               row.numeric
-                ? 'nums text-body text-ivory-200 sm:col-span-8'
-                : 'text-body text-ivory-200 sm:col-span-8'
+                ? 'nums text-body text-ink-muted sm:col-span-8'
+                : 'text-body text-ink-muted sm:col-span-8'
             }
             {...(row.numeric ? { dir: 'ltr' } : {})}
             style={row.numeric ? { textAlign: 'start' } : undefined}

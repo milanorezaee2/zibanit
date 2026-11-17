@@ -57,7 +57,7 @@ export function SectionHeading({
       >
         <h2
           id={titleId}
-          className="max-w-[26ch] font-body text-title font-bold text-ivory-50"
+          className="max-w-[26ch] font-body text-title font-bold text-ink"
         >
           {title}
         </h2>
@@ -67,7 +67,7 @@ export function SectionHeading({
       {description && (
         <p
           className={cn(
-            'mt-4 max-w-[52ch] text-body text-sage-400',
+            'mt-4 max-w-[52ch] text-body text-ink-muted',
             align === 'center' && 'mx-auto',
           )}
         >

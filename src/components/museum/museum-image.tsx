@@ -48,7 +48,7 @@ export function MuseumImage({
   if (!image) {
     return (
       <div
-        className={cn('relative overflow-hidden bg-obsidian-850', className)}
+        className={cn('relative overflow-hidden bg-paper-raised', className)}
         style={aspect ? { aspectRatio: aspect } : undefined}
       >
         {fallback}
@@ -58,7 +58,7 @@ export function MuseumImage({
 
   return (
     <div
-      className={cn('relative overflow-hidden bg-obsidian-850', className)}
+      className={cn('relative overflow-hidden bg-paper-raised', className)}
       style={aspect ? { aspectRatio: aspect } : undefined}
     >
       <Image

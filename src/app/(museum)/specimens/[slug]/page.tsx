@@ -144,10 +144,10 @@ export default async function SpecimenPage({ params }: { params: Promise<{ slug:
               <SpecimenGallery images={gallery} title={specimen.title} />
             ) : (
               <div
-                className="flex items-center justify-center bg-surface/40"
+                className="flex items-center justify-center bg-paper-raised/40"
                 style={{ aspectRatio: '4 / 5', borderRadius: 'var(--radius-vitrine)' }}
               >
-                <p className="max-w-[16rem] text-center text-small text-sage-600">
+                <p className="max-w-[16rem] text-center text-small text-ink-subtle">
                   این نمونه هنوز عکسی ندارد. تصویر پس از ثبت در کتابخانهٔ رسانه در همین
                   ویترین نمایش داده می‌شود.
                 </p>
@@ -159,56 +159,56 @@ export default async function SpecimenPage({ params }: { params: Promise<{ slug:
             <div className="lg:sticky lg:top-[calc(var(--header-height)+2rem)]">
               <p className="label-fa">نمونهٔ موزه</p>
 
-              <h1 className="mt-3 font-body text-hero font-bold leading-[1.2] tracking-[0.01em] text-ivory-50">
+              <h1 className="mt-3 font-body text-hero font-bold leading-[1.2] tracking-[0.01em] text-ink">
                 {specimen.title}
               </h1>
 
               {(specimen.scientificName ?? specimen.subtitle) && (
                 <p
                   dir="ltr"
-                  className="mt-3 font-latin text-[1.05rem] tracking-[0.14em] text-gold-300/90 uppercase"
+                  className="mt-3 font-latin text-[1.05rem] tracking-[0.14em] text-accent/90 uppercase"
                 >
                   {specimen.scientificName ?? specimen.subtitle}
                 </p>
               )}
 
               {specimen.summary && (
-                <p className="mt-6 text-lead text-ivory-200/90">{specimen.summary}</p>
+                <p className="mt-6 text-lead text-ink-muted/90">{specimen.summary}</p>
               )}
 
-              <dl className="mt-8 divide-y divide-white/[0.06] border-y border-white/[0.06] text-[0.85rem]">
+              <dl className="mt-8 divide-y divide-line border-y border-line text-[0.85rem]">
                 {classification.mineral_family && (
                   <div className="flex items-baseline justify-between gap-4 py-3">
-                    <dt className="text-sage-500">{TAXONOMY_LABELS.mineral_family.fa}</dt>
-                    <dd className="text-ivory-100">{classification.mineral_family}</dd>
+                    <dt className="text-ink-subtle">{TAXONOMY_LABELS.mineral_family.fa}</dt>
+                    <dd className="text-ink">{classification.mineral_family}</dd>
                   </div>
                 )}
                 {primaryOrigin && (primaryOrigin.countryName ?? primaryOrigin.region) && (
                   <div className="flex items-baseline justify-between gap-4 py-3">
-                    <dt className="text-sage-500">خاستگاه</dt>
-                    <dd className="text-ivory-200">
+                    <dt className="text-ink-subtle">خاستگاه</dt>
+                    <dd className="text-ink-muted">
                       {[primaryOrigin.countryName, primaryOrigin.region].filter(Boolean).join('، ')}
                     </dd>
                   </div>
                 )}
                 {specimen.weightCt && (
                   <div className="flex items-baseline justify-between gap-4 py-3">
-                    <dt className="text-sage-500">وزن</dt>
-                    <dd className="nums text-ivory-200" dir="ltr">
+                    <dt className="text-ink-subtle">وزن</dt>
+                    <dd className="nums text-ink-muted" dir="ltr">
                       {fa(Number(specimen.weightCt))} ct
                     </dd>
                   </div>
                 )}
                 <div className="flex items-baseline justify-between gap-4 py-3">
-                  <dt className="text-sage-500">شمارهٔ اموال</dt>
-                  <dd className="nums text-ivory-300" dir="ltr">
+                  <dt className="text-ink-subtle">شمارهٔ اموال</dt>
+                  <dd className="nums text-ink-muted" dir="ltr">
                     {specimen.inventoryNo}
                   </dd>
                 </div>
               </dl>
 
               {nonImageMedia.length > 0 && (
-                <p className="mt-6 border-s-2 border-gold-500/30 ps-4 text-[12px] leading-6 text-sage-500">
+                <p className="mt-6 border-s-2 border-gold-500/30 ps-4 text-[12px] leading-6 text-ink-subtle">
                   {fa(nonImageMedia.length)} رسانهٔ غیرتصویری (ویدئو یا مدل) برای این نمونه ثبت
                   شده است. نمایشگر آن‌ها در فاز بعدی موزه افزوده می‌شود.
                 </p>
@@ -239,7 +239,7 @@ export default async function SpecimenPage({ params }: { params: Promise<{ slug:
               <h2 id="specimen-science" className="label-fa">
                 مشخصات علمی
               </h2>
-              <p className="mt-3 max-w-[18rem] text-[12px] leading-6 text-sage-600">
+              <p className="mt-3 max-w-[18rem] text-[12px] leading-6 text-ink-subtle">
                 فقط ویژگی‌های ثبت‌شده نمایش داده می‌شوند. مقادیر علمی بدون منبع معتبر در
                 موزه ثبت نمی‌شوند.
               </p>
@@ -251,15 +251,15 @@ export default async function SpecimenPage({ params }: { params: Promise<{ slug:
                 <dl className="mt-8 grid gap-x-8 gap-y-4 sm:grid-cols-2">
                   {specimen.classification.map((entry) => (
                     <div key={`${entry.kind}-${entry.code}`} className="flex flex-col gap-1">
-                      <dt className="text-[11.5px] text-sage-600">
+                      <dt className="text-[11.5px] text-ink-subtle">
                         {TAXONOMY_LABELS[entry.kind as TaxonomyKind]?.fa ?? entry.kind}
                       </dt>
-                      <dd className="text-small text-ivory-200">
+                      <dd className="text-small text-ink-muted">
                         {entry.label}
                         {entry.latinName && (
                           <span
                             dir="ltr"
-                            className="ms-2 font-latin text-[0.72rem] tracking-[0.08em] text-gold-400/70 uppercase"
+                            className="ms-2 font-latin text-[0.72rem] tracking-[0.08em] text-accent/70 uppercase"
                           >
                             {entry.latinName}
                           </span>
@@ -275,7 +275,7 @@ export default async function SpecimenPage({ params }: { params: Promise<{ slug:
 
         {/* ── 4. The scientific introduction ───────────────────────────────── */}
         {(specimen.story ?? specimen.formation ?? specimen.history ?? specimen.notes) && (
-          <section className="mt-section border-t border-white/[0.06] pt-14" aria-labelledby="specimen-story">
+          <section className="mt-section border-t border-line pt-14" aria-labelledby="specimen-story">
             <div className="grid gap-8 lg:grid-cols-12 lg:gap-16">
               <div className="lg:col-span-3">
                 <h2 id="specimen-story" className="label-fa">
@@ -285,25 +285,25 @@ export default async function SpecimenPage({ params }: { params: Promise<{ slug:
               <div className="space-y-10 lg:col-span-8 lg:col-start-5">
                 {specimen.story && (
                   <div>
-                    <h3 className="mb-3 text-small text-gold-300/90">توضیح علمی</h3>
+                    <h3 className="mb-3 text-small text-accent/90">توضیح علمی</h3>
                     <Prose variant="body">{specimen.story}</Prose>
                   </div>
                 )}
                 {specimen.formation && (
                   <div>
-                    <h3 className="mb-3 text-small text-gold-300/90">نحوهٔ شکل‌گیری</h3>
+                    <h3 className="mb-3 text-small text-accent/90">نحوهٔ شکل‌گیری</h3>
                     <Prose variant="body">{specimen.formation}</Prose>
                   </div>
                 )}
                 {specimen.history && (
                   <div>
-                    <h3 className="mb-3 text-small text-gold-300/90">اطلاعات تاریخی</h3>
+                    <h3 className="mb-3 text-small text-accent/90">اطلاعات تاریخی</h3>
                     <Prose variant="body">{specimen.history}</Prose>
                   </div>
                 )}
                 {specimen.notes && (
                   <div>
-                    <h3 className="mb-3 text-small text-gold-300/90">توضیحات تکمیلی</h3>
+                    <h3 className="mb-3 text-small text-accent/90">توضیحات تکمیلی</h3>
                     <Prose variant="body">{specimen.notes}</Prose>
                   </div>
                 )}
@@ -315,7 +315,7 @@ export default async function SpecimenPage({ params }: { params: Promise<{ slug:
         {/* ── 5. Geographic origin ─────────────────────────────────────────── */}
         {(specimen.provenance.length > 0 || specimen.provenanceText) && (
           <section
-            className="mt-section border-t border-white/[0.06] pt-14"
+            className="mt-section border-t border-line pt-14"
             aria-labelledby="specimen-origin"
           >
             <div className="grid gap-8 lg:grid-cols-12 lg:gap-16">
@@ -323,35 +323,35 @@ export default async function SpecimenPage({ params }: { params: Promise<{ slug:
                 <h2 id="specimen-origin" className="label-fa">
                   منشأ جغرافیایی
                 </h2>
-                <p className="mt-3 max-w-[18rem] text-[12px] leading-6 text-sage-600">
+                <p className="mt-3 max-w-[18rem] text-[12px] leading-6 text-ink-subtle">
                   اطلس تعاملی در فاز بعدی به همین داده‌ها متصل می‌شود.
                 </p>
               </div>
 
               <div className="lg:col-span-8 lg:col-start-5">
                 {specimen.provenanceText && (
-                  <p className="mb-6 text-body text-sage-300">{specimen.provenanceText}</p>
+                  <p className="mb-6 text-body text-ink-muted">{specimen.provenanceText}</p>
                 )}
 
-                <ul className="divide-y divide-white/[0.07] border-y border-white/[0.07]">
+                <ul className="divide-y divide-line border-y border-line">
                   {specimen.provenance.map((place) => (
                     <li key={place.id} className="py-4">
-                      <p className="text-body text-ivory-200">
+                      <p className="text-body text-ink-muted">
                         {[place.locality, place.region, place.countryName].filter(Boolean).join('، ') ||
                           'محل ثبت‌شده'}
                       </p>
                       {place.countryCode && (
-                        <p dir="ltr" className="mt-1 text-[11.5px] tracking-[0.16em] text-sage-600 uppercase">
+                        <p dir="ltr" className="mt-1 text-[11.5px] tracking-[0.16em] text-ink-subtle uppercase">
                           {place.countryCode}
                         </p>
                       )}
-                      {place.note && <p className="mt-2 text-small text-sage-500">{place.note}</p>}
+                      {place.note && <p className="mt-2 text-small text-ink-subtle">{place.note}</p>}
                     </li>
                   ))}
                 </ul>
 
                 {specimen.provenance.some((place) => place.latitude && place.longitude) && (
-                  <p className="mt-4 text-[11.5px] text-sage-600">
+                  <p className="mt-4 text-[11.5px] text-ink-subtle">
                     مختصات جغرافیایی ثبت شده و برای نمایش روی نقشهٔ اطلس آماده است.
                   </p>
                 )}
@@ -363,7 +363,7 @@ export default async function SpecimenPage({ params }: { params: Promise<{ slug:
         {/* ── 6. What else resembles it ────────────────────────────────────── */}
         {specimen.related.length > 0 && (
           <section
-            className="mt-section border-t border-white/[0.06] pt-14"
+            className="mt-section border-t border-line pt-14"
             aria-labelledby="specimen-related"
           >
             <h2 id="specimen-related" className="label-fa mb-8">
@@ -380,7 +380,7 @@ export default async function SpecimenPage({ params }: { params: Promise<{ slug:
         )}
 
         {/* ── 7. The doors out of the room ─────────────────────────────────── */}
-        <section className="mt-section border-t border-white/[0.06] pt-14" aria-labelledby="specimen-nav">
+        <section className="mt-section border-t border-line pt-14" aria-labelledby="specimen-nav">
           <h2 id="specimen-nav" className="label-fa mb-8">
             ادامهٔ مسیر
           </h2>
@@ -388,13 +388,13 @@ export default async function SpecimenPage({ params }: { params: Promise<{ slug:
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {specimen.halls.length > 0 && (
               <nav aria-label="تالارهای این نمونه">
-                <h3 className="mb-3 text-small text-gold-300/90">تالارها</h3>
+                <h3 className="mb-3 text-small text-accent/90">تالارها</h3>
                 <ul className="space-y-2">
                   {specimen.halls.map((hall) => (
                     <li key={hall.slug}>
                       <Link
                         href={`/halls/${encodeURIComponent(hall.slug)}`}
-                        className="text-small text-sage-400 transition-colors hover:text-gold-200"
+                        className="text-small text-ink-muted transition-colors hover:text-accent"
                       >
                         {hall.title}
                       </Link>
@@ -406,13 +406,13 @@ export default async function SpecimenPage({ params }: { params: Promise<{ slug:
 
             {specimen.articles.length > 0 && (
               <nav aria-label="مقالات مرتبط">
-                <h3 className="mb-3 text-small text-gold-300/90">در دانشنامه</h3>
+                <h3 className="mb-3 text-small text-accent/90">در دانشنامه</h3>
                 <ul className="space-y-2">
                   {specimen.articles.map((article) => (
                     <li key={article.slug}>
                       <Link
                         href={`/encyclopedia/${encodeURIComponent(article.slug)}`}
-                        className="text-small text-sage-400 transition-colors hover:text-gold-200"
+                        className="text-small text-ink-muted transition-colors hover:text-accent"
                       >
                         {article.title}
                       </Link>
@@ -423,12 +423,12 @@ export default async function SpecimenPage({ params }: { params: Promise<{ slug:
             )}
 
             <nav aria-label="جست‌وجوی بیشتر">
-              <h3 className="mb-3 text-small text-gold-300/90">کاوش بیشتر</h3>
+              <h3 className="mb-3 text-small text-accent/90">کاوش بیشتر</h3>
               <ul className="space-y-2">
                 <li>
                   <Link
                     href={classification.mineral_family ? `/search?family=${encodeURIComponent(classification.mineral_family)}` : '/search'}
-                    className="text-small text-sage-400 transition-colors hover:text-gold-200"
+                    className="text-small text-ink-muted transition-colors hover:text-accent"
                   >
                     جست‌وجو در مجموعهٔ موزه
                   </Link>
@@ -436,7 +436,7 @@ export default async function SpecimenPage({ params }: { params: Promise<{ slug:
                 <li>
                   <Link
                     href="/encyclopedia"
-                    className="text-small text-sage-400 transition-colors hover:text-gold-200"
+                    className="text-small text-ink-muted transition-colors hover:text-accent"
                   >
                     دانشنامهٔ موزه
                   </Link>

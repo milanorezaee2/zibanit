@@ -26,7 +26,7 @@ export function CardHeader({ className, children, ...rest }: ComponentProps<'div
   return (
     <div
       className={cn(
-        'flex items-start justify-between gap-3 border-b border-white/[0.07] px-5 py-4',
+        'flex items-start justify-between gap-3 border-b border-line px-5 py-4',
         className,
       )}
       {...rest}
@@ -46,7 +46,7 @@ export function CardBody({ className, children, ...rest }: ComponentProps<'div'>
 
 export function CardTitle({ className, children, ...rest }: ComponentProps<'h3'>) {
   return (
-    <h3 className={cn('font-display text-lg text-ivory-100', className)} {...rest}>
+    <h3 className={cn('font-display text-lg text-ink', className)} {...rest}>
       {children}
     </h3>
   );
@@ -54,7 +54,7 @@ export function CardTitle({ className, children, ...rest }: ComponentProps<'h3'>
 
 export function CardText({ className, children, ...rest }: ComponentProps<'p'>) {
   return (
-    <p className={cn('text-[13.5px] leading-[1.95] text-sage-400', className)} {...rest}>
+    <p className={cn('text-[13.5px] leading-[1.95] text-ink-muted', className)} {...rest}>
       {children}
     </p>
   );

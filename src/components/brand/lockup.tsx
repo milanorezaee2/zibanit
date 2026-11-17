@@ -28,19 +28,19 @@ export function Lockup({ href, size = 'md', showTagline = false, className }: Lo
 
   const content = (
     <span className={cn('inline-flex items-center', s.gap, className)}>
-      <GemoriaMark className={cn(s.mark, 'shrink-0 text-gold-500')} weight={size === 'lg' ? 0.9 : 1.1} />
+      <GemoriaMark className={cn(s.mark, 'shrink-0 text-accent')} weight={size === 'lg' ? 0.9 : 1.1} />
       <span className="inline-flex flex-col">
         <span
           dir="ltr"
           className={cn(
-            'font-latin leading-none text-ivory-100 uppercase ps-[0.34em]',
+            'font-latin leading-none text-ink uppercase ps-[0.34em]',
             s.word,
           )}
         >
           {site.nameLatin}
         </span>
         {showTagline && (
-          <span className="mt-2.5 font-body text-[10.5px] tracking-[0.02em] text-sage-500">
+          <span className="mt-2.5 font-body text-[10.5px] tracking-[0.02em] text-ink-subtle">
             {site.tagline}
           </span>
         )}

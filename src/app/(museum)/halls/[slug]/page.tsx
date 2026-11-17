@@ -97,7 +97,7 @@ export default async function HallPage({
   return (
     <article className="pb-section">
       {/* ── 1 & 2. The hall's own hero ─────────────────────────────────────── */}
-      <header className="relative isolate overflow-hidden pt-[var(--header-height)]">
+      <header className="on-dark relative isolate overflow-hidden pt-[var(--header-height)]">
         <div className="absolute inset-0 -z-10">
           <MuseumImage
             image={hall.heroImage}
@@ -126,15 +126,15 @@ export default async function HallPage({
           <div className="mt-10 max-w-reading">
             <p
               dir="ltr"
-              className="font-latin text-[0.78rem] tracking-[0.26em] text-gold-300/90 uppercase"
+              className="font-latin text-[0.78rem] tracking-[0.26em] text-accent/90 uppercase"
             >
               {hall.latinName}
             </p>
-            <h1 className="mt-4 font-body text-hero font-bold tracking-[0.01em] text-ivory-50">
+            <h1 className="mt-4 font-body text-hero font-bold tracking-[0.01em] text-ink">
               {hall.title}
             </h1>
-            <p className="mt-5 max-w-[46rem] text-lead text-ivory-200/85">{hall.summary}</p>
-            <p className="mt-7 inline-flex items-center gap-2 rounded-full bg-white/[0.07] px-4 py-1.5 text-[0.78rem] text-ivory-200/80 backdrop-blur-sm">
+            <p className="mt-5 max-w-[46rem] text-lead text-ink-muted/85">{hall.summary}</p>
+            <p className="mt-7 inline-flex items-center gap-2 rounded-full bg-paper-raised px-4 py-1.5 text-[0.78rem] text-ink-muted/80 backdrop-blur-sm">
               {hall.specimenCount > 0
                 ? `${persian(hall.specimenCount)} نمونهٔ منتشرشده در این تالار`
                 : 'این تالار هنوز نمونهٔ منتشرشده‌ای ندارد'}
@@ -145,7 +145,7 @@ export default async function HallPage({
 
       {/* ── 3. The catalogue text ─────────────────────────────────────────── */}
       {hall.description && (
-        <section className="border-b border-white/[0.06] py-14" aria-labelledby="hall-intro">
+        <section className="border-b border-line py-14" aria-labelledby="hall-intro">
           <Container width="museum">
             <div className="grid gap-8 lg:grid-cols-12">
               <div className="lg:col-span-3">
@@ -154,7 +154,7 @@ export default async function HallPage({
                 </h2>
               </div>
               <div className="max-w-[62ch] lg:col-span-8 lg:col-start-5">
-                <p className="text-[1.05rem] leading-[2.1] text-sage-300">{hall.description}</p>
+                <p className="text-[1.05rem] leading-[2.1] text-ink-muted">{hall.description}</p>
               </div>
             </div>
           </Container>
@@ -165,7 +165,7 @@ export default async function HallPage({
       <section className="py-14" aria-labelledby="hall-collection">
         <Container width="museum">
           <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
-            <h2 id="hall-collection" className="text-subtitle font-bold text-ivory-50">
+            <h2 id="hall-collection" className="text-subtitle font-bold text-ink">
               نمونه‌های این تالار
             </h2>
             {specimens.state !== 'unavailable' && (
@@ -242,7 +242,7 @@ export default async function HallPage({
 
       {/* ── 9. Related halls ──────────────────────────────────────────────── */}
       {relatedHalls.length > 0 && (
-        <section className="border-t border-white/[0.06] py-14" aria-labelledby="related-halls">
+        <section className="border-t border-line py-14" aria-labelledby="related-halls">
           <Container width="museum">
             <h2 id="related-halls" className="label-fa mb-6">
               تالارهای مرتبط
@@ -252,19 +252,19 @@ export default async function HallPage({
                 <li key={other.id}>
                   <Link
                     href={`/halls/${encodeURIComponent(other.slug)}`}
-                    className="group flex h-full flex-col border border-white/[0.07] bg-surface/40 p-6 transition-colors hover:border-gold-500/30"
+                    className="group flex h-full flex-col border border-line bg-paper-raised/40 p-6 transition-colors hover:border-gold-500/30"
                     style={{ borderRadius: 'var(--radius-vitrine)' }}
                   >
                     <p
                       dir="ltr"
-                      className="font-latin text-[0.7rem] tracking-[0.2em] text-gold-400/80 uppercase"
+                      className="font-latin text-[0.7rem] tracking-[0.2em] text-accent/80 uppercase"
                     >
                       {other.latinName}
                     </p>
-                    <span className="mt-2 font-display text-subtitle text-ivory-100 group-hover:text-gold-100">
+                    <span className="mt-2 font-display text-subtitle text-ink group-hover:text-accent">
                       {other.title}
                     </span>
-                    <span className="mt-3 text-small text-sage-500">{other.summary}</span>
+                    <span className="mt-3 text-small text-ink-subtle">{other.summary}</span>
                   </Link>
                 </li>
               ))}

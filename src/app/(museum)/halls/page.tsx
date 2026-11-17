@@ -41,10 +41,10 @@ export default async function HallsIndexPage() {
             <span className="label-fa">تالارهای موزه</span>
             <span className="h-px w-10 bg-gold-500/60" aria-hidden="true" />
           </p>
-          <h1 className="font-body text-hero font-bold text-ivory-50">
+          <h1 className="font-body text-hero font-bold text-ink">
             شش تالار، شش اقلیم زمین
           </h1>
-          <p className="mt-5 max-w-[52ch] text-lead text-sage-400">
+          <p className="mt-5 max-w-[52ch] text-lead text-ink-muted">
             هر تالار به یک خانوادهٔ طبیعی اختصاص دارد. جایگاه یک نمونه در تالار، تقسیم‌بندی
             نمایشی موزه است؛ طبقه‌بندی علمی آن جداگانه در صفحهٔ هر نمونه ثبت می‌شود.
             {totalObjects > 0 && (
@@ -58,7 +58,7 @@ export default async function HallsIndexPage() {
           <p className="mt-4">
             <Link
               href="/search"
-              className="text-small text-gold-300 underline decoration-gold-500/30 underline-offset-[6px] transition-colors hover:text-gold-200 hover:decoration-gold-400/70"
+              className="text-small text-accent underline decoration-gold-500/30 underline-offset-[6px] transition-colors hover:text-accent hover:decoration-gold-400/70"
             >
               جست‌وجو در همهٔ نمونه‌های موزه
             </Link>
@@ -68,9 +68,9 @@ export default async function HallsIndexPage() {
         {halls.state === 'ready' ? (
           /* A numbered index, not a card wall: each gallery is a spread with its own
              photograph, and the number is the position in the building, not a rank. */
-          <ol className="border-t border-white/[0.08]">
+          <ol className="border-t border-line">
             {halls.items.map((hall, index) => (
-              <li key={hall.id} className="border-b border-white/[0.08]">
+              <li key={hall.id} className="border-b border-line">
                 <Link
                   href={`/halls/${encodeURIComponent(hall.slug)}`}
                   className="group grid items-center gap-8 py-9 sm:py-12 lg:grid-cols-[1fr_minmax(0,26rem)] lg:gap-14"
@@ -78,26 +78,26 @@ export default async function HallsIndexPage() {
                   <div className="flex gap-5 sm:gap-8">
                     <span
                       aria-hidden="true"
-                      className="mt-1 shrink-0 font-latin text-[1.6rem] leading-none text-gold-500/50 tabular-nums"
+                      className="mt-1 shrink-0 font-latin text-[1.6rem] leading-none text-accent/60 tabular-nums"
                     >
                       {String(index + 1).padStart(2, '0')}
                     </span>
 
                     <div className="min-w-0">
-                      <p className="font-latin text-[0.72rem] tracking-[0.22em] text-gold-400/70 uppercase" dir="ltr">
+                      <p className="font-latin text-[0.72rem] tracking-[0.22em] text-accent/70 uppercase" dir="ltr">
                         {hall.latinName}
                       </p>
-                      <h2 className="mt-2 text-[1.5rem] font-bold leading-snug text-ivory-50 transition-colors duration-300 group-hover:text-gold-100 sm:text-[1.75rem]">
+                      <h2 className="mt-2 text-[1.5rem] font-bold leading-snug text-ink transition-colors duration-300 group-hover:text-accent sm:text-[1.75rem]">
                         {hall.title}
                       </h2>
-                      <p className="mt-3 max-w-[46ch] text-body text-sage-400">{hall.summary}</p>
+                      <p className="mt-3 max-w-[46ch] text-body text-ink-muted">{hall.summary}</p>
 
                       <p className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-small">
-                        <span className="inline-flex items-center gap-2 text-gold-300">
+                        <span className="inline-flex items-center gap-2 text-accent">
                           مشاهدهٔ تالار
                           <ArrowStart className="h-4 w-4 transition-transform duration-500 ease-museum group-hover:-translate-x-1.5" />
                         </span>
-                        <span className="text-sage-600">
+                        <span className="text-ink-subtle">
                           {hall.specimenCount > 0
                             ? `${persianNumber(hall.specimenCount)} نمونهٔ منتشرشده`
                             : 'در حال آماده‌سازی'}
@@ -115,7 +115,7 @@ export default async function HallsIndexPage() {
                       imgClassName="transition-transform duration-[1100ms] ease-museum group-hover:scale-[1.05]"
                       fallback={
                         <div
-                          className="flex items-center justify-center bg-surface/40"
+                          className="flex items-center justify-center bg-paper-raised/40"
                           style={{ aspectRatio: '16 / 10' }}
                         >
                           <span className="font-display text-[2.5rem] text-gold-500/20" aria-hidden="true">

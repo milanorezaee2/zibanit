@@ -63,11 +63,33 @@
   --color-sage-600: #85837a;
   --color-sage-700: #6b6a61;
 
-  /* ── Semantic surfaces ───────────────────────────────────────────────── */
-  --color-canvas: #0b0e0c;
-  --color-surface: #141815;
-  --color-surface-raised: #191e1a;
-  --color-hairline: #242b25;
+  /* ── Semantic surfaces: a gallery is a lit room, not a dark one ─────────
+     The brand palette above is unchanged. What changed is which end of it the
+     *page* uses: paper, ink and a gold that is dark enough to read on paper
+     (6.06:1). Every pair below was measured, not chosen by eye — see
+     `docs/PHASE-1B.md`, section 15.
+
+     These names are roles, so a dark surface can re-declare them for its own
+     subtree (`.on-dark`) without any component knowing. */
+  --color-paper: #f6f1e6;
+  --color-paper-raised: #ede6d6;
+  --color-paper-sunken: #efe9db;
+
+  --color-ink: #101310; /* 16.61:1 on paper */
+  --color-ink-muted: #4c534b; /* 7.05:1 */
+  --color-ink-subtle: #5e645a; /* 5.41:1 */
+
+  --color-line: rgb(16 19 16 / 0.14);
+  --color-line-strong: rgb(16 19 16 / 0.26);
+
+  /* Antique gold, darkened for text: the brand gold stays for rules and fills. */
+  --color-accent: #6b5836; /* 6.06:1 on paper */
+
+  /* Legacy aliases kept so older components keep compiling while they migrate. */
+  --color-canvas: var(--color-paper);
+  --color-surface: var(--color-paper-raised);
+  --color-surface-raised: var(--color-paper-raised);
+  --color-hairline: var(--color-line);
 
   /* ── Typography scale ────────────────────────────────────────────────────
      Persian is not Latin: Naskh needs more line-height and never letter-spacing.
@@ -114,8 +136,8 @@
   --radius-plinth: 8px;
 
   /* ── Shadows: light falling off, never a drop shadow ─────────────────── */
-  --shadow-plinth: 0 32px 80px -48px rgb(0 0 0 / 0.9);
-  --shadow-lift: 0 24px 60px -36px rgb(0 0 0 / 0.85);
+  --shadow-plinth: 0 30px 70px -46px rgb(35 30 18 / 0.45);
+  --shadow-lift: 0 22px 50px -32px rgb(35 30 18 / 0.4);
 
   /* ── Containers ──────────────────────────────────────────────────────── */
   --container-museum: 88rem;
@@ -139,12 +161,41 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
+   The dark room
+   ───────────────────────────────────────────────────────────────────────────
+   `on-dark` re-declares the semantic roles for a subtree: a photograph with a
+   scrim behind it, the lightbox, and the administration dashboard — a control
+   room is allowed to be dark inside a lit museum.
+
+   Because every utility resolves through `var(--color-…)`, no component has to
+   know whether it is standing on paper or on a photograph.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.on-dark {
+  --color-paper: #0b0e0c;
+  --color-paper-raised: #151915;
+  --color-paper-sunken: #101410;
+  --color-ink: #f4eee1;
+  --color-ink-muted: #cdc6b4;
+  --color-ink-subtle: #a8a69c;
+  --color-line: rgb(255 255 255 / 0.1);
+  --color-line-strong: rgb(255 255 255 / 0.22);
+  --color-accent: #e8dabd;
+
+  color: var(--color-ink);
+  color-scheme: dark;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
    Base layer
    ═══════════════════════════════════════════════════════════════════════════ */
 
 @layer base {
   :root {
-    color-scheme: dark;
+    /* Daylight: native controls, scrollbars and form widgets follow the page.
+       `.on-dark` restores `dark` for the panels that really are dark — otherwise
+       a date picker in the dashboard would open white on a black room. */
+    color-scheme: light;
     --gemoria-ease: var(--ease-museum);
     --header-height: 4rem;
   }
@@ -163,8 +214,8 @@
   }
 
   body {
-    background-color: var(--color-canvas);
-    color: var(--color-ivory-100);
+    background-color: var(--color-paper);
+    color: var(--color-ink);
     font-family: var(--font-body);
     font-size: var(--text-body);
     /* Persian body text needs air: 1.9 is the floor, not a preference. */
@@ -172,11 +223,11 @@
     font-synthesis-weight: none;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
-    /* One institutional wash, no images, no network, no fixed attachment: a
-       fixed background repaints on every scroll frame on a phone. */
+    /* Daylight: two faint washes of warm paper, no images, no network, and no
+       fixed attachment (a fixed background repaints on every scroll frame). */
     background-image:
-      radial-gradient(1200px 640px at 92% -12%, rgba(23, 60, 50, 0.34), transparent 64%),
-      radial-gradient(900px 560px at 0% 108%, rgba(16, 43, 37, 0.22), transparent 62%);
+      radial-gradient(1100px 560px at 92% -10%, rgba(184, 154, 98, 0.12), transparent 62%),
+      radial-gradient(900px 520px at 0% 106%, rgba(23, 60, 50, 0.07), transparent 60%);
   }
 
   /*
@@ -244,12 +295,13 @@
   }
 
   ::selection {
-    background-color: var(--color-gold-500);
-    color: var(--color-obsidian-950);
+    background-color: var(--color-emerald-800);
+    color: var(--color-ivory-50);
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-gold-400);
+    /* The accent, darkened: gold-400 on paper is 2.1:1 and would be invisible. */
+    outline: 2px solid var(--color-accent);
     outline-offset: 3px;
     border-radius: 2px;
   }
@@ -268,7 +320,7 @@
   }
 
   * {
-    scrollbar-color: var(--color-emerald-800) transparent;
+    scrollbar-color: color-mix(in srgb, var(--color-ink) 22%, transparent) transparent;
     scrollbar-width: thin;
   }
 
@@ -277,7 +329,7 @@
     height: 10px;
   }
   ::-webkit-scrollbar-thumb {
-    background-color: var(--color-emerald-800);
+    background-color: color-mix(in srgb, var(--color-ink) 20%, transparent);
     border-radius: 999px;
   }
   ::-webkit-scrollbar-track {
@@ -311,27 +363,28 @@
   );
 }
 
+/*
+ * Retired as a gradient.
+ *
+ * A gold gradient behind clipped text only works on a dark ground; on paper it
+ * disappears. The utility survives because `Heading gold` and a few editorial
+ * labels still ask for it by name — it now returns the readable accent instead of
+ * a decoration nobody can read.
+ */
 @utility text-gold-gradient {
-  background-image: linear-gradient(
-    100deg,
-    #fdf8ec 0%,
-    var(--color-gold-200) 42%,
-    var(--color-gold-400) 76%,
-    #f2e6cd 100%
-  );
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
+  color: var(--color-accent);
 }
 
-/* Small caps label: Latin eyebrows only. Persian never gets pseudo-caps. */
+/* Small caps label: Latin eyebrows only. Persian never gets pseudo-caps.
+   Colour is the *accent* role, not the brand gold: gold-400 on paper is 2.1:1
+   and would be decorative text pretending to be readable. */
 @utility eyebrow {
   font-family: var(--font-body);
   font-size: var(--text-label);
   font-weight: 500;
   letter-spacing: var(--text-label--letter-spacing);
   text-transform: uppercase;
-  color: var(--color-gold-400);
+  color: var(--color-accent);
 }
 
 /* Small Persian label above a heading. */
@@ -340,7 +393,7 @@
   font-size: var(--text-small);
   font-weight: 500;
   letter-spacing: normal;
-  color: var(--color-gold-400);
+  color: var(--color-accent);
 }
 
 @utility surface-panel {

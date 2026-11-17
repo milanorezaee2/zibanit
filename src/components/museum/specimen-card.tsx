@@ -54,7 +54,7 @@ export function SpecimenCard({ specimen, priority = false, size = 'default' }: S
           // No photograph yet: a quiet vitrine with the object's initial letter in
           // Naskh, rather than a grey rectangle pretending to be an image.
           <div
-            className="mb-5 flex items-center justify-center bg-surface/40"
+            className="mb-5 flex items-center justify-center bg-paper-raised/40"
             style={{ aspectRatio: '4 / 5', borderRadius: 'var(--radius-vitrine)' }}
             aria-hidden="true"
           >
@@ -65,24 +65,24 @@ export function SpecimenCard({ specimen, priority = false, size = 'default' }: S
         )}
 
         <div className="flex flex-1 flex-col">
-          <h3 className="text-[1.05rem] font-medium leading-snug text-ivory-50 transition-colors duration-300 group-hover:text-gold-100">
+          <h3 className="text-[1.05rem] font-medium leading-snug text-ink transition-colors duration-300 group-hover:text-accent">
             {specimen.title}
           </h3>
 
           {(specimen.subtitle ?? specimen.scientificName) && (
             <p
               dir="ltr"
-              className="mt-1.5 self-start font-latin text-[0.8rem] tracking-[0.14em] text-gold-400/75 uppercase"
+              className="mt-1.5 self-start font-latin text-[0.8rem] tracking-[0.14em] text-accent/75 uppercase"
             >
               {specimen.subtitle ?? specimen.scientificName}
             </p>
           )}
 
           {specimen.summary && (
-            <p className="mt-3 line-clamp-2 text-[0.85rem] leading-7 text-sage-500">{specimen.summary}</p>
+            <p className="mt-3 line-clamp-2 text-[0.85rem] leading-7 text-ink-subtle">{specimen.summary}</p>
           )}
 
-          <dl className="mt-auto flex flex-wrap items-center gap-x-4 gap-y-2 pt-4 text-[0.8rem] text-sage-600">
+          <dl className="mt-auto flex flex-wrap items-center gap-x-4 gap-y-2 pt-4 text-[0.8rem] text-ink-subtle">
             {specimen.mineralFamily && (
               <div className="flex items-center gap-1.5">
                 <dt className="sr-only">خانوادهٔ کانی‌شناسی</dt>
@@ -103,7 +103,7 @@ export function SpecimenCard({ specimen, priority = false, size = 'default' }: S
                 </dd>
               </div>
             )}
-            <span className="ms-auto inline-flex items-center gap-1.5 text-gold-300/80">
+            <span className="ms-auto inline-flex items-center gap-1.5 text-accent/80">
               <span className="sr-only">صفحهٔ </span>
               <span aria-hidden="true">ببینید</span>
               <ArrowStart className="h-3.5 w-3.5 transition-transform duration-500 ease-museum group-hover:-translate-x-1" />

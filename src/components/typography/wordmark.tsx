@@ -25,13 +25,13 @@ export function Wordmark({ className, showTagline = false, size = 'md' }: Wordma
   return (
     <span className={cn('inline-flex flex-col items-center', className)}>
       <span
-        className={cn('font-latin leading-none text-gold-300 uppercase ps-[0.4em]', sizes[size])}
+        className={cn('font-latin leading-none text-accent uppercase ps-[0.4em]', sizes[size])}
         dir="ltr"
       >
         {site.nameLatin}
       </span>
       {showTagline && (
-        <span className="mt-2 font-body text-[10.5px] tracking-[0.06em] text-sage-500">
+        <span className="mt-2 font-body text-[10.5px] tracking-[0.06em] text-ink-subtle">
           {site.tagline}
         </span>
       )}

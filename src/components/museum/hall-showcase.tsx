@@ -53,20 +53,20 @@ function HallCard({
     <>
       <p
         dir="ltr"
-        className="font-latin text-[0.78rem] tracking-[0.22em] text-gold-300/90 uppercase"
+        className="font-latin text-[0.78rem] tracking-[0.22em] text-accent/90 uppercase"
       >
         {hall.latinName}
       </p>
-      <h3 className="mt-2 text-[1.35rem] font-bold leading-snug text-ivory-50">{hall.title}</h3>
-      <p className="mt-2.5 line-clamp-2 max-w-sm text-[0.85rem] leading-7 text-ivory-200/70">
+      <h3 className="mt-2 text-[1.35rem] font-bold leading-snug text-ink">{hall.title}</h3>
+      <p className="mt-2.5 line-clamp-2 max-w-sm text-[0.85rem] leading-7 text-ink-muted/70">
         {hall.summary}
       </p>
-      <span className="mt-5 inline-flex items-center gap-2 text-small text-gold-200">
+      <span className="mt-5 inline-flex items-center gap-2 text-small text-accent">
         <span>مشاهدهٔ تالار</span>
         <ArrowStart className="h-4 w-4 transition-transform duration-500 ease-museum group-hover:-translate-x-1" />
       </span>
       {hall.specimenCount > 0 && (
-        <span className="mt-3 block text-label text-ivory-200/60">
+        <span className="mt-3 block text-label text-ink-muted/60">
           {new Intl.NumberFormat('fa-IR', { useGrouping: false }).format(hall.specimenCount)} نمونه
         </span>
       )}
@@ -97,7 +97,7 @@ function HallCard({
     return (
       <Link
         href={`/halls/${encodeURIComponent(hall.slug)}`}
-        className="group grid overflow-hidden bg-surface/50 transition-colors duration-500 hover:bg-surface lg:grid-cols-2"
+        className="group grid overflow-hidden bg-paper-raised/50 transition-colors duration-500 hover:bg-paper-raised lg:grid-cols-2"
         style={{ borderRadius: 'var(--radius-plinth)' }}
       >
         {image}
@@ -120,7 +120,8 @@ function HallCard({
         aria-hidden="true"
       />
 
-      <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">{caption}</div>
+      {/* A label printed on a photograph: the roles flip for this subtree only. */}
+      <div className="on-dark absolute inset-x-0 bottom-0 p-6 sm:p-8">{caption}</div>
     </Link>
   );
 }

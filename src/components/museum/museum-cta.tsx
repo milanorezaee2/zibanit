@@ -12,15 +12,15 @@ import { GemoriaMark } from '@/components/brand/gemoria-mark';
  */
 export function MuseumCTA() {
   return (
-    <section className="border-t border-white/[0.06] py-section" aria-labelledby="cta-heading">
+    <section className="border-t border-line py-section" aria-labelledby="cta-heading">
       <Container width="reading" className="text-center">
         <GemoriaMark className="mx-auto mb-9 h-12 w-12 text-gold-500/70" weight={0.8} />
 
-        <h2 id="cta-heading" className="font-bold text-title text-ivory-100">
+        <h2 id="cta-heading" className="font-bold text-title text-ink">
           بازدید را از تالارها آغاز کنید
         </h2>
 
-        <p className="mx-auto mt-5 max-w-reading text-body text-sage-400">
+        <p className="mx-auto mt-5 max-w-reading text-body text-ink-muted">
           شش تالار، یک دانشنامه و یک اطلس در حال شکل‌گرفتن است. موزه باز است؛ هرچه ثبت
           شود، همین‌جا نمایش داده خواهد شد.
         </p>
@@ -34,7 +34,7 @@ export function MuseumCTA() {
           </ButtonLink>
         </div>
 
-        <p className="mt-10 text-small text-sage-600">
+        <p className="mt-10 text-small text-ink-subtle">
           گموریا فروشگاه نیست: هیچ قیمتی در این سایت وجود ندارد.
         </p>
       </Container>

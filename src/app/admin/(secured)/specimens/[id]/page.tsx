@@ -79,7 +79,7 @@ export default async function EditSpecimenPage({
                 <input type="hidden" name="status" value="draft" />
                 <button
                   type="submit"
-                  className="h-8 rounded-lg border border-white/15 px-3 text-[11.5px] text-ivory-200 transition-colors hover:border-gold-400/50"
+                  className="h-8 rounded-lg border border-line-strong px-3 text-[11.5px] text-ink-muted transition-colors hover:border-gold-400/50"
                 >
                   خارج کردن از انتشار
                 </button>
@@ -89,7 +89,7 @@ export default async function EditSpecimenPage({
             {specimen.status === 'published' && (
               <Link
                 href={`/specimens/${encodeURIComponent(specimen.slug)}`}
-                className="h-8 rounded-lg border border-white/15 px-3 text-[11.5px] leading-8 text-ivory-200 hover:border-gold-400/50"
+                className="h-8 rounded-lg border border-line-strong px-3 text-[11.5px] leading-8 text-ink-muted hover:border-gold-400/50"
               >
                 صفحهٔ عمومی
               </Link>
@@ -111,17 +111,17 @@ export default async function EditSpecimenPage({
         {canWrite ? (
           <SpecimenForm mode="edit" initial={specimen} options={{ halls, media, taxonomy }} />
         ) : (
-          <p className="border border-white/[0.08] px-5 py-6 text-[12.5px] leading-6 text-sage-400">
+          <p className="border border-line px-5 py-6 text-[12.5px] leading-6 text-ink-muted">
             نقش شما اجازهٔ ویرایش نمونه‌ها را ندارد. این صفحه فقط خواندنی است.
           </p>
         )}
 
         {canPublish && !specimen.status.startsWith('archived') && (
-          <section className="mb-10 border-t border-white/[0.07] pt-6" aria-labelledby="danger-zone">
+          <section className="mb-10 border-t border-line pt-6" aria-labelledby="danger-zone">
             <h2 id="danger-zone" className="mb-2 text-[12.5px] font-medium text-red-300/90">
               حذف از موزه
             </h2>
-            <p className="mb-4 max-w-lg text-[11.5px] leading-6 text-sage-500">
+            <p className="mb-4 max-w-lg text-[11.5px] leading-6 text-ink-subtle">
               حذف، رکورد را نابود نمی‌کند: نمونه به بایگانی می‌رود و از صفحه‌های عمومی
               ناپدید می‌شود. سابقهٔ حسابرسی و شمارهٔ اموال باقی می‌ماند.
             </p>

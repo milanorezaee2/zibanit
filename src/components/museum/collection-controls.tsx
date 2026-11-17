@@ -34,10 +34,10 @@ export interface CollectionControlsProps {
 }
 
 const controlClass =
-  'h-10 w-full appearance-none rounded-full border border-white/10 bg-white/[0.03] ps-4 pe-8 text-[0.82rem] text-ivory-200 ' +
-  'bg-[url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'10\' height=\'6\' viewBox=\'0 0 10 6\' fill=\'none\'%3E%3Cpath d=\'M1 1l4 4 4-4\' stroke=\'%23a8a69c\' stroke-width=\'1.2\' stroke-linecap=\'round\'/%3E%3C/svg%3E")] ' +
+  'h-10 w-full appearance-none rounded-full border border-line-strong bg-paper-raised ps-4 pe-8 text-[0.82rem] text-ink-muted ' +
+  'bg-[url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'10\' height=\'6\' viewBox=\'0 0 10 6\' fill=\'none\'%3E%3Cpath d=\'M1 1l4 4 4-4\' stroke=\'%235e645a\' stroke-width=\'1.2\' stroke-linecap=\'round\'/%3E%3C/svg%3E")] ' +
   'bg-[length:10px_6px] bg-[position:left_0.9rem_center] bg-no-repeat ' +
-  'transition-colors hover:border-white/25 focus:border-gold-400/70 focus:outline-none focus:ring-2 focus:ring-gold-400/20';
+  'transition-colors hover:border-line-strong focus:border-gold-400/70 focus:outline-none focus:ring-2 focus:ring-gold-400/20';
 
 const srLabel = 'sr-only';
 
@@ -64,7 +64,7 @@ export function CollectionControls({
     <form
       action={action}
       method="get"
-      className="border-y border-white/[0.07] py-5"
+      className="border-y border-line py-5"
       role="search"
     >
       {Object.entries(preserved).map(([key, value]) => (
@@ -259,7 +259,7 @@ export function CollectionControls({
           {hasFilters && (
             <Link
               href={clearHref}
-              className="whitespace-nowrap text-[0.8rem] text-sage-500 underline decoration-sage-600/40 underline-offset-4 transition-colors hover:text-gold-200"
+              className="whitespace-nowrap text-[0.8rem] text-ink-subtle underline decoration-sage-600/40 underline-offset-4 transition-colors hover:text-accent"
             >
               پاک کردن
             </Link>
@@ -267,7 +267,7 @@ export function CollectionControls({
         </div>
       </div>
 
-      <p className="mt-3 text-[11px] text-sage-600" aria-live="polite">
+      <p className="mt-3 text-[11px] text-ink-subtle" aria-live="polite">
         فیلترها در نشانی صفحه ذخیره می‌شوند و قابل اشتراک‌گذاری‌اند.
       </p>
     </form>

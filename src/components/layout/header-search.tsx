@@ -20,7 +20,7 @@ export function HeaderSearch({ className }: { className?: string }) {
       href="/search"
       aria-label="جست‌وجو در مجموعهٔ موزه"
       className={
-        'inline-flex h-10 w-10 items-center justify-center text-ivory-200 transition-colors duration-300 hover:text-gold-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400/50 ' +
+        'inline-flex h-10 w-10 items-center justify-center text-ink-muted transition-colors duration-300 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400/50 ' +
         (className ?? '')
       }
     >

@@ -20,7 +20,7 @@ export default async function SecuredAdminLayout({ children }: { children: React
   return (
     <AdminShell user={{ displayName: user.displayName, email: user.email, role: user.role }}>
       {children}
-      <footer className="border-t border-white/[0.07] px-5 py-3 text-[11px] text-sage-600 sm:px-8">
+      <footer className="border-t border-line px-5 py-3 text-[11px] text-ink-subtle sm:px-8">
         واردشده به‌عنوان {user.displayName} — نقش: {user.role}
       </footer>
     </AdminShell>

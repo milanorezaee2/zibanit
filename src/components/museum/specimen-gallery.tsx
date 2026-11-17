@@ -113,10 +113,10 @@ export function SpecimenGallery({
         </button>
 
         {(current.caption || images.length > 1) && (
-          <figcaption className="mt-4 flex flex-wrap items-baseline justify-between gap-3 text-small text-sage-500">
+          <figcaption className="mt-4 flex flex-wrap items-baseline justify-between gap-3 text-small text-ink-subtle">
             {current.caption && <span className="max-w-reading">{current.caption}</span>}
             {images.length > 1 && (
-              <span className="text-label text-sage-600">
+              <span className="text-label text-ink-subtle">
                 {new Intl.NumberFormat('fa-IR', { useGrouping: false }).format(images.length)} تصویر
               </span>
             )}
@@ -135,7 +135,7 @@ export function SpecimenGallery({
                 aria-label={`تصویر ${position + 1}`}
                 className={
                   'block w-full overflow-hidden border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400/50 ' +
-                  (position === index ? 'border-gold-500/60' : 'border-transparent hover:border-white/20')
+                  (position === index ? 'border-gold-500/60' : 'border-transparent hover:border-line-strong')
                 }
               >
                 <MuseumImage
@@ -153,13 +153,13 @@ export function SpecimenGallery({
 
       {open && (
         <div
-          className="fixed inset-0 z-[70] flex flex-col bg-obsidian-950/97 p-4 sm:p-8"
+          className="fixed inset-0 z-[70] flex flex-col bg-paper/97 p-4 sm:p-8"
           role="dialog"
           aria-modal="true"
           aria-label={`تصویر بزرگ ${title}`}
         >
           <div className="flex items-center justify-between gap-4 pb-4">
-            <p className="text-small text-sage-400">
+            <p className="text-small text-ink-muted">
               {new Intl.NumberFormat('fa-IR', { useGrouping: false }).format(index + 1)} از{' '}
               {new Intl.NumberFormat('fa-IR', { useGrouping: false }).format(images.length)}
             </p>
@@ -167,7 +167,7 @@ export function SpecimenGallery({
               ref={closeRef}
               type="button"
               onClick={close}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-ivory-200 transition-colors hover:border-gold-400/60 hover:text-gold-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400/50"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-line-strong text-ink-muted transition-colors hover:border-gold-400/60 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400/50"
               aria-label="بستن تصویر"
             >
               <CloseIcon className="h-4 w-4" />
@@ -190,7 +190,7 @@ export function SpecimenGallery({
                 <button
                   type="button"
                   onClick={() => step(-1)}
-                  className="absolute end-0 top-1/2 inline-flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-obsidian-900/70 text-ivory-100 transition-colors hover:border-gold-400/60 hover:text-gold-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400/50"
+                  className="absolute end-0 top-1/2 inline-flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-line-strong bg-paper-raised/70 text-ink transition-colors hover:border-gold-400/60 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400/50"
                   aria-label="تصویر پیشین"
                 >
                   ›
@@ -198,7 +198,7 @@ export function SpecimenGallery({
                 <button
                   type="button"
                   onClick={() => step(1)}
-                  className="absolute start-0 top-1/2 inline-flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-obsidian-900/70 text-ivory-100 transition-colors hover:border-gold-400/60 hover:text-gold-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400/50"
+                  className="absolute start-0 top-1/2 inline-flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-line-strong bg-paper-raised/70 text-ink transition-colors hover:border-gold-400/60 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400/50"
                   aria-label="تصویر بعدی"
                 >
                   ‹
@@ -208,9 +208,9 @@ export function SpecimenGallery({
           </div>
 
           {current.caption && (
-            <p className="pt-4 text-center text-small text-sage-400">{current.caption}</p>
+            <p className="pt-4 text-center text-small text-ink-muted">{current.caption}</p>
           )}
-          <p className="pt-2 text-center text-[11px] text-sage-600">
+          <p className="pt-2 text-center text-[11px] text-ink-subtle">
             برای بستن، کلید Escape و برای جابه‌جایی، کلیدهای جهت را بزنید.
           </p>
         </div>
