@@ -36,3 +36,6 @@ Thumbs.db
 # local PostgreSQL cluster (embedded-postgres) — `npm run db:server` and the
 # disposable servers used by `npm run test:postgres`
 .pgdata/
+
+# generated image masters (19 MB of PNG) — the WebP derivatives are committed
+public/images/source/

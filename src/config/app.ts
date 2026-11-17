@@ -11,12 +11,13 @@ export const APP_VERSION = '0.1.0';
 
 /** The implementation phase this build belongs to. Displayed in the dashboard. */
 export const APP_PHASE = {
-  number: 0,
-  name: 'بنیاد و اسکلت',
+  number: 1,
+  slug: '1A',
+  name: 'سیستم طراحی و صفحهٔ اصلی',
   status: 'in-progress',
 } as const;
 
-/** The only locale enabled in Phase 0. */
+/** The only locale enabled while the museum is Persian-only. */
 export const ENABLED_LOCALES = ['fa'] as const;
 export type EnabledLocale = (typeof ENABLED_LOCALES)[number];
 

@@ -30,6 +30,19 @@ const nextConfig: NextConfig = {
   // be copied into any container image without a hosting provider's tooling.
   output: 'standalone',
   serverExternalPackages: ['@electric-sql/pglite', 'pg'],
+
+  // Photography is the museum's primary material, so the optimiser is allowed to
+  // keep more than the default 75: 82 for gallery images, 88 for the hero. Without
+  // declaring them here, Next ignores the requested quality and silently serves 75.
+  images: {
+    qualities: [75, 82, 88],
+    formats: ['image/avif', 'image/webp'],
+  },
+
+  // The development preview is served from a per-sandbox hostname; without this the
+  // browser receives a cross-origin warning on every asset and HMR can be blocked.
+  // Development only — it has no effect on a production build.
+  allowedDevOrigins: ['*.e2b.app', '*.e2b.dev', '*.arena.ai'],
   // The Administration Dashboard is never indexed, never cached by intermediaries.
   async headers() {
     return [

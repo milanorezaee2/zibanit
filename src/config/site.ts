@@ -1,13 +1,15 @@
 /**
  * GEMORIA — public museum configuration.
  *
- * Navigation is declared once and rendered by both the desktop header and the
- * mobile drawer. Items whose section does not exist yet are marked `available:
- * false`: they render as visibly disabled, are not links, and therefore cannot
- * produce a 404 or a dead end for a visitor or a crawler.
+ * Navigation is declared once and rendered by the desktop header, the mobile
+ * drawer and the sitemap-bearing footer. An item whose destination does not
+ * exist yet is marked `available: false`: it renders as inert text with its
+ * phase, is not a link, and therefore cannot produce a 404 — for a visitor or
+ * for a crawler.
  *
- * Phase 0 ships one public page. Phase 2 turns `available` on, one section at a
- * time, as each route lands.
+ * Phase 1A makes the whole primary navigation real: every entry points at a
+ * section that exists today. Legal pages (privacy, terms) stay inert until the
+ * hosting phase decides what they must say.
  */
 
 export interface NavItem {
@@ -18,62 +20,64 @@ export interface NavItem {
   readonly phase?: string;
 }
 
+/**
+ * The header's primary navigation, in reading order (right to left).
+ *
+ * `/#atlas` rather than `#atlas`: the anchors are absolute so the same header
+ * works on every page, not only on the homepage.
+ */
 export const publicNav: readonly NavItem[] = [
   { label: 'خانه', href: '/', available: true },
-  { label: 'موزه', href: '/museum', available: false, phase: 'فاز ۲' },
-  { label: 'مجموعه‌ها', href: '/collections', available: false, phase: 'فاز ۲' },
-  { label: 'اطلس', href: '/atlas', available: false, phase: 'فاز ۳' },
-  { label: 'مجله', href: '/journal', available: false, phase: 'فاز ۳' },
+  { label: 'تالارهای موزه', href: '/halls', available: true },
+  { label: 'اطلس جهانی', href: '/#atlas', available: true },
+  { label: 'دانشنامه', href: '/#encyclopedia', available: true },
+  { label: 'دربارهٔ موزه', href: '/#about', available: true },
 ];
 
-export const museumSections = [
-  {
-    numeral: '۰۱',
-    title: 'موزه',
-    description:
-      'گالری اشیای شاخص: سنگ‌های قیمتی و نیمه‌قیمتی، بلورها و نمونه‌های کانی‌شناسی، هر یک با کارت فنی، خاستگاه و روایت خود.',
-    phase: 'فاز ۲',
-    available: false,
-  },
-  {
-    numeral: '۰۲',
-    title: 'اطلس جغرافیایی',
-    description:
-      'کره‌ای از معادن و مناطق یافت: از موزوی کلمبیا تا پنجشیر افغانستان، با پیوند مستقیم هر نقطه به اشیای همان سرزمین.',
-    phase: 'فاز ۳',
-    available: false,
-  },
-  {
-    numeral: '۰۳',
-    title: 'مجلهٔ موزه',
-    description:
-      'مقاله‌های بلند دربارهٔ کانی‌شناسی، تاریخ گوهرشناسی و پشت‌صحنهٔ مجموعه‌ها؛ نوشته‌شده برای خواندن، نه برای فروش.',
-    phase: 'فاز ۳',
-    available: false,
-  },
-  {
-    numeral: '۰۴',
-    title: 'واژه‌نامه',
-    description:
-      'مرجعی برای زبان سنگ: تفاوت بریل و زمرد، معنای تراش امرالد، و آنچه «بدون تیمار» واقعاً می‌گوید.',
-    phase: 'فاز ۳',
-    available: false,
-  },
-] as const;
+/** Secondary column in the footer: the museum itself. */
+export const footerNav: readonly NavItem[] = [
+  { label: 'تالارهای موزه', href: '/halls', available: true },
+  { label: 'نمونه‌های منتخب', href: '/#featured', available: true },
+  { label: 'اطلس جهانی', href: '/#atlas', available: true },
+  { label: 'دانشنامه', href: '/#encyclopedia', available: true },
+  { label: 'دربارهٔ موزه', href: '/#about', available: true },
+];
 
+/** Legal column. Inert until the hosting phase decides what these must say. */
 export const footerLinks = [
-  { label: 'دربارهٔ گموریا', available: false, phase: 'فاز ۲' },
-  { label: 'تماس', available: false, phase: 'فاز ۲' },
   { label: 'حریم خصوصی', available: false, phase: 'فاز ۶' },
   { label: 'شرایط استفاده', available: false, phase: 'فاز ۶' },
+  { label: 'دسترس‌پذیری', available: false, phase: 'فاز ۶' },
 ] as const;
 
 export const site = {
   nameFa: 'گموریا',
   nameLatin: 'GEMORIA',
   tagline: 'موزهٔ دیجیتال سنگ‌های قیمتی',
+  /** Used as the default meta description. */
   descriptionFa:
     'گموریا موزهٔ دیجیتال سنگ‌های قیمتی، کانی‌ها و نمونه‌های زمین‌شناسی است؛ مجموعه‌ای برای دیدن، خواندن و شناختن — نه برای خرید.',
   descriptionEn:
     'GEMORIA is a digital museum of gemstones, minerals and geological specimens: a collection to look at and learn from, not to buy.',
 } as const;
+
+/**
+ * A canonical URL is only honest if the deployment actually knows its public
+ * origin. `APP_URL` defaults to localhost in development, and emitting
+ * `canonical: http://localhost:3000` into a released page is worse than emitting
+ * none at all: it tells crawlers the canonical version of the museum is a laptop.
+ */
+export function officialUrl(appUrl: string): string | null {
+  try {
+    const url = new URL(appUrl);
+    const isLocal =
+      url.hostname === 'localhost' ||
+      url.hostname === '127.0.0.1' ||
+      url.hostname.endsWith('.local') ||
+      url.hostname.startsWith('192.168.');
+    if (isLocal || url.protocol !== 'https:') return null;
+    return url.origin;
+  } catch {
+    return null;
+  }
+}

@@ -1,16 +1,20 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { publicNav } from '@/config/site';
+import Link from 'next/link';
+import { footerNav, publicNav } from '@/config/site';
 import { NavItemView } from './nav-item';
-import { ButtonLink } from '@/components/ui/button';
+import { Lockup } from '@/components/brand/lockup';
+import { MenuIcon, CloseIcon, SearchIcon } from '@/components/ui/icons';
 
 /**
- * Mobile navigation drawer.
+ * Mobile navigation.
  *
- * Closes on Escape and on navigation, locks background scroll, and exposes the
- * open state through `aria-expanded`. The desktop navigation is rendered in the
- * server component; this is the only interactive piece of the public header.
+ * Not a shrunken desktop bar: a full-height sheet with the lockup, the primary
+ * navigation at a size a thumb can hit, and a route to the archive search. It
+ * closes on Escape and on navigation, locks background scroll while open, and
+ * moves focus to the panel so a keyboard user does not start at the top of the
+ * page again.
  */
 export function MobileNav() {
   const [open, setOpen] = useState(false);
@@ -39,11 +43,9 @@ export function MobileNav() {
         aria-expanded={open}
         aria-controls="mobile-navigation"
         aria-label="باز کردن منو"
-        className="inline-flex items-center justify-center rounded-full border border-white/12 p-2.5 text-ivory-200 transition-colors hover:border-gold-400/50 hover:text-gold-200 md:hidden"
+        className="inline-flex h-10 w-10 items-center justify-center text-ivory-200 transition-colors hover:text-gold-200 lg:hidden"
       >
-        <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" fill="none">
-          <path d="M2 5h14M2 9h14M2 13h14" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-        </svg>
+        <MenuIcon className="h-5 w-5" />
       </button>
 
       {open && (
@@ -52,43 +54,70 @@ export function MobileNav() {
           role="dialog"
           aria-modal="true"
           aria-label="منوی اصلی"
-          className="fixed inset-0 z-50 md:hidden"
+          className="fixed inset-0 z-[70] lg:hidden"
         >
           <button
             type="button"
             aria-label="بستن منو"
             onClick={() => setOpen(false)}
-            className="absolute inset-0 h-full w-full cursor-default bg-obsidian-950/80 backdrop-blur-sm"
+            className="absolute inset-0 h-full w-full cursor-default bg-obsidian-950/85 backdrop-blur-sm"
           />
-          <div className="absolute inset-x-0 top-0 border-b border-white/10 bg-obsidian-900 px-5 pb-8 pt-5 shadow-2xl">
-            <div className="mb-6 flex items-center justify-between">
-              <span className="eyebrow">منو</span>
+
+          <div className="absolute inset-y-0 end-0 flex w-[min(22rem,92vw)] flex-col border-s border-white/10 bg-obsidian-900">
+            <div className="flex items-center justify-between border-b border-white/[0.07] px-6 py-4">
+              <Lockup href="/" size="sm" />
               <button
                 type="button"
                 onClick={() => setOpen(false)}
                 aria-label="بستن منو"
-                className="rounded-full border border-white/12 p-2.5 text-ivory-200"
+                className="inline-flex h-10 w-10 items-center justify-center text-ivory-200"
               >
-                <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none">
-                  <path d="M3 3l10 10M13 3L3 13" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-                </svg>
+                <CloseIcon className="h-5 w-5" />
               </button>
             </div>
 
-            <nav aria-label="ناوبری اصلی (موبایل)">
-              <ul className="flex flex-col gap-1">
+            <nav aria-label="ناوبری اصلی (موبایل)" className="flex-1 overflow-y-auto px-6 py-6">
+              <ul className="flex flex-col">
                 {publicNav.map((item) => (
-                  <li key={item.href} className="border-b border-white/[0.05] py-2.5 text-[15px] last:border-0">
+                  <li
+                    key={item.href}
+                    className="border-b border-white/[0.05] py-3.5 text-[1.05rem] last:border-0"
+                  >
                     <NavItemView item={item} onNavigate={() => setOpen(false)} showPhase />
                   </li>
                 ))}
               </ul>
+
+              <p className="mt-10 mb-3 text-label tracking-[0.16em] text-sage-600 uppercase">بیشتر</p>
+              <ul className="flex flex-col gap-3 text-small">
+                {footerNav.slice(1, 3).map((item) => (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      onClick={() => setOpen(false)}
+                      className="text-sage-400 transition-colors hover:text-gold-200"
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+                <li>
+                  <Link
+                    href="/admin"
+                    onClick={() => setOpen(false)}
+                    className="text-sage-400 transition-colors hover:text-gold-200"
+                  >
+                    پنل مدیریت
+                  </Link>
+                </li>
+              </ul>
             </nav>
 
-            <div className="mt-7">
-              <ButtonLink href="/admin" variant="outline" size="sm" className="w-full">
-                ورود به پنل مدیریت
-              </ButtonLink>
+            <div className="border-t border-white/[0.07] px-6 py-5">
+              <p className="flex items-center gap-2 text-small text-sage-600">
+                <SearchIcon className="h-3.5 w-3.5" />
+                جست‌وجو در نوار بالای صفحه
+              </p>
             </div>
           </div>
         </div>

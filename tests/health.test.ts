@@ -42,6 +42,8 @@ describe('GET /api/health', () => {
     const response = await route.GET();
     expect(response.status).toBe(200);
 
+    const { APP_PHASE } = await import('@/config/app');
+
     const body = (await response.json()) as {
       status: string;
       application: { name: string; version: string; phase: number };
@@ -56,7 +58,9 @@ describe('GET /api/health', () => {
 
     expect(body.status).toBe('ok');
     expect(body.application.name).toBe('gemoria');
-    expect(body.application.phase).toBe(0);
+    // The payload must report the phase the build declares, not a literal that
+    // goes stale the moment the project moves on (it did exactly that at 1A).
+    expect(body.application.phase).toBe(APP_PHASE.number);
     expect(body.database.driver).toBe('pglite');
     expect(body.database.reachable).toBe(true);
     expect(body.database.schemaReady).toBe(true);

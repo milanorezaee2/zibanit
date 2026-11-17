@@ -22,6 +22,9 @@
  *     will be asked to draw them — i.e. no character silently falls back
  *   • the wordmark face stays Latin-only, and Persian numerals are never set in it
  *   • /admin is noindex, the 404 is Persian, /api/health reports a usable database
+ *   • every section the homepage promises is on the homepage, in heading order
+ *   • every internal link on the page resolves — nothing in the museum is a dead end
+ *   • the page sells nothing: no price, no cart, no checkout
  *
  * It uses only Node built-ins plus `fontkit`, which the test suite already
  * depends on. No new dependency, no new infrastructure.
@@ -145,6 +148,66 @@ async function main(): Promise<void> {
   check('database is reachable', payload.database.reachable);
   check('migrations are up to date', payload.database.migrations.upToDate);
   check('Persian text search is supported by the cluster', payload.capabilities.persianTextSearch.supported);
+
+  // ── 4b. The homepage promises nine sections; nine sections must exist ─────
+  const requiredSections = ['about', 'halls', 'featured', 'atlas', 'encyclopedia'];
+  for (const id of requiredSections) {
+    check(`homepage has section #${id}`, new RegExp(`id="${id}"`).test(home.body));
+  }
+
+  const requiredCopy = [
+    'جهانی از شگفتی‌های پنهان در دل زمین',
+    'A Digital Museum of Natural Wonders',
+    'ورود به تالارهای موزه',
+    'کاوش در مجموعه‌ها',
+    'شش تالار',
+    'نمونه‌های منتخب',
+    'از دل زمین، از سراسر جهان',
+    'دانشنامهٔ سنگ',
+    'هر سنگ، سندی',
+  ];
+  for (const text of requiredCopy) {
+    check(`homepage copy: «${text.slice(0, 28)}…»`, home.body.includes(text));
+  }
+
+  // The featured section must be either real objects or an honest empty vitrine.
+  const hasEmptyVitrine = home.body.includes('ویترین‌ها هنوز خالی‌اند');
+  const hasSpecimenCards = /data-specimen-card/.test(home.body);
+  check('featured section is honest (objects or a declared empty state)',
+    hasEmptyVitrine || hasSpecimenCards);
+
+  // ── 4c. Heading order: one h1, and no level skips ─────────────────────────
+  const headingLevels = [...home.body.matchAll(/<h([1-4])[\s>]/g)].map((match) => Number(match[1]));
+  checkEqual('homepage has exactly one h1', headingLevels.filter((level) => level === 1).length, 1);
+  check('homepage never skips a heading level', headingLevels.every((level, index) => {
+    if (index === 0) return level === 1;
+    return level <= (headingLevels[index - 1] ?? 1) + 1;
+  }), headingLevels.join(','));
+
+  // ── 4d. Nothing sells anything ────────────────────────────────────────────
+  // A museum, not a shop. The page is *allowed* — indeed required — to say that
+  // nothing is for sale; what it may never contain is an affordance to buy.
+  const commerce = ['افزودن به سبد', 'سبد خرید', 'تسویه حساب', 'پرداخت آنلاین', 'همین حالا بخرید', 'ثبت سفارش'];
+  const foundCommerce = commerce.filter((word) => homeText.includes(word));
+  check('homepage offers no way to buy anything', foundCommerce.length === 0, foundCommerce.join(', '));
+
+  // No number is ever followed by a currency.
+  const priced = /[\d۰-۹][\d۰-۹٬,.]*\s*(تومان|ریال|دلار|یورو|USD|EUR)/.exec(homeText);
+  check('homepage shows no price', priced === null, priced?.[0]);
+
+  // And the promise is stated, not merely implied by absence.
+  check('homepage states that nothing is for sale', /برای فروش عرضه نمی‌شود|فروشگاه نیست/.test(homeText));
+
+  // ── 4e. Every internal destination resolves ───────────────────────────────
+  const internal = [...new Set([...home.body.matchAll(/href="(\/[^"#][^"]*)"/g)]
+    .map((match) => match[1]!)
+    .filter((href) => !href.startsWith('/_next') && !href.startsWith('/api')))];
+  check('homepage links to at least six internal destinations', internal.length >= 6, internal.join(' '));
+
+  for (const href of internal.slice(0, 24)) {
+    const page = await get(href.split('#')[0]!);
+    check(`link ${href} resolves`, page.status >= 200 && page.status < 400, `status ${page.status}`);
+  }
 
   // ── 5. Stylesheet: tokens, roles, and every font the browser will fetch ───
   const hrefs = [...home.body.matchAll(/<link[^>]+rel="stylesheet"[^>]+href="([^"]+)"/g)]

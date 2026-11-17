@@ -5,21 +5,25 @@ import type { NavItem } from '@/config/site';
 /**
  * One navigation entry.
  *
- * Sections that do not exist yet are rendered as inert text with their phase
- * noted — deliberately not links, so the museum never ships a 404 in its own
- * main navigation, and a screen reader announces the state rather than pretending
- * the destination is available.
+ * The current page is marked with `aria-current="page"` as well as a gold
+ * hairline: colour alone is not a state a screen reader — or a colour-blind
+ * visitor — can perceive.
+ *
+ * Sections that do not exist yet render as inert text with their phase noted,
+ * deliberately not links, so the museum never ships a 404 in its own navigation.
  */
 export function NavItemView({
   item,
   className,
   onNavigate,
   showPhase = false,
+  current = false,
 }: {
   item: NavItem;
   className?: string;
   onNavigate?: () => void;
   showPhase?: boolean;
+  current?: boolean;
 }) {
   if (!item.available) {
     return (
@@ -30,7 +34,7 @@ export function NavItemView({
       >
         {item.label}
         {showPhase && item.phase && (
-          <span className="ms-1.5 align-middle text-[9.5px] text-sage-600/80">({item.phase})</span>
+          <span className="ms-1.5 align-middle text-[9.5px] text-sage-600">({item.phase})</span>
         )}
       </span>
     );
@@ -40,12 +44,22 @@ export function NavItemView({
     <Link
       href={item.href}
       onClick={onNavigate}
+      aria-current={current ? 'page' : undefined}
       className={cn(
-        'text-ivory-200 transition-colors duration-200 hover:text-gold-200',
+        'group relative inline-flex py-2 text-ivory-200/85 transition-colors duration-300 hover:text-gold-200',
+        current && 'text-ivory-50',
         className,
       )}
     >
       {item.label}
+      {/* The state indicator: a hairline that is present when current, grows on hover. */}
+      <span
+        aria-hidden="true"
+        className={cn(
+          'absolute inset-x-0 -bottom-0.5 h-px origin-right bg-gold-500 transition-transform duration-500 ease-museum',
+          current ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100',
+        )}
+      />
     </Link>
   );
 }

@@ -9,9 +9,9 @@ export interface SectionProps {
   description?: string;
   children?: ReactNode;
   className?: string;
-  /** `plain` skips the outer padding — used by full-bleed hero bands. */
+  /** `plain` skips the outer padding — used by full-bleed bands. */
   variant?: 'default' | 'plain' | 'band';
-  width?: 'narrow' | 'default' | 'wide';
+  width?: 'reading' | 'gallery' | 'museum';
   titleAs?: 'h1' | 'h2';
 }
 
@@ -23,7 +23,7 @@ export function Section({
   children,
   className,
   variant = 'default',
-  width = 'default',
+  width = 'gallery',
   titleAs = 'h2',
 }: SectionProps) {
   const TitleTag = titleAs;

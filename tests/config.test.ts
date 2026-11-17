@@ -6,7 +6,8 @@ import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { APP_VERSION, DEFAULT_LOCALE, ENABLED_LOCALES, PLANNED_LOCALES } from '@/config/app';
 import { adminNav } from '@/config/admin-navigation';
-import { museumSections, publicNav, site } from '@/config/site';
+import { footerNav, publicNav, site } from '@/config/site';
+import { halls } from '@/content/halls';
 
 describe('build version', () => {
   it('matches package.json', () => {
@@ -42,15 +43,52 @@ describe('public navigation', () => {
   it('keeps the home route available', () => {
     expect(publicNav[0]).toMatchObject({ href: '/', available: true });
   });
+
+  it('points every primary entry at something that exists', () => {
+    // Phase 1A makes the whole primary navigation real. Anything shipped as a
+    // link must resolve to a page or an in-page section.
+    for (const item of publicNav) {
+      expect(item.available, `${item.label} is still inert`).toBe(true);
+      expect(item.href).toMatch(/^(\/(halls)?|\/#[a-z]+)$/);
+    }
+  });
+
+  it('links the footer to the same real destinations', () => {
+    for (const item of footerNav) {
+      expect(item.available).toBe(true);
+      expect(item.href).toMatch(/^\/(halls|#[a-z]+)?$/);
+    }
+  });
 });
 
-describe('museum sections', () => {
-  it('describes four sections with numerals and phases', () => {
-    expect(museumSections).toHaveLength(4);
-    expect(museumSections.map((section) => section.numeral)).toEqual(['۰۱', '۰۲', '۰۳', '۰۴']);
-    for (const section of museumSections) {
-      expect(section.phase).toMatch(/^فاز/);
-      expect(section.description.length).toBeGreaterThan(40);
+describe('museum halls', () => {
+  it('declares the six halls of the museum', () => {
+    expect(halls).toHaveLength(6);
+  });
+
+  it('gives every hall a Persian title, a Latin title, a summary and an image', () => {
+    for (const hall of halls) {
+      expect(hall.titleFa.length).toBeGreaterThan(3);
+      expect(hall.titleEn).toMatch(/^[A-Z][A-Za-z-]+( [A-Za-z-]+)*$/);
+      expect(hall.summary.length).toBeGreaterThan(40);
+      expect(hall.imageKey).toBeTruthy();
+      expect(hall.imageAlt.length).toBeGreaterThan(20);
+    }
+  });
+
+  it('keeps hall slugs unique and URL-safe', () => {
+    const slugs = halls.map((hall) => hall.slug);
+    expect(new Set(slugs).size).toBe(slugs.length);
+    for (const slug of slugs) expect(slug).toMatch(/^[a-z][a-z-]*$/);
+  });
+
+  it('never presents a specimen record in the hall configuration', () => {
+    // Halls are architecture; objects come from the database. A hall entry that
+    // carried a specimen's name would be hard-coded museum content.
+    for (const hall of halls) {
+      expect(Object.keys(hall).sort()).toEqual(
+        ['emphasis', 'imageAlt', 'imageKey', 'slug', 'summary', 'titleEn', 'titleFa'].sort(),
+      );
     }
   });
 });
