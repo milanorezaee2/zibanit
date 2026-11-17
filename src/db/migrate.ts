@@ -94,13 +94,40 @@ export async function getMigrationStatus(
 }
 
 /** True when every table declared in the schema exists in this database. */
+/**
+ * Every table the migrations are expected to create.
+ *
+ * Named individually rather than counted: a count would pass on a database where one
+ * table is missing and a stray one exists. Phase 1B has twenty; adding one means
+ * adding it here, and the collection test asserts the same list.
+ */
+export const EXPECTED_TABLES = [
+  'app_settings',
+  'article_sources',
+  'article_specimens',
+  'article_translations',
+  'articles',
+  'audit_log',
+  'hall_specimens',
+  'hall_translations',
+  'halls',
+  'media_assets',
+  'media_translations',
+  'sessions',
+  'specimen_media',
+  'specimen_provenances',
+  'specimen_relations',
+  'specimen_translations',
+  'specimens',
+  'taxonomy_term_translations',
+  'taxonomy_terms',
+  'users',
+] as const;
+
 export async function hasSchema(handle: DatabaseHandle): Promise<boolean> {
-  const result = await handle.db.execute<{ count: number }>(
-    sql`select count(*)::int as count from information_schema.tables
-        where table_schema = 'public'
-          and table_name in ('users', 'sessions', 'audit_log', 'media_assets',
-                             'media_translations', 'specimens', 'specimen_translations',
-                             'app_settings')`,
+  const result = await handle.db.execute<{ table_name: string }>(
+    sql`select table_name from information_schema.tables where table_schema = 'public'`,
   );
-  return (result.rows[0]?.count ?? 0) === 8;
+  const present = new Set(result.rows.map((row) => row.table_name));
+  return EXPECTED_TABLES.every((table) => present.has(table));
 }

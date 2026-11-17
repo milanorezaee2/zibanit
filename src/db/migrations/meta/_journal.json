@@ -8,6 +8,20 @@
       "when": 1794907765138,
       "tag": "0000_tidy_puppet_master",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1794910710756,
+      "tag": "0001_cooing_dark_beast",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1794910711654,
+      "tag": "0002_seed_halls",
+      "breakpoints": true
     }
   ]
 }

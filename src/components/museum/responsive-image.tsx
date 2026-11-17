@@ -1,29 +1,20 @@
-import Image from 'next/image';
-import { cn } from '@/lib/cn';
 import type { MediaEntry } from '@/content/media.generated';
+import { MuseumImage } from './museum-image';
 
 /**
- * Every photograph in the museum goes through this component.
+ * A build-time photograph, adapted to the catalogue's image primitive.
  *
- * It always uses `fill` inside a wrapper whose aspect ratio is known **before**
- * the image loads, so a slow connection costs paint time but never causes layout
- * shift. The blur placeholder comes from the generated manifest: a photograph
- * resolves out of its own shadow instead of popping in from nothing.
- *
- * `sizes` is required rather than defaulted, because the browser cannot guess how
- * wide a gallery column will be and a wrong guess downloads the wrong file.
+ * Phase 1A introduced this component for the nine photographs that ship with the
+ * application. Phase 1B generalised the primitive (`MuseumImage`) so that objects
+ * from the media library render through exactly the same wrapper — including the
+ * aspect-ratio reservation that keeps Cumulative Layout Shift at zero. This file
+ * remains as the manifest-entry adapter so no Phase 1A call site had to change.
  */
 export interface ResponsiveImageProps {
   media: MediaEntry;
   alt: string;
   sizes: string;
-  /** Only the hero image is above the fold. */
   priority?: boolean;
-  /**
-   * CSS aspect-ratio, e.g. `3 / 4`. Defaults to the photograph's own.
-   * `free` fills whatever box the parent gives it — used by the hero, where the
-   * section's height is controlled by the viewport, not by the photograph.
-   */
   ratio?: string;
   className?: string;
   imgClassName?: string;
@@ -41,21 +32,20 @@ export function ResponsiveImage({
   quality = 82,
 }: ResponsiveImageProps) {
   return (
-    <div
-      className={cn('relative overflow-hidden bg-obsidian-850', className)}
-      style={ratio === 'free' ? undefined : { aspectRatio: ratio ?? `${media.width} / ${media.height}` }}
-    >
-      <Image
-        src={media.src}
-        alt={alt}
-        fill
-        sizes={sizes}
-        quality={quality}
-        priority={priority}
-        placeholder="blur"
-        blurDataURL={media.blurDataURL}
-        className={cn('object-cover', imgClassName)}
-      />
-    </div>
+    <MuseumImage
+      image={{
+        src: media.src,
+        width: media.width,
+        height: media.height,
+        blurDataURL: media.blurDataURL,
+      }}
+      alt={alt}
+      sizes={sizes}
+      priority={priority}
+      ratio={ratio}
+      className={className}
+      imgClassName={imgClassName}
+      quality={quality}
+    />
   );
 }

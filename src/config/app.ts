@@ -12,8 +12,8 @@ export const APP_VERSION = '0.1.0';
 /** The implementation phase this build belongs to. Displayed in the dashboard. */
 export const APP_PHASE = {
   number: 1,
-  slug: '1A',
-  name: 'سیستم طراحی و صفحهٔ اصلی',
+  slug: '1B',
+  name: 'هستهٔ موزهٔ دیجیتال',
   status: 'in-progress',
 } as const;
 

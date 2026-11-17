@@ -9,6 +9,8 @@ import { DiscoveryPanel } from '@/components/museum/discovery-panel';
 import { MuseumCTA } from '@/components/museum/museum-cta';
 import { officialUrl, site } from '@/config/site';
 import { getPublicEnv } from '@/lib/env';
+import { getPublishedHalls } from '@/db/queries/halls';
+import { connection } from 'next/server';
 
 const publicEnv = getPublicEnv();
 const canonical = officialUrl(publicEnv.appUrl);
@@ -50,12 +52,19 @@ export const metadata: Metadata = {
   },
 };
 
-export default function MuseumHomePage() {
+export default async function MuseumHomePage() {
+  // The halls are rows now, so the homepage reads them at request time. The same
+  // `connection()` contract as the featured collection keeps `next build` free of a
+  // database dependency while making the page honest about what is published today.
+  await connection();
+  const halls = await getPublishedHalls();
+  const hallList = halls.state === 'ready' ? halls.items : [];
+
   return (
     <>
       <HeroSection />
-      <EditorialSection />
-      <HallShowcase />
+      <EditorialSection hallCount={hallList.length} />
+      <HallShowcase halls={hallList} />
 
       {/* Awaited rather than suspended: the collection is one indexed query, and a
           skeleton flashing above the fold costs more than the round trip saves. */}

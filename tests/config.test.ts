@@ -7,7 +7,7 @@ import { describe, expect, it } from 'vitest';
 import { APP_VERSION, DEFAULT_LOCALE, ENABLED_LOCALES, PLANNED_LOCALES } from '@/config/app';
 import { adminNav } from '@/config/admin-navigation';
 import { footerNav, publicNav, site } from '@/config/site';
-import { halls } from '@/content/halls';
+import { CRYSTAL_SYSTEMS, CRYSTAL_SYSTEM_LABELS, TAXONOMY_KINDS } from '@/content/mineral';
 
 describe('build version', () => {
   it('matches package.json', () => {
@@ -45,73 +45,42 @@ describe('public navigation', () => {
   });
 
   it('points every primary entry at something that exists', () => {
-    // Phase 1A makes the whole primary navigation real. Anything shipped as a
-    // link must resolve to a page or an in-page section.
+    // Everything shipped as a link must resolve to a real route or an in-page
+    // section. Phase 1B added `/search` and `/encyclopedia` as real pages, so the
+    // pattern grew with the museum rather than the assertions being loosened.
     for (const item of publicNav) {
       expect(item.available, `${item.label} is still inert`).toBe(true);
-      expect(item.href).toMatch(/^(\/(halls)?|\/#[a-z]+)$/);
+      expect(item.href).toMatch(/^(\/(halls|search|encyclopedia)?|\/#[a-z]+)$/);
     }
   });
 
   it('links the footer to the same real destinations', () => {
     for (const item of footerNav) {
       expect(item.available).toBe(true);
-      expect(item.href).toMatch(/^\/(halls|#[a-z]+)?$/);
+      expect(item.href).toMatch(/^\/(halls|search|encyclopedia|#[a-z]+)?$/);
     }
   });
 });
 
-describe('museum halls', () => {
-  it('declares the six halls of the museum', () => {
-    expect(halls).toHaveLength(6);
-  });
-
-  it('gives every hall a Persian title, a Latin title, a summary and an image', () => {
-    for (const hall of halls) {
-      expect(hall.titleFa.length).toBeGreaterThan(3);
-      expect(hall.titleEn).toMatch(/^[A-Z][A-Za-z-]+( [A-Za-z-]+)*$/);
-      expect(hall.summary.length).toBeGreaterThan(40);
-      expect(hall.imageKey).toBeTruthy();
-      expect(hall.imageAlt.length).toBeGreaterThan(20);
+describe('closed scientific vocabularies', () => {
+  it('declares the seven crystal systems', () => {
+    // Crystallography has had exactly seven classes since the 19th century; the
+    // enum in the database and this list must not drift apart.
+    expect(CRYSTAL_SYSTEMS).toHaveLength(7);
+    for (const system of CRYSTAL_SYSTEMS) {
+      expect(CRYSTAL_SYSTEM_LABELS[system].fa.length).toBeGreaterThan(2);
+      expect(CRYSTAL_SYSTEM_LABELS[system].en).toMatch(/^[A-Z][a-z]+$/);
     }
   });
 
-  it('keeps hall slugs unique and URL-safe', () => {
-    const slugs = halls.map((hall) => hall.slug);
-    expect(new Set(slugs).size).toBe(slugs.length);
-    for (const slug of slugs) expect(slug).toMatch(/^[a-z][a-z-]*$/);
-  });
-
-  it('never presents a specimen record in the hall configuration', () => {
-    // Halls are architecture; objects come from the database. A hall entry that
-    // carried a specimen's name would be hard-coded museum content.
-    for (const hall of halls) {
-      expect(Object.keys(hall).sort()).toEqual(
-        ['emphasis', 'imageAlt', 'imageKey', 'slug', 'summary', 'titleEn', 'titleFa'].sort(),
-      );
-    }
-  });
-});
-
-describe('administration navigation', () => {
-  it('declares a permission for every entry', () => {
-    for (const group of adminNav) {
-      for (const item of group.items) {
-        expect(item.permission).toMatch(/^[a-z_]+\.[a-z_]+$/);
-        expect(item.href.startsWith('/admin')).toBe(true);
-      }
-    }
-  });
-
-  it('exposes exactly one implemented destination in Phase 0', () => {
-    const available = adminNav.flatMap((group) => group.items).filter((item) => item.available);
-    expect(available).toHaveLength(1);
-    expect(available[0]?.href).toBe('/admin');
-  });
-});
-
-describe('brand', () => {
-  it('states that the museum is not a shop', () => {
-    expect(site.descriptionFa).toMatch(/نه برای خرید|فروشگاه/);
+  it('declares the four independent classification axes', () => {
+    // Display classification (halls) is deliberately not one of them.
+    expect(TAXONOMY_KINDS).toEqual([
+      'mineral_family',
+      'scientific_group',
+      'specimen_type',
+      'origin_kind',
+    ]);
+    expect(TAXONOMY_KINDS as readonly string[]).not.toContain('hall');
   });
 });

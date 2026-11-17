@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { Container } from '@/components/ui/container';
 import { SectionHeading } from './section-heading';
 import { encyclopediaTopics } from '@/content/encyclopedia';
@@ -9,8 +10,10 @@ import { encyclopediaTopics } from '@/content/encyclopedia';
  * so the five axes are numbered like catalogue entries, each with the Latin name
  * a specialist would look up and the question a visitor actually asks.
  *
- * The rows are index entries, not links: the encyclopedia has no routes yet, and a
- * museum that links to nothing has not learned the lesson of the empty vitrine.
+ * The rows are index entries rather than article links: an axis is a question, and
+ * the articles that answer it are written and cited one at a time. The section does
+ * link to the encyclopedia index, which exists from Phase 1B and lists whatever has
+ * actually been published.
  */
 const persianNumber = (value: number): string =>
   new Intl.NumberFormat('fa-IR', { minimumIntegerDigits: 2, useGrouping: false }).format(value);
@@ -60,7 +63,13 @@ export function EncyclopediaPreview() {
             </ol>
 
             <p className="mt-7 text-small text-sage-600">
-              مدخل‌های دانشنامه در فاز دانشنامه منتشر می‌شوند.
+              مدخل‌های دانشنامه پس از نگارش و بازبینی علمی منتشر می‌شوند.{' '}
+              <Link
+                href="/encyclopedia"
+                className="text-gold-300 underline decoration-gold-500/30 underline-offset-[6px] transition-colors hover:text-gold-200 hover:decoration-gold-400/70"
+              >
+                ورود به دانشنامه
+              </Link>
             </p>
           </div>
         </div>

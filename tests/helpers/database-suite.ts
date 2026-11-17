@@ -90,23 +90,18 @@ export function defineDatabaseSuite(label: string, open: () => Promise<DatabaseH
       expect(after.applied).toBe(before.applied);
     });
 
-    it('creates all eight Phase 0 tables', async () => {
+    it('creates every expected table and nothing extra', async () => {
       expect(await hasSchema(handle)).toBe(true);
 
+      const { EXPECTED_TABLES } = await import('@/db/migrate');
       const result = await handle.db.execute<{ table_name: string }>(
         sql`select table_name from information_schema.tables
             where table_schema = 'public' order by table_name`,
       );
-      expect(result.rows.map((row) => row.table_name)).toEqual([
-        'app_settings',
-        'audit_log',
-        'media_assets',
-        'media_translations',
-        'sessions',
-        'specimen_translations',
-        'specimens',
-        'users',
-      ]);
+
+      // Exact equality, not a subset: a table that exists but is not listed means a
+      // migration shipped something nobody declared.
+      expect(result.rows.map((row) => row.table_name)).toEqual([...EXPECTED_TABLES].sort());
     });
 
     it('supports enum types and rejects values outside them', async () => {

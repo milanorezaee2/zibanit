@@ -1,11 +1,10 @@
 import Link from 'next/link';
-import { cn } from '@/lib/cn';
 import { Container } from '@/components/ui/container';
 import { ButtonLink } from '@/components/ui/button';
-import { ResponsiveImage } from './responsive-image';
+import { MuseumImage } from './museum-image';
 import { SectionHeading } from './section-heading';
 import { ArrowStart } from '@/components/ui/icons';
-import { hallImage, halls, type Hall } from '@/content/halls';
+import type { HallSummary } from '@/db/queries/halls';
 
 /**
  * The six halls.
@@ -16,9 +15,15 @@ import { hallImage, halls, type Hall } from '@/content/halls';
  * laid out: rooms are not the same size, and the asymmetry is what tells a visitor
  * where to start.
  *
- * One `HallCard` serves every position; `emphasis` only changes its proportions.
+ * Phase 1B reads the halls from the database, but the *composition* stays here:
+ * a curator controls the order and which halls are featured, while the editorial
+ * rhythm of the homepage remains a design decision rather than a seventh setting
+ * nobody understands. The positions are therefore derived from the hall's place in
+ * the published order.
  */
-const cardSizes: Record<Hall['emphasis'], { ratio: string; sizes: string }> = {
+type Emphasis = 'feature' | 'companion' | 'standard' | 'band';
+
+const cardSizes: Record<Emphasis, { ratio: string; sizes: string }> = {
   feature: { ratio: '16 / 11', sizes: '(min-width: 1024px) 58vw, 92vw' },
   // 1:1 keeps its height equal to the 7-column feature beside it at 16:11.
   companion: { ratio: '1 / 1', sizes: '(min-width: 1024px) 40vw, 92vw' },
@@ -26,8 +31,23 @@ const cardSizes: Record<Hall['emphasis'], { ratio: string; sizes: string }> = {
   band: { ratio: '16 / 9', sizes: '(min-width: 1024px) 46vw, 92vw' },
 };
 
-function HallCard({ hall, index }: { hall: Hall; index: number }) {
-  const { ratio, sizes } = cardSizes[hall.emphasis];
+export function hallEmphasis(index: number, total: number): Emphasis {
+  if (index === 0) return 'feature';
+  if (index === 1) return 'companion';
+  if (index === total - 1 && total > 4) return 'band';
+  return 'standard';
+}
+
+function HallCard({
+  hall,
+  emphasis,
+  priority = false,
+}: {
+  hall: HallSummary;
+  emphasis: Emphasis;
+  priority?: boolean;
+}) {
+  const { ratio, sizes } = cardSizes[emphasis];
 
   const caption = (
     <>
@@ -35,48 +55,61 @@ function HallCard({ hall, index }: { hall: Hall; index: number }) {
         dir="ltr"
         className="font-latin text-[0.78rem] tracking-[0.22em] text-gold-300/90 uppercase"
       >
-        {hall.titleEn}
+        {hall.latinName}
       </p>
-      <h3 className="mt-2 font-display text-subtitle text-ivory-50">{hall.titleFa}</h3>
+      <h3 className="mt-2 font-display text-subtitle text-ivory-50">{hall.title}</h3>
       <p className="mt-3 max-w-sm text-small text-ivory-200/75">{hall.summary}</p>
       <span className="mt-5 inline-flex items-center gap-2 text-small text-gold-200">
         <span>مشاهدهٔ تالار</span>
         <ArrowStart className="h-4 w-4 transition-transform duration-500 ease-museum group-hover:-translate-x-1" />
       </span>
+      {hall.specimenCount > 0 && (
+        <span className="mt-3 block text-label text-ivory-200/60">
+          {new Intl.NumberFormat('fa-IR', { useGrouping: false }).format(hall.specimenCount)} نمونه
+        </span>
+      )}
     </>
+  );
+
+  const image = (
+    <MuseumImage
+      image={hall.image}
+      alt={hall.imageAlt}
+      sizes={sizes}
+      ratio={ratio}
+      priority={priority}
+      imgClassName="transition-transform duration-[1100ms] ease-museum group-hover:scale-[1.03]"
+      fallback={
+        <div className="flex h-full items-center justify-center" style={{ aspectRatio: ratio }}>
+          <span className="font-display text-[2.5rem] text-gold-500/20" aria-hidden="true">
+            ❖
+          </span>
+        </div>
+      }
+    />
   );
 
   // The closing hall is a two-column band rather than an overlay: at full width an
   // overlay caption would float in the middle of the photograph.
-  if (hall.emphasis === 'band') {
+  if (emphasis === 'band') {
     return (
       <Link
-        href={`/halls/${hall.slug}`}
+        href={`/halls/${encodeURIComponent(hall.slug)}`}
         className="group grid overflow-hidden border border-white/[0.07] bg-surface/40 transition-colors duration-500 hover:border-gold-500/25 lg:grid-cols-2"
         style={{ borderRadius: 'var(--radius-vitrine)' }}
       >
-        <ResponsiveImage
-          media={hallImage(hall)}
-          alt={hall.imageAlt}
-          sizes={sizes}
-          ratio={ratio}
-          imgClassName="transition-transform duration-[1100ms] ease-museum group-hover:scale-[1.03]"
-        />
+        {image}
         <div className="flex flex-col justify-center gap-2 p-8 sm:p-12">{caption}</div>
       </Link>
     );
   }
 
   return (
-    <Link href={`/halls/${hall.slug}`} className="group relative block overflow-hidden">
-      <ResponsiveImage
-        media={hallImage(hall)}
-        alt={hall.imageAlt}
-        sizes={sizes}
-        ratio={ratio}
-        priority={index === 0}
-        imgClassName="transition-transform duration-[1100ms] ease-museum group-hover:scale-[1.03]"
-      />
+    <Link
+      href={`/halls/${encodeURIComponent(hall.slug)}`}
+      className="group relative block overflow-hidden"
+    >
+      {image}
 
       {/* The scrim exists only where the text sits — the photograph stays legible. */}
       <div
@@ -94,10 +127,10 @@ function HallCard({ hall, index }: { hall: Hall; index: number }) {
   );
 }
 
-export function HallShowcase() {
+export function HallShowcase({ halls }: { halls: readonly HallSummary[] }) {
   const [feature, companion, ...rest] = halls;
-  const row = rest.filter((hall) => hall.emphasis === 'standard');
-  const band = rest.find((hall) => hall.emphasis === 'band');
+  const row = rest.filter((_, index) => hallEmphasis(index + 2, halls.length) === 'standard');
+  const band = rest.find((_, index) => hallEmphasis(index + 2, halls.length) === 'band');
 
   return (
     <section id="halls" className="py-section" aria-labelledby="halls-heading">
@@ -117,27 +150,27 @@ export function HallShowcase() {
         <div className="grid gap-5 lg:grid-cols-12">
           {feature && (
             <div className="lg:col-span-7">
-              <HallCard hall={feature} index={0} />
+              <HallCard hall={feature} emphasis="feature" priority />
             </div>
           )}
           {companion && (
             <div className="lg:col-span-5">
-              <HallCard hall={companion} index={1} />
+              <HallCard hall={companion} emphasis="companion" />
             </div>
           )}
         </div>
 
         <ul className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {row.map((hall) => (
-            <li key={hall.slug}>
-              <HallCard hall={hall} index={2} />
+            <li key={hall.code}>
+              <HallCard hall={hall} emphasis="standard" />
             </li>
           ))}
         </ul>
 
         {band && (
           <div className="mt-5">
-            <HallCard hall={band} index={halls.length - 1} />
+            <HallCard hall={band} emphasis="band" />
           </div>
         )}
       </Container>

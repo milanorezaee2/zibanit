@@ -30,7 +30,7 @@ export const publicNav: readonly NavItem[] = [
   { label: 'خانه', href: '/', available: true },
   { label: 'تالارهای موزه', href: '/halls', available: true },
   { label: 'اطلس جهانی', href: '/#atlas', available: true },
-  { label: 'دانشنامه', href: '/#encyclopedia', available: true },
+  { label: 'دانشنامه', href: '/encyclopedia', available: true },
   { label: 'دربارهٔ موزه', href: '/#about', available: true },
 ];
 
@@ -39,7 +39,7 @@ export const footerNav: readonly NavItem[] = [
   { label: 'تالارهای موزه', href: '/halls', available: true },
   { label: 'نمونه‌های منتخب', href: '/#featured', available: true },
   { label: 'اطلس جهانی', href: '/#atlas', available: true },
-  { label: 'دانشنامه', href: '/#encyclopedia', available: true },
+  { label: 'دانشنامه', href: '/encyclopedia', available: true },
   { label: 'دربارهٔ موزه', href: '/#about', available: true },
 ];
 

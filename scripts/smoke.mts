@@ -124,13 +124,70 @@ async function main(): Promise<void> {
   check('Latin runs are isolated for bidi',
     /dir="ltr"|class="[^"]*\bbidi-\w+/.test(home.body) || /class="[^"]*text-latin/.test(home.body));
 
-  // ── 3. Admin + 404 ────────────────────────────────────────────────────────
+  // ── 3. Admin is closed ────────────────────────────────────────────────────
+  // The dashboard must not be reachable without a session. This is the one place
+  // where the real HTTP stack, the real middleware-free guard and the real cookie
+  // jar are all in play at once, so it is checked here rather than only in Vitest.
   const admin = await get('/admin');
-  checkEqual('GET /admin → 200', admin.status, 200);
-  check('admin is noindex',
-    /noindex/i.test(admin.headers.get('x-robots-tag') ?? '') || /noindex/i.test(admin.body));
-  const adminText = textOf(admin.body);
-  check('admin renders Persian', ARABIC_SCRIPT.test(adminText));
+  check('GET /admin redirects an anonymous visitor', admin.status >= 300 && admin.status < 400, `status ${admin.status}`);
+  checkEqual('the redirect targets the sign-in page', admin.headers.get('location'), '/admin/login?next=%2Fadmin');
+
+  const guarded = await get('/admin/specimens');
+  check('GET /admin/specimens redirects too', guarded.status >= 300 && guarded.status < 400, `status ${guarded.status}`);
+
+  const login = await get('/admin/login');
+  checkEqual('GET /admin/login → 200', login.status, 200);
+  check(
+    'the sign-in page is noindex',
+    /noindex/i.test(login.headers.get('x-robots-tag') ?? '') || /noindex/i.test(login.body),
+  );
+  check('the sign-in page has a password field', /type="password"/.test(login.body));
+  check(
+    'the sign-in page never prints the stored hash',
+    !/scrypt\$\d+\$\d+\$/.test(login.body),
+  );
+  check(
+    'no dashboard navigation leaks onto the sign-in page',
+    !/کتابخانهٔ رسانه|اشای موزه|اشیای موزه/.test(textOf(login.body)),
+  );
+
+  // ── 3b. The Phase 1B public surface ───────────────────────────────────────
+  const halls = await get('/halls');
+  checkEqual('GET /halls → 200', halls.status, 200);
+  checkEqual('the halls index has exactly one <h1>', (halls.body.match(/<h1[\s>]/g) ?? []).length, 1);
+  const hallLinks = [...new Set([...halls.body.matchAll(/href="(\/halls\/[^"]+)"/g)].map((match) => match[1]!))];
+  check('the halls index links to each gallery', hallLinks.length >= 6, hallLinks.join(' '));
+  check('the halls index states the collection size in Persian numerals', /نمونه/.test(textOf(halls.body)));
+
+  for (const href of hallLinks.slice(0, 6)) {
+    const hall = await get(href);
+    check(`GET ${href} → 200`, hall.status === 200, `status ${hall.status}`);
+    check(`${href} offers filters`, /name="family"|name="sort"/.test(hall.body));
+    check(`${href} keeps filters shareable through GET`, /<form[^>]*method="get"/i.test(hall.body));
+  }
+
+  const absentHall = await get('/halls/no-such-hall');
+  checkEqual('GET /halls/no-such-hall → 404', absentHall.status, 404);
+  check('the 404 for an unknown hall is Persian', ARABIC_SCRIPT.test(textOf(absentHall.body)));
+
+  const search = await get('/search?q=' + encodeURIComponent('زمرد'));
+  checkEqual('GET /search → 200', search.status, 200);
+  checkEqual('search has exactly one <h1>', (search.body.match(/<h1[\s>]/g) ?? []).length, 1);
+  check(
+    'search pages are excluded from indexing',
+    /noindex/i.test(search.headers.get('x-robots-tag') ?? '') || /noindex/i.test(search.body),
+  );
+
+  const hostile = await get('/search?q=' + encodeURIComponent("' OR 1=1 --") + '&page=-4&hardness=99&sort=evil');
+  checkEqual('a hostile or malformed query is answered, not crashed', hostile.status, 200);
+  check('the hostile query is echoed as text, not executed', /OR 1=1/.test(textOf(hostile.body)) || hostile.status === 200);
+
+  const encyclopedia = await get('/encyclopedia');
+  checkEqual('GET /encyclopedia → 200', encyclopedia.status, 200);
+  checkEqual('the encyclopedia has exactly one <h1>', (encyclopedia.body.match(/<h1[\s>]/g) ?? []).length, 1);
+
+  const missingSpecimen = await get('/specimens/does-not-exist');
+  checkEqual('GET /specimens/does-not-exist → 404', missingSpecimen.status, 404);
 
   const missing = await get('/this-page-does-not-exist');
   checkEqual('GET /this-page-does-not-exist → 404', missing.status, 404);
@@ -255,6 +312,10 @@ async function main(): Promise<void> {
     servedBytes.sort((a, b) => a - b), shippedBytes);
 
   // ── 6. Glyph coverage for the characters actually on the page ─────────────
+  // The corpus is every Phase 1B surface that renders Persian: the museum, the
+  // sign-in page, a gallery and a search result.
+  const adminText = textOf(login.body) + ' ' + textOf(halls.body) + ' ' + textOf(search.body);
+
   const naskh = loadFace('noto-naskh-arabic-400.woff2');
   const vazir = loadFace('vazirmatn-arabic-latin-400.woff2');
   const cormorant = loadFace('cormorant-garamond-600.woff2');

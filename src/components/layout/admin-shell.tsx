@@ -1,9 +1,13 @@
+'use client';
+
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import type { ReactNode } from 'react';
 import { adminNav } from '@/config/admin-navigation';
 import { cn } from '@/lib/cn';
 import { Wordmark } from '@/components/typography/wordmark';
 import { Badge } from '@/components/ui/badge';
+import { signOutAction } from '@/app/admin/login/actions';
 
 /**
  * The administration shell.
@@ -13,7 +17,17 @@ import { Badge } from '@/components/ui/badge';
  * text with their phase, so an administrator can see the shape of the tool without
  * being able to reach a page that does not exist.
  */
-export function AdminSidebar({ currentPath = '/admin' }: { currentPath?: string }) {
+export interface AdminIdentity {
+  readonly displayName: string;
+  readonly email: string;
+  readonly role: string;
+}
+
+export function AdminSidebar({ user }: { user?: AdminIdentity }) {
+  // A live pathname instead of a prop: the shell is rendered once by the layout, and
+  // a fixed value would highlight «داشبورد» on every page.
+  const currentPath = usePathname() ?? '/admin';
+
   return (
     <aside className="hidden w-64 shrink-0 flex-col border-e border-white/[0.07] bg-obsidian-900/50 lg:flex">
       <div className="border-b border-white/[0.07] px-5 py-5">
@@ -31,7 +45,8 @@ export function AdminSidebar({ currentPath = '/admin' }: { currentPath?: string 
             </p>
             <ul className="space-y-0.5">
               {group.items.map((item) => {
-                const isActive = currentPath === item.href;
+                const isActive =
+                  currentPath === item.href || (item.href !== '/admin' && currentPath.startsWith(`${item.href}/`));
                 const content = (
                   <>
                     <span className="flex-1">{item.label}</span>
@@ -75,14 +90,32 @@ export function AdminSidebar({ currentPath = '/admin' }: { currentPath?: string 
 
       <div className="border-t border-white/[0.07] px-4 py-4">
         <div className="flex items-center gap-3">
-          <span className="flex h-8 w-8 items-center justify-center rounded-full border border-gold-400/30 bg-gold-400/10 text-[11px] text-gold-200">
-            مد
+          <span
+            aria-hidden="true"
+            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-gold-400/30 bg-gold-400/10 text-[11px] text-gold-200"
+          >
+            {user ? user.displayName.slice(0, 2) : 'مد'}
           </span>
-          <div className="min-w-0">
-            <p className="truncate text-[12.5px] text-ivory-200">مدیر موزه</p>
-            <p className="text-[10.5px] text-sage-600">ورود از فاز ۱</p>
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-[12.5px] text-ivory-200">{user?.displayName ?? 'مدیر موزه'}</p>
+            <p className="truncate text-[10.5px] text-sage-600" dir="ltr">
+              {user?.email ?? 'admin@gemoria.example'}
+            </p>
           </div>
         </div>
+
+        {/*
+          Sign-out is a form around a Server Action, not a link: a GET that ends a
+          session can be fired by an <img> tag on any page the user visits.
+        */}
+        <form action={signOutAction} className="mt-3">
+          <button
+            type="submit"
+            className="w-full rounded-lg border border-white/[0.08] px-3 py-1.5 text-[11.5px] text-sage-400 transition-colors hover:border-gold-400/40 hover:text-gold-200"
+          >
+            خروج از حساب
+          </button>
+        </form>
       </div>
     </aside>
   );
@@ -136,7 +169,7 @@ export function AdminTopbar({
         <div>
           <div className="flex items-center gap-2.5">
             <h1 className="font-display text-[19px] leading-tight text-ivory-100">{title}</h1>
-            <Badge tone="gold">فاز ۰</Badge>
+            <Badge tone="gold">فاز ۱B</Badge>
           </div>
           {subtitle && <p className="mt-1 text-[12px] text-sage-500">{subtitle}</p>}
         </div>
@@ -146,16 +179,10 @@ export function AdminTopbar({
   );
 }
 
-export function AdminShell({
-  children,
-  currentPath,
-}: {
-  children: ReactNode;
-  currentPath?: string;
-}) {
+export function AdminShell({ children, user }: { children: ReactNode; user?: AdminIdentity }) {
   return (
     <div className="flex min-h-dvh bg-obsidian-950">
-      <AdminSidebar currentPath={currentPath} />
+      <AdminSidebar user={user} />
       <div className="flex min-w-0 flex-1 flex-col">
         <AdminMobileNav />
         {children}

@@ -11,7 +11,7 @@
  * Exits non-zero on failure so a deployment pipeline stops.
  */
 import { closeDatabase, openDatabase } from '../src/db/client';
-import { getMigrationStatus, hasSchema, runMigrations } from '../src/db/migrate';
+import { EXPECTED_TABLES, getMigrationStatus, hasSchema, runMigrations } from '../src/db/migrate';
 import { assertProductionDatabaseSafety, describeTarget, getServerEnv } from '../src/lib/env';
 
 async function main(): Promise<void> {
@@ -35,7 +35,9 @@ async function main(): Promise<void> {
     const schemaReady = await hasSchema(handle);
 
     console.log(`  applied     : ${after.applied}/${after.available}`);
-    console.log(`  schema      : ${schemaReady ? 'complete (8 tables)' : 'INCOMPLETE'}`);
+    console.log(
+      `  schema      : ${schemaReady ? `complete (${EXPECTED_TABLES.length} tables)` : 'INCOMPLETE'}`,
+    );
 
     if (!after.upToDate || !schemaReady) {
       console.error('✗ Migration finished but the database is not in the expected state.');

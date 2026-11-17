@@ -3,6 +3,9 @@ import Link from 'next/link';
 import { getSystemStatus } from '@/lib/system-status';
 import { APP_PHASE, APP_VERSION } from '@/config/app';
 import { AdminTopbar } from '@/components/layout/admin-shell';
+import { getSessionUser } from '@/lib/auth/session';
+import { listRecentAudit, listAdminSpecimens } from '@/db/queries/admin';
+import { getDatabase } from '@/db/client';
 import { Badge } from '@/components/ui/badge';
 import { ButtonLink } from '@/components/ui/button';
 import { Card, CardBody, CardHeader, CardTitle } from '@/components/ui/card';
@@ -14,7 +17,17 @@ export const metadata: Metadata = { title: 'داشبورد' };
 export const dynamic = 'force-dynamic';
 
 export default async function AdminDashboardPage() {
-  const status = await getSystemStatus();
+  const [status, user, handle] = await Promise.all([
+    getSystemStatus(),
+    getSessionUser(),
+    getDatabase(),
+  ]);
+
+  const [specimens, audit] = await Promise.all([
+    listAdminSpecimens(handle.db, { pageSize: 1 }),
+    listRecentAudit(handle.db, 8),
+  ]);
+
   const { database, application } = status;
 
   const healthTone =
@@ -38,13 +51,18 @@ export default async function AdminDashboardPage() {
       />
 
       <div className="flex-1 px-5 py-7 sm:px-8">
-        {/* Phase 0 has no authentication. Saying so loudly is safer than a quiet footnote. */}
-        <div className="mb-7 flex flex-wrap items-center gap-x-3 gap-y-2 rounded-xl border border-gold-400/30 bg-gold-400/[0.07] px-4 py-3">
-          <Badge tone="gold">توجه</Badge>
-          <p className="text-[12.5px] leading-6 text-gold-100/90">
-            احراز هویت در فاز ۱ اضافه می‌شود. این پنل در فاز ۰ هیچ محتوای موزه و هیچ
-            دادهٔ شخصی ندارد و نباید به‌صورت عمومی در دسترس قرار گیرد.
-          </p>
+        <div className="mb-7 grid gap-3 sm:grid-cols-3">
+          <Stat
+            label="نمونه‌های ثبت‌شده"
+            value={new Intl.NumberFormat('fa-IR', { useGrouping: false }).format(specimens.total)}
+            hint="همهٔ وضعیت‌ها، اعم از پیش‌نویس و منتشرشده"
+          />
+          <Stat label="نقش شما" value={user?.role ?? '—'} hint={user?.email ?? '—'} />
+          <Stat
+            label="آخرین تغییر ثبت‌شده"
+            value={audit[0] ? audit[0].action : '—'}
+            hint={audit[0] ? new Date(audit[0].createdAt).toLocaleString('fa-IR') : 'بدون سابقه'}
+          />
         </div>
 
         <section aria-labelledby="system-status" className="mb-8">

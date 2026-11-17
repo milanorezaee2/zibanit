@@ -1,6 +1,5 @@
 import { Container } from '@/components/ui/container';
 import { ResponsiveImage } from './responsive-image';
-import { halls } from '@/content/halls';
 import { encyclopediaTopics } from '@/content/encyclopedia';
 import { media } from '@/content/media.generated';
 
@@ -15,9 +14,9 @@ import { media } from '@/content/media.generated';
 const persianNumber = (value: number): string =>
   new Intl.NumberFormat('fa-IR', { useGrouping: false }).format(value);
 
-export function EditorialSection() {
+export function EditorialSection({ hallCount }: { hallCount: number }) {
   const facts = [
-    { value: persianNumber(halls.length), label: 'تالار' },
+    { value: persianNumber(hallCount), label: 'تالار' },
     { value: persianNumber(encyclopediaTopics.length), label: 'محور دانشنامه' },
     { value: '۰', label: 'شیء فروشی' },
   ];

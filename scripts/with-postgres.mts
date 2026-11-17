@@ -60,7 +60,7 @@ async function main(): Promise<number> {
     const vitestPath = path.join(ROOT, 'node_modules', 'vitest', 'vitest.mjs');
     const result = spawnSync(
       process.execPath,
-      [vitestPath, 'run', 'tests/database/postgres.test.ts'],
+      [vitestPath, 'run', 'tests/database/postgres.test.ts', 'tests/collection/postgres.test.ts'],
       {
         cwd: ROOT,
         stdio: 'inherit',

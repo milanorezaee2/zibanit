@@ -13,6 +13,9 @@ build/
 dist/
 
 # runtime data — PGlite database files, uploaded media. NEVER commit.
+# scratch files used by one-off verification scripts.
+.tmp/
+
 .data/
 
 # environment / secrets
