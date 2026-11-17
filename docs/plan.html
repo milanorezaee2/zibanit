@@ -187,7 +187,16 @@ blockquote p:last-child{margin-bottom:0}
 <td>✅ ثبت شد</td>
 <td>۱۲ تا ۲۰ سنگ نمونه با تصاویر تولیدی، تا موزه در تمام حالات (خالی/پر/فیلتر) واقعی دیده شود؛ بعداً با محتوای نهایی جایگزین می‌شود</td>
 </tr>
+<tr>
+<td><strong>D-05</strong></td>
+<td>خوشهٔ PostgreSQL تولید باید <strong>UTF-8</strong> باشد (encoding و ctype)</td>
+<td>✅ ثبت و اعمال شد</td>
+<td><code>initdb</code> پیش‌فرض (<code>SQL_ASCII</code>/<code>C</code>) متن فارسی را در <code>to_tsvector</code> بی‌صدا دور می‌ریزد و جست‌وجو را می‌کشد. <code>src/db/capabilities.ts</code> این را روی اتصال واقعی می‌سنجد؛ <code>/api/health</code> وضعیت <code>degraded</code> می‌دهد، <code>npm run db:doctor</code> خطا می‌دهد، و هر دو مجموعهٔ آزمون آن را assert می‌کنند. جزئیات: <code>docs/DATABASE.md</code></td>
+</tr>
 </tbody></table></div>
+<blockquote>
+<p><strong>فاز ۰ تحویل شد.</strong> وضعیت اجرایی، شواهد آزمون و محدودیت‌ها: <a href="PHASE-0.md"><code>docs/PHASE-0.md</code></a>. فاز ۱ آغاز نشده است.</p>
+</blockquote>
 <blockquote>
 <p>تصمیم D-04 یک الزام فنی به همراه دارد: نمونه‌ها باید از همان مسیر واقعی (آپلود → پردازش → انتشار) عبور کنند، نه اینکه مستقیم در کد نوشته شوند؛ در غیر این صورت موزه «دمو» می‌شود نه «نرم‌افزار».</p>
 </blockquote>
