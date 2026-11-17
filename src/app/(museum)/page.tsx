@@ -72,7 +72,10 @@ export default async function MuseumHomePage() {
         wrong thing to say first. `#about` still exists, so the hero's «آغاز
         بازدید» lands on it.
       */}
-      <HeroSection hallCount={hallList.length} />
+      <HeroSection
+        hallCount={hallList.length}
+        halls={hallList.map((hall) => ({ title: hall.title, latinName: hall.latinName }))}
+      />
       <HallShowcase halls={hallList} />
 
       {/* Awaited rather than suspended: the collection is one indexed query, and a

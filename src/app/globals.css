@@ -451,6 +451,52 @@
   }
 }
 
+/*
+ * A paper grain, generated not downloaded.
+ *
+ * One inline turbulence tile at 6% opacity. It is the difference between "a cream
+ * background" and "a sheet of paper", and it costs no request, no image and no
+ * layout. Multiply blending keeps it from greying the text above it — the layer is
+ * behind the content and inert.
+ */
+@utility paper-grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+}
+
+/*
+ * The hall ticker.
+ *
+ * One line of the six rooms drifting past the fold, duplicated once so the loop is
+ * seamless. It is decorative by contract — `aria-hidden`, and it stops dead under
+ * `prefers-reduced-motion` (the names are also in the halls section, in a list, for
+ * anyone who needs them read out).
+ */
+@utility ticker-track {
+  display: flex;
+  width: max-content;
+  animation: gemoria-ticker 52s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track {
+    animation: none;
+  }
+}
+
+@keyframes gemoria-ticker {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(50%);
+  }
+}
+
 /* A full-bleed band that keeps content aligned to the grid. */
 @utility bleed {
   width: 100vw;

@@ -223,8 +223,12 @@ async function main(): Promise<void> {
     'دانشنامهٔ سنگ',
     'هر سنگ، سندی',
   ];
+  // Compared against the *rendered text*, whitespace-normalised: the hero sets one
+  // word in a different face, and an inline <span> must not be able to hide copy
+  // from this check — nor should a line break be mistaken for missing text.
+  const homeFlowing = homeText.replace(/\s+/g, ' ');
   for (const text of requiredCopy) {
-    check(`homepage copy: «${text.slice(0, 28)}…»`, home.body.includes(text));
+    check(`homepage copy: «${text.slice(0, 28)}…»`, homeFlowing.includes(text));
   }
 
   // The featured section must be either real objects or an honest empty vitrine.
